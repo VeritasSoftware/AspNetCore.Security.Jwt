@@ -87,6 +87,7 @@ After this validation, the Jwt token is issued by the **TokenController**.
     "Secret": "a secret that needs to be at least 16 characters long",
     "Issuer": "your app",
     "Audience": "the client of your app",
+    "IdType":  "Name",
     "TokenExpiryInHours" :  2
   },
   .

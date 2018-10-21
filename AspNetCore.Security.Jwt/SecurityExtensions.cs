@@ -9,11 +9,10 @@
 
     public static class SecurityExtensions
     {
-        public static IServiceCollection AddSecurity<TAuthenticator>(this IServiceCollection services, IConfiguration configuration, IdType idType, bool addSwaggerSecurity = false)
+        public static IServiceCollection AddSecurity<TAuthenticator>(this IServiceCollection services, IConfiguration configuration, bool addSwaggerSecurity = false)
             where TAuthenticator : class, IAuthentication
         {
             var securitySettings = new SecuritySettings();
-            securitySettings.IdType = idType;
             configuration.Bind("SecuritySettings", securitySettings);
             services.AddSingleton(securitySettings);
             services.AddScoped<ISecurityService, SecurityService>();
