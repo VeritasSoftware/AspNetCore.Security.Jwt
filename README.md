@@ -20,19 +20,20 @@ Validate the Username and Password here.
 After this validation, the Jwt token is issued by the **TokenController**.
 
 ```C#
-using AspNetCore.Security.Jwt;
+	using AspNetCore.Security.Jwt;
+	using System.Threading.Tasks;
 
-namespace XXX.API
-{
-    public class Authenticator : IAuthentication
-    {        
-        public async Task<bool> IsValidUser(string userName, string password)
-        {
-            //Put your user authenication here.
-            return true;
-        }
-    }
-}
+	namespace Webjet.API
+	{
+		public class Authenticator : IAuthentication
+		{        
+			public async Task<bool> IsValidUser(string userName, string password)
+			{
+				//Put your user authenication here.
+				return true;
+			}
+		}
+	}
 ```
 
 **In your Startup.cs:**
