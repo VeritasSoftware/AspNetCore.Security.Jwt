@@ -31,6 +31,10 @@ namespace XXX.API
 **In your Startup.cs:**
 
 ```C#
+	using AspNetCore.Security.Jwt;
+```
+
+```C#
         public void ConfigureServices(IServiceCollection services)
         {
 			.
@@ -66,7 +70,7 @@ namespace XXX.API
 
 **And in your appsettings.json:**
 
-```json
+```javascript
 {
   "SecuritySettings": {
     "Secret": "a secret that needs to be at least 16 characters long",
