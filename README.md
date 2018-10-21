@@ -17,7 +17,7 @@
 
 Validate the Id and Password here.
 
-The **IdType** supported so far are Name, Email.
+The **IdType** supported so far are **Name**, **Email**.
 
 After this validation, the Jwt token is issued by the **TokenController**.
 
