@@ -22,7 +22,7 @@ After this validation, the Jwt token is issued by the **TokenController**.
 	using AspNetCore.Security.Jwt;
 	using System.Threading.Tasks;
 
-	namespace Webjet.API
+	namespace XXX.API
 	{
 		public class Authenticator : IAuthentication
 		{        
