@@ -12,7 +12,9 @@ Asp Net Core Jwt Bearer Token Security package.
 Add a reference to the package and...
 
 **Implement IAuthentication interface:**
+
 Validate the Username and Password here.
+After this validation, the Jwt token is issued by the TokenController.
 
 ```C#
 using AspNetCore.Security.Jwt;
@@ -87,10 +89,11 @@ namespace XXX.API
 }
 ```
 
-The Token Contoller has a POST Method which you can call with a Username and Password.
-A Jwt Bearer token is then issued which must be sent subsequent requests to the API.
+The **TokenContoller** has a POST Method which you can call with a Username and Password.
 
-You can mark the Controller or Action that you want to secure with Authorize attribute like:
+A Jwt Bearer token is then issued which must be sent in subsequent requests to the API.
+
+You must mark the Controller or Action that you want to secure with Authorize attribute like:
 
 ```C#
 using Microsoft.AspNetCore.Mvc;
