@@ -15,7 +15,10 @@ Add a reference to the package and...
 
 **Implement IAuthentication interface:**
 
-Validate the Username and Password here.
+Validate the Id and Password here.
+
+The **IdType** supported so far are Name, Email.
+
 After this validation, the Jwt token is issued by the **TokenController**.
 
 ```C#
@@ -56,8 +59,6 @@ After this validation, the Jwt token is issued by the **TokenController**.
             services.AddMvc().AddSecurity();
         }
 ```
-
-The **IdType** supported so far are Name, Email.
 
 ```C#
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
