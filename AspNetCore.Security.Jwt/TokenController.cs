@@ -21,11 +21,11 @@ namespace AspNetCore.Security.Jwt
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] User user)
         {
-            if (string.IsNullOrEmpty(user.UserName))
-                throw new ArgumentNullException(nameof(user.UserName));
+            if (string.IsNullOrEmpty(user.Id))
+                throw new ArgumentNullException(nameof(user.Id));
 
-            if (await this.authentication.IsValidUser(user.UserName, user.Password))
-                return new ObjectResult(this.securityService.GenerateToken(user.UserName));
+            if (await this.authentication.IsValidUser(user.Id, user.Password))
+                return new ObjectResult(this.securityService.GenerateToken(user.Id));
             return BadRequest();
         }
     }

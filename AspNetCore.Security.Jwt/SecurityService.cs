@@ -23,8 +23,24 @@
         {
             var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(this.securitySettings.Secret));
 
+            var idType = this.securitySettings.IdType;
+            Claim claim;
+
+            switch(idType)
+            {
+                case IdType.Name:
+                    claim = new Claim(ClaimTypes.Name, seed);
+                    break;
+                case IdType.Email:
+                    claim = new Claim(ClaimTypes.Email, seed);
+                    break;
+                default:
+                    claim = new Claim(ClaimTypes.Name, seed);
+                    break;
+            }
+
             var claims = new Claim[] {
-                new Claim(ClaimTypes.Name, seed),
+                claim,
                 new Claim(JwtRegisteredClaimNames.Exp, $"{new DateTimeOffset(DateTime.Now.AddDays(1)).ToUnixTimeSeconds()}"),
                 new Claim(JwtRegisteredClaimNames.Nbf, $"{new DateTimeOffset(DateTime.Now).ToUnixTimeSeconds()}")
             };

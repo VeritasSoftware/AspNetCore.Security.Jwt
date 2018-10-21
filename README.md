@@ -22,11 +22,11 @@ After this validation, the Jwt token is issued by the **TokenController**.
 	using AspNetCore.Security.Jwt;
 	using System.Threading.Tasks;
 
-	namespace XXX.API
+	namespace Webjet.API
 	{
 		public class Authenticator : IAuthentication
 		{        
-			public async Task<bool> IsValidUser(string userName, string password)
+			public async Task<bool> IsValidUser(string id, string password)
 			{
 				//Put your user authenication here.
 				return true;
@@ -52,10 +52,12 @@ After this validation, the Jwt token is issued by the **TokenController**.
                 c.SwaggerDoc("v1", new Info { Title = "XXX API", Version = "v1" });
             });
 
-            services.AddSecurity<Authenticator>(this.Configuration, true);
+            services.AddSecurity<Authenticator>(this.Configuration, IdType.Name, true);
             services.AddMvc().AddSecurity();
         }
 ```
+
+The **IdType** supported so far are Name, Email.
 
 ```C#
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

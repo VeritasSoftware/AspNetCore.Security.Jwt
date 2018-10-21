@@ -4,6 +4,6 @@
 
     public interface IAuthentication
     {
-        Task<bool> IsValidUser(string userName, string password);
+        Task<bool> IsValidUser(string id, string password);
     }
 }

@@ -9,5 +9,7 @@
         public string Audience { get; set; }
 
         public int? TokenExpiryInHours { get; set; }
+
+        public IdType IdType { get; set; }
     }
 }
