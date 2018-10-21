@@ -1,20 +1,23 @@
 # AspNetCore.Security.Jwt
 Asp Net Core Jwt Bearer Token Security package.
 
-*	Adds Jwt Security to your ASP NET Core 2.0 app in the blink of an eye!!
+**The package:**
 
-*	Even gives you an out of the box TokenController to issue Jwt tokens. 
+
+*	Adds Jwt Bearer Token Security to your **ASP NET Core 2.0 app** in the blink of an eye!!
+
+*	Even gives you an out of the box **TokenController** to issue Jwt tokens. 
 
 *	And integrates that Contoller into your app automatically.
 
-*	Also, adds Security to Swagger UI!
+*	Also, adds Security to **Swagger UI**!
 
 Add a reference to the package and...
 
 **Implement IAuthentication interface:**
 
 Validate the Username and Password here.
-After this validation, the Jwt token is issued by the TokenController.
+After this validation, the Jwt token is issued by the **TokenController**.
 
 ```C#
 using AspNetCore.Security.Jwt;
