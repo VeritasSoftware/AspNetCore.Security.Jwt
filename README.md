@@ -97,7 +97,7 @@ The **TokenContoller** has a POST Method which you can call with a Username and 
 
 The POST in **Postman** is like below:
 
-![POST to TokenController](https://github.com/VeritasSoftware/ts-validator-app-angular6/blob/master/src/Login.jpg)
+![POST to TokenController](https://github.com/VeritasSoftware/AspNetCore.Security.Jwt/blob/master/TokenRequest.jpg)
 
 A Jwt Bearer token is then issued which must be sent in subsequent requests to the API.
 
