@@ -103,9 +103,11 @@ The POST in **Postman** is like below:
 
 ![POST to TokenController](https://github.com/VeritasSoftware/AspNetCore.Security.Jwt/blob/master/TokenRequest.jpg)
 
-A Jwt Bearer token is then issued which must be sent in subsequent requests to the API.
+A Jwt Bearer token is then issued which must be sent in subsequent requests in the header to the API.
 
-You must mark the Controller or Action that you want to secure with Authorize attribute like:
+## In your Controller that you want to secure
+
+You must mark the Controller or Action that you want to secure with **Authorize attribute** like:
 
 ```C#
 using Microsoft.AspNetCore.Mvc;
