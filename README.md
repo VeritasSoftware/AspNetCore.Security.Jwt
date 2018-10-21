@@ -20,15 +20,12 @@ using AspNetCore.Security.Jwt;
 namespace XXX.API
 {
     public class Authenticator : IAuthentication
-    {
-    public class Authenticator : IAuthentication
     {        
         public async Task<bool> IsValidUser(string userName, string password)
         {
             //Put your user authenication here.
             return true;
         }
-    }
     }
 }
 ```
