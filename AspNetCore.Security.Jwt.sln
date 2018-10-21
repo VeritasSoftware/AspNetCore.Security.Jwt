@@ -8,6 +8,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{1D7818F5-E6B6-4B67-9E68-B2A85581381C}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
+		AuthorizationHeader.jpg = AuthorizationHeader.jpg
 		LICENSE = LICENSE
 		README.md = README.md
 		TokenRequest.jpg = TokenRequest.jpg
