@@ -93,10 +93,9 @@ You can mark the Controller or Action that you want to secure with Authorize att
 
 ```C#
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Webjet.Entities;
-using Webjet.Repository;
+.
+.
+.
 
 namespace XXX.API.Controllers
 {
