@@ -3,14 +3,13 @@
 
 **The package:**
 
-
-*	Adds Jwt Bearer Token Security to your **ASP NET Core 2.0 app** in the blink of an eye!!
+*	Makes adding **Jwt Bearer Token Security** to your **ASP NET Core 2.0 app** a breeze!!
 
 *	Even gives you an out of the box **TokenController** to issue Jwt tokens. 
 
 *	And integrates that Contoller into your app automatically.
 
-*	Also, adds Security to **Swagger UI**!
+*	Also, **Swagger UI** integration!
 
 Add a reference to the package and...
 
