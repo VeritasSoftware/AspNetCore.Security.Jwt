@@ -21,11 +21,14 @@ namespace XXX.API
 {
     public class Authenticator : IAuthentication
     {
-        public bool IsValidUser(string userName, string password)
+    public class Authenticator : IAuthentication
+    {        
+        public async Task\<bool\> IsValidUser(string userName, string password)
         {
             //Put your user authenication here.
             return true;
         }
+    }
     }
 }
 ```

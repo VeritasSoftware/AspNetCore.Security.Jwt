@@ -1,7 +1,9 @@
 ﻿namespace AspNetCore.Security.Jwt
 {
+    using System.Threading.Tasks;
+
     public interface IAuthentication
     {
-        bool IsValidUser(string userName, string password);
+        Task<bool> IsValidUser(string userName, string password);
     }
 }

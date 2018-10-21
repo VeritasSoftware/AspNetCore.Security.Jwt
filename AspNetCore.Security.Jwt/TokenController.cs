@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace AspNetCore.Security.Jwt
 {
@@ -17,12 +18,11 @@ namespace AspNetCore.Security.Jwt
 
         [Route("/token")]
         [HttpPost]
-        public IActionResult Create(string username, string password)
+        public async Task<IActionResult> Create(string username, string password)
         {
-            if (this.authentication.IsValidUser(username, password))
+            if (await this.authentication.IsValidUser(username, password))
                 return new ObjectResult(this.securityService.GenerateToken(username));
             return BadRequest();
-            //return new ObjectResult(this.securityService.GenerateToken(username));
         }
     }
 }
