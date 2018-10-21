@@ -105,11 +105,11 @@ The POST in **Postman** is like below:
 
 ![POST to TokenController](https://github.com/VeritasSoftware/AspNetCore.Security.Jwt/blob/master/TokenRequest.jpg)
 
-A Jwt Bearer token is then issued which must be sent in subsequent requests in the header to the API.
+A Jwt Bearer token is then issued which must be sent in subsequent requests in the header.
 
 ## In your Controller that you want to secure
 
-You must mark the Controller or Action that you want to secure with **Authorize attribute** like:
+You must mark the **Controller or Action** that you want to secure with **Authorize attribute** like:
 
 ```C#
 using Microsoft.AspNetCore.Mvc;
@@ -140,6 +140,8 @@ Authorization: Bearer \<token\>
 Eg.
 
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiU2hhbiIsImV4cCI6MTU0MjUxMTkzOSwibmJmIjoxNTQwMDkyNzM5LCJpc3MiOiJ5b3VyIGFwcCIsImF1ZCI6InRoZSBjbGllbnQgb2YgeW91ciBhcHAifQ.VktS3XGD-Z3-wNuXl4IuLLJXe9OUNK5RZ8o-9eUUVuE
+
+to access the Controller or Action.
 
 This is like below in Postman:
 
