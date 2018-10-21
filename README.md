@@ -5,9 +5,9 @@ Asp Net Core Jwt Bearer Token Security package.
 
 *	Even gives you an out of the box TokenController to issue Jwt tokens. 
 
-*	And integrates that Contoller into your app automatically.
+*	And integrates that Contoller into your app automagically.
 
-*	Also, add Security to Swagger UI!
+*	Also, adds Security to Swagger UI!
 
 Add a reference to the package and...
 
