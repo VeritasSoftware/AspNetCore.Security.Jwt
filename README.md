@@ -13,7 +13,7 @@
 
 Add a reference to the package and...
 
-**Implement IAuthentication interface:**
+**Implement IAuthentication interface in your app:**
 
 Validate the Id and Password here.
 
