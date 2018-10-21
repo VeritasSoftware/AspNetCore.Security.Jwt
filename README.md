@@ -77,7 +77,8 @@ namespace XXX.API
   "SecuritySettings": {
     "Secret": "a secret that needs to be at least 16 characters long",
     "Issuer": "your app",
-    "Audience": "the client of your app"
+    "Audience": "the client of your app",
+    "TokenExpiryInHours" :  2
   },
   .
   .

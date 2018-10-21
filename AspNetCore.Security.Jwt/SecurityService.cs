@@ -34,7 +34,7 @@
                 audience: this.securitySettings.Audience,
                 claims: claims,
                 notBefore: DateTime.Now,
-                expires: DateTime.Now.AddDays(28),
+                expires: DateTime.Now.AddHours(this.securitySettings.TokenExpiryInHours ?? 1),
                 signingCredentials: new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256)
             );
 
@@ -42,14 +42,5 @@
 
             return jwtToken;
         }
-    }
-
-    public class SecuritySettings
-    {
-        public string Secret { get; set; }
-
-        public string Issuer { get; set; }
-
-        public string Audience { get; set; }
     }
 }
