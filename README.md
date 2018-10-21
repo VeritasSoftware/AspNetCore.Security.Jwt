@@ -137,5 +137,18 @@ This is like below in Postman:
 
 ![POST to secure API](https://github.com/VeritasSoftware/AspNetCore.Security.Jwt/blob/master/AuthorizationHeader.jpg)
 
-In Angular 2+ app, you can do this using HttpInterceptors.
+In Angular 2+ app, you can do this using **HttpInterceptors**.
 
+## Swagger UI integration
+
+When you start Swagger you will see a **Token endppoint** automatically.
+Also, you will see an **Authorize** button.
+
+![Swagger Integration](https://github.com/VeritasSoftware/AspNetCore.Security.Jwt/blob/master/SwaggerIntegration.jpg)
+
+You obtain the Jwt token by entering your Username and Password on the Token endpoint.
+Then you enter the token into the Value field after clicking on the Authorize button as
+
+![Available Authorizations](https://github.com/VeritasSoftware/AspNetCore.Security.Jwt/blob/master/AvailableAuthorizations.jpg)
+
+Then, you can make calls to all secured endpoints (marked with Authorize attribute).
