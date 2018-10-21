@@ -34,6 +34,7 @@ namespace XXX.API
 
 ```C#
 	using AspNetCore.Security.Jwt;
+	using Swashbuckle.AspNetCore.Swagger;
 ```
 
 ```C#
