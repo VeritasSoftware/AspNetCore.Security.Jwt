@@ -7,7 +7,7 @@
 
 *	Even gives you an out of the box **TokenController** to issue Jwt tokens. 
 
-*	And integrates that Contoller into your app automatically.
+*	And integrates the TokenContoller into your app automatically.
 
 *	Also, **Swagger UI** integration!
 
