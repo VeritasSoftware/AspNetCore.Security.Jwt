@@ -95,6 +95,8 @@ After this validation, the Jwt token is issued by the **TokenController**.
 }
 ```
 
+## TokenController
+
 The **TokenContoller** has a POST Method which you can call with a Id and Password.
 
 The Id has to match the specified **IdType**.
