@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading.Tasks;
 
 namespace AspNetCore.Security.Jwt
@@ -20,6 +21,9 @@ namespace AspNetCore.Security.Jwt
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] User user)
         {
+            if (string.IsNullOrEmpty(user.UserName))
+                throw new ArgumentNullException(nameof(user.UserName));
+
             if (await this.authentication.IsValidUser(user.UserName, user.Password))
                 return new ObjectResult(this.securityService.GenerateToken(user.UserName));
             return BadRequest();
