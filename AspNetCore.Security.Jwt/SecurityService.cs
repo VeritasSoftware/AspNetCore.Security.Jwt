@@ -12,6 +12,7 @@
     public class SecurityService : ISecurityService
     {
         private readonly SecuritySettings securitySettings;
+        const int DEFAULT_TOKEN_EXPIRY_IN_HOURS = 1;
 
         public SecurityService(SecuritySettings securitySettings)
         {
@@ -41,7 +42,7 @@
 
             var claims = new Claim[] {
                 claim,
-                new Claim(JwtRegisteredClaimNames.Exp, $"{new DateTimeOffset(DateTime.Now.AddDays(1)).ToUnixTimeSeconds()}"),
+                new Claim(JwtRegisteredClaimNames.Exp, $"{new DateTimeOffset(DateTime.Now.AddHours(this.securitySettings.TokenExpiryInHours ?? DEFAULT_TOKEN_EXPIRY_IN_HOURS)).ToUnixTimeSeconds()}"),
                 new Claim(JwtRegisteredClaimNames.Nbf, $"{new DateTimeOffset(DateTime.Now).ToUnixTimeSeconds()}")
             };
 
@@ -50,7 +51,7 @@
                 audience: this.securitySettings.Audience,
                 claims: claims,
                 notBefore: DateTime.Now,
-                expires: DateTime.Now.AddHours(this.securitySettings.TokenExpiryInHours ?? 1),
+                expires: DateTime.Now.AddHours(this.securitySettings.TokenExpiryInHours ?? DEFAULT_TOKEN_EXPIRY_IN_HOURS),
                 signingCredentials: new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256)
             );
 
