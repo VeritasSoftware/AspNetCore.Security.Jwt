@@ -112,7 +112,7 @@ Once this is done,
 
 you have to send the issued Jwt token in the header of the request as
 
-Authorization: Bearer <token>
+Authorization: Bearer \<token\>
 
 Eg.
 
