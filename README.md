@@ -141,7 +141,8 @@ In Angular 2+ app, you can do this using **HttpInterceptors**.
 
 ## Swagger UI integration
 
-When you start Swagger you will see a **Token endppoint** automatically.
+When you start Swagger you will see a **Token endpoint** automatically.
+
 Also, you will see an **Authorize** button.
 
 ![Swagger Integration](https://github.com/VeritasSoftware/AspNetCore.Security.Jwt/blob/master/SwaggerIntegration.jpg)
