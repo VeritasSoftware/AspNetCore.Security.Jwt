@@ -79,7 +79,7 @@ After this validation, the Jwt token is issued by the **TokenController**.
         }
 ```
 
-**And in your appsettings.json:**
+## In your appsettings.json
 
 ```javascript
 {
@@ -95,7 +95,7 @@ After this validation, the Jwt token is issued by the **TokenController**.
 }
 ```
 
-## TokenController
+## TokenController - Issues the Jwt token
 
 The **TokenContoller** has a POST Method which you can call with a Id and Password.
 
