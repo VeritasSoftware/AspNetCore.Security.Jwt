@@ -11,9 +11,9 @@
 
 *	Also, **Swagger UI** integration!
 
-Add a reference to the package and...
+**Add a reference to the package and...**
 
-**Implement IAuthentication interface in your app:**
+## Implement IAuthentication interface in your app
 
 Validate the Id and Password here.
 
@@ -38,7 +38,7 @@ After this validation, the Jwt token is issued by the **TokenController**.
 	}
 ```
 
-**In your Startup.cs:**
+## In your Startup.cs
 
 ```C#
 	using AspNetCore.Security.Jwt;
