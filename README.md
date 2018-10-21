@@ -157,7 +157,8 @@ Also, you will see an **Authorize** button.
 
 ![Swagger Integration](https://github.com/VeritasSoftware/AspNetCore.Security.Jwt/blob/master/SwaggerIntegration.jpg)
 
-You obtain the Jwt token by entering your Username and Password on the Token endpoint.
+You obtain the Jwt token by entering your Id and Password on the Token endpoint.
+
 Then you enter the token into the Value field after clicking on the Authorize button as
 
 ![Available Authorizations](https://github.com/VeritasSoftware/AspNetCore.Security.Jwt/blob/master/AvailableAuthorizations.jpg)
