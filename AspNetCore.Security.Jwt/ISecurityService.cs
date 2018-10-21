@@ -1,4 +1,4 @@
-﻿namespace Api.Security.Jwt
+﻿namespace AspNetCore.Security.Jwt
 {
     /// <summary>
     /// ISecurityService interface

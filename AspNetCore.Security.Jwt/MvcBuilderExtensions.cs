@@ -1,4 +1,4 @@
-﻿namespace Api.Security.Jwt
+﻿namespace AspNetCore.Security.Jwt
 {
     using Microsoft.Extensions.DependencyInjection;
     using System.Reflection;
@@ -7,7 +7,7 @@
     {
         public static IMvcBuilder AddSecurity(this IMvcBuilder mvcBuilder)
         {
-            mvcBuilder.AddApplicationPart(Assembly.Load(new AssemblyName("Api.Security.Jwt")));
+            mvcBuilder.AddApplicationPart(Assembly.Load(new AssemblyName("AspNetCore.Security.Jwt")));
 
             return mvcBuilder;
         }

@@ -1,4 +1,4 @@
-﻿namespace Api.Security.Jwt
+﻿namespace AspNetCore.Security.Jwt
 {
     using Microsoft.IdentityModel.Tokens;
     using System;

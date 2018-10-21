@@ -1,4 +1,4 @@
-﻿namespace Api.Security.Jwt
+﻿namespace AspNetCore.Security.Jwt
 {
     using Microsoft.AspNetCore.Builder;
     using Microsoft.Extensions.Configuration;
@@ -9,12 +9,14 @@
 
     public static class SecurityExtensions
     {
-        public static IServiceCollection AddSecurity(this IServiceCollection services, IConfiguration configuration, bool addSwaggerSecurity = true)
+        public static IServiceCollection AddSecurity<TAuthenticator>(this IServiceCollection services, IConfiguration configuration, bool addSwaggerSecurity = false)
+            where TAuthenticator : class, IAuthentication
         {
             var securitySettings = new SecuritySettings();
             configuration.Bind("SecuritySettings", securitySettings);
             services.AddSingleton(securitySettings);
             services.AddScoped<ISecurityService, SecurityService>();
+            services.AddScoped<IAuthentication, TAuthenticator>();
 
             if (addSwaggerSecurity)
             {
@@ -47,7 +49,7 @@
             return services;
         }
 
-        public static IApplicationBuilder UseSecurity(this IApplicationBuilder app, bool addSwaggerSecurity = true)
+        public static IApplicationBuilder UseSecurity(this IApplicationBuilder app, bool addSwaggerSecurity = false)
         {
             if (addSwaggerSecurity)
             {

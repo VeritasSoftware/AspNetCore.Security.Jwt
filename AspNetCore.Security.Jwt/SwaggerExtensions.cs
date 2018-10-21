@@ -1,4 +1,4 @@
-﻿namespace Api.Security.Jwt
+﻿namespace AspNetCore.Security.Jwt
 {
     using Microsoft.AspNetCore.Builder;
     using Microsoft.Extensions.DependencyInjection;
@@ -10,9 +10,7 @@
         public static IServiceCollection AddSecureSwaggerDocumentation(this IServiceCollection services)
         {
             services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new Info { Title = "Webjet API", Version = "v1" });
-
+            {            
                 // Swagger 2.+ support
                 var security = new Dictionary<string, IEnumerable<string>>
                 {
@@ -37,8 +35,6 @@
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
-
                 c.DocExpansion(DocExpansion.None);
             });
 
