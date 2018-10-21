@@ -95,6 +95,10 @@ After this validation, the Jwt token is issued by the **TokenController**.
 
 The **TokenContoller** has a POST Method which you can call with a Username and Password.
 
+The POST in **Postman** is like below:
+
+![POST to TokenController](https://github.com/VeritasSoftware/ts-validator-app-angular6/blob/master/src/Login.jpg)
+
 A Jwt Bearer token is then issued which must be sent in subsequent requests to the API.
 
 You must mark the Controller or Action that you want to secure with Authorize attribute like:
