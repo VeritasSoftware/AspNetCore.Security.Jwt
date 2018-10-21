@@ -95,19 +95,6 @@ After this validation, the Jwt token is issued by the **TokenController**.
   .
 }
 ```
-
-## TokenController - Issues the Jwt token
-
-The **TokenContoller** has a POST Method which you can call with a Id and Password.
-
-The Id has to match the specified **IdType**.
-
-The POST in **Postman** is like below:
-
-![POST to TokenController](https://github.com/VeritasSoftware/AspNetCore.Security.Jwt/blob/master/TokenRequest.jpg)
-
-A Jwt Bearer token is then issued which must be sent in subsequent requests in the header.
-
 ## In your Controller that you want to secure
 
 You must mark the **Controller or Action** that you want to secure with **Authorize attribute** like:
@@ -132,9 +119,22 @@ namespace XXX.API.Controllers
     }
 }
 ```
-Once this is done,
 
-you have to send the issued Jwt token in the header of the request as
+## TokenController - Issues the Jwt token
+
+The **TokenContoller** has a POST Method which you can call with a Id and Password.
+
+The Id has to match the specified **IdType**.
+
+The POST in **Postman** is like below:
+
+![POST to TokenController](https://github.com/VeritasSoftware/AspNetCore.Security.Jwt/blob/master/TokenRequest.jpg)
+
+A Jwt Bearer token is then issued which must be sent in subsequent requests in the header.
+
+# Access your secure Controller or Action
+
+You have to send the issued Jwt token in the header of the request as
 
 Authorization: Bearer \<token\>
 
