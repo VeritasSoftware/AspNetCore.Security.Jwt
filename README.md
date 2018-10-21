@@ -55,7 +55,7 @@ After this validation, the Jwt token is issued by the **TokenController**.
                 c.SwaggerDoc("v1", new Info { Title = "XXX API", Version = "v1" });
             });
 
-            services.AddSecurity<Authenticator>(this.Configuration, IdType.Name, true);
+            services.AddSecurity<Authenticator>(this.Configuration, true);
             services.AddMvc().AddSecurity();
         }
 ```
