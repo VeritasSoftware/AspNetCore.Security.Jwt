@@ -31,7 +31,7 @@ After this validation, the Jwt token is issued by the **TokenController**.
 		{        
 			public async Task<bool> IsValidUser(string id, string password)
 			{
-				//Put your user authenication here.
+				//Put your id authenication here.
 				return true;
 			}
 		}
