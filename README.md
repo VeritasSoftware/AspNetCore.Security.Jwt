@@ -40,6 +40,8 @@ After this validation, the Jwt token is issued by the **TokenController**.
 	}
 ```
 
+The Authenticator is automatically wired up for dependency injection (Scoped).
+
 ## In your Startup.cs
 
 ```C#
