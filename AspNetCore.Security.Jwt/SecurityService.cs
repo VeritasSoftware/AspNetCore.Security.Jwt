@@ -22,6 +22,9 @@
         /// <inheritdoc>
         public string GenerateToken(string seed)
         {
+            if (string.IsNullOrEmpty(seed))
+                throw new ArgumentNullException(nameof(seed));
+
             var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(this.securitySettings.Secret));
 
             var idType = this.securitySettings.IdType;
