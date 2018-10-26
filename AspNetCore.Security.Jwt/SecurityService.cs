@@ -28,20 +28,10 @@
             var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(this.securitySettings.Secret));
 
             var idType = this.securitySettings.IdType;
-            Claim claim;
 
-            switch(idType)
-            {
-                case IdType.Name:
-                    claim = new Claim(ClaimTypes.Name, seed);
-                    break;
-                case IdType.Email:
-                    claim = new Claim(ClaimTypes.Email, seed);
-                    break;
-                default:
-                    claim = new Claim(ClaimTypes.Name, seed);
-                    break;
-            }
+            //dynamically generate ClaimTypes from IdType
+            //create claim 
+            Claim claim = new Claim(idType.ToClaimTypes(), seed);            
 
             var claims = new Claim[] {
                 claim,

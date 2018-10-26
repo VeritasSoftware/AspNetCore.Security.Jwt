@@ -21,6 +21,9 @@ namespace AspNetCore.Security.Jwt
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] User user)
         {
+            if (user == null)
+                throw new ArgumentNullException(nameof(user));
+
             if (string.IsNullOrEmpty(user.Id))
                 throw new ArgumentNullException(nameof(user.Id));
 
