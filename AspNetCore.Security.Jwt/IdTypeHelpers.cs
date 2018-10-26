@@ -5,7 +5,7 @@ using System.Security.Claims;
 
 namespace AspNetCore.Security.Jwt
 {
-    public static class IdTypeHelpers
+    internal static class IdTypeHelpers
     {
         private static Dictionary<string, string> claimTypes = null;
 
