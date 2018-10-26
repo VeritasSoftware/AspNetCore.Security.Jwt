@@ -15,11 +15,13 @@
 
 **Add a reference to the package and...**
 
-If you want to use a **custom User model** in your app then do the following for below **steps 1, 2, 3**:
+If you want to use a **custom User model** in your app for authentication then do the following for below **steps 1, 2, 3**:
 
-[**Using a custom User model**](READMECustomUserModel.md)
+[**Using a custom User model for authentication**](READMECustomUserModel.md)
 
 **OR**
+
+**Default authentication**
 
 ## 1. Implement IAuthentication interface in your app
 

@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace AspNetCore.Security.Jwt
 {
+    /// <summary>
+    /// Token Contoller for default authentication
+    /// </summary>
     [Produces("application/json")]
     [Route("api/[controller]")]
     public class TokenController : Controller
@@ -39,16 +42,20 @@ namespace AspNetCore.Security.Jwt
         }        
     }
 
+    /// <summary>
+    /// Token Controller for custom User model
+    /// </summary>
+    /// <typeparam name="TUserModel">The custom User model</typeparam>
     [Produces("application/json")]
     [Route("api/[controller]")]
     [GenericControllerNameConvention]
-    public class TokenController<T> : Controller where T : class, IAuthenticationUser
+    public class TokenController<TUserModel> : Controller where TUserModel : class, IAuthenticationUser
     {
-        private readonly ISecurityService<T> securityService;
-        private readonly IAuthentication<T> authentication;
+        private readonly ISecurityService<TUserModel> securityService;
+        private readonly IAuthentication<TUserModel> authentication;
 
-        public TokenController(ISecurityService<T> securityService,
-                                IAuthentication<T> authentication)
+        public TokenController(ISecurityService<TUserModel> securityService,
+                                IAuthentication<TUserModel> authentication)
         {
             this.securityService = securityService;
             this.authentication = authentication;
@@ -56,7 +63,7 @@ namespace AspNetCore.Security.Jwt
 
         [Route("/token")]
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] T user)
+        public async Task<IActionResult> Create([FromBody] TUserModel user)
         {
             if (user == null)
                 throw new ArgumentNullException(nameof(user));

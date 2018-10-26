@@ -7,8 +7,19 @@
     using System;
     using System.Text;
 
+    /// <summary>
+    /// SecurityExtensions static class
+    /// </summary>
     public static class SecurityExtensions
     {
+        /// <summary>
+        /// Add Security extensions - Used to wire up the dependency injection
+        /// </summary>
+        /// <typeparam name="TAuthenticator">The authenticator - Used to authenticate the default authentication</typeparam>
+        /// <param name="services">The services collection</param>
+        /// <param name="configuration">The configurations -- appsettings</param>
+        /// <param name="addSwaggerSecurity">Enable security in Swagger UI</param>
+        /// <returns>The services collection</returns>
         public static IServiceCollection AddSecurity<TAuthenticator>(this IServiceCollection services, 
                                                                         IConfiguration configuration, 
                                                                         bool addSwaggerSecurity = false)
@@ -53,6 +64,16 @@
             return services;
         }
 
+        /// <summary>
+        /// Add Security extensions - Used to wire up the dependency injection
+        /// </summary>
+        /// <typeparam name="TAuthenticator">The authenticator - Used to authenticate the custom User model</typeparam>
+        /// <typeparam name="TUserModel">The custom User model</typeparam>
+        /// <param name="services">The services collection</param>
+        /// <param name="configuration">The configurations -- appsettings</param>
+        /// <param name="addClaims">Add the Claims using the IdTypeBuilder (<see cref="IdTypeBuilder{TUserModel}"/>)</param>
+        /// <param name="addSwaggerSecurity">Enable security in Swagger UI</param>
+        /// <returns>The services collection</returns>
         public static IServiceCollection AddSecurity<TAuthenticator, TUserModel>(this IServiceCollection services,
                                                                 IConfiguration configuration,
                                                                 Action<IIdTypeBuilder<TUserModel>> addClaims,

@@ -4,6 +4,7 @@ using System.Security.Claims;
 
 namespace AspNetCore.Security.Jwt
 {
+    /// <inheritdoc />
     public class IdTypeBuilder<TUserModel> : IIdTypeBuilder<TUserModel>, IIdTypeBuilderToClaims
         where TUserModel : IAuthenticationUser
     {
