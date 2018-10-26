@@ -1,6 +1,6 @@
 ## Create the User Model
 
-Your custom User model must inherit from IAuthenticationUser.
+Your custom User model must inherit from **IAuthenticationUser**.
 
 ```C#
     using AspNetCore.Security.Jwt;
@@ -89,4 +89,20 @@ You can specify multiple Claim Types.
 
             app.UseMvc();
         }
+```
+
+## 3. In your appsettings.json
+
+```javascript
+{
+  "SecuritySettings": {
+    "Secret": "a secret that needs to be at least 16 characters long",
+    "Issuer": "your app",
+    "Audience": "the client of your app",
+    "TokenExpiryInHours" :  2
+  },
+  .
+  .
+  .
+}
 ```

@@ -15,7 +15,7 @@
 
 **Add a reference to the package and...**
 
-If you want to use a custom User model in your app then do the following for steps 1, 2:
+If you want to use a **custom User model** in your app then do the following for **steps 1, 2, 3**:
 
 [Custom User model](READMECustomUserModel.md)
 
