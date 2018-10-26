@@ -11,5 +11,15 @@
 
             return mvcBuilder;
         }
+
+        public static IMvcBuilder AddSecurity<TUserModel>(this IMvcBuilder mvcBuilder)
+            where TUserModel: class, IAuthenticationUser            
+        {
+            mvcBuilder.AddApplicationPart(Assembly.Load(new AssemblyName("AspNetCore.Security.Jwt")))
+                .ConfigureApplicationPartManager(apm =>
+                                    apm.FeatureProviders.Add(new GenericControllerFeatureProvider<TUserModel>()));
+
+            return mvcBuilder;
+        }
     }
 }

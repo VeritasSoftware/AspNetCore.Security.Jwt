@@ -15,7 +15,13 @@
 
 **Add a reference to the package and...**
 
-## Implement IAuthentication interface in your app
+If you want to use a custom User model in your app then do the following for steps 1, 2:
+
+[Custom User model](READMECustomUserModel.md)
+
+OR
+
+## 1. Implement IAuthentication interface in your app
 
 Validate the Id and Password here.
 
@@ -42,7 +48,7 @@ After this validation, the Jwt token is issued by the **TokenController**.
 
 The Authenticator is automatically wired up for dependency injection (Scoped).
 
-## In your Startup.cs
+## 2. In your Startup.cs
 
 ```C#
 	using AspNetCore.Security.Jwt;
@@ -83,7 +89,7 @@ The Authenticator is automatically wired up for dependency injection (Scoped).
         }
 ```
 
-## In your appsettings.json
+## 3. In your appsettings.json
 
 ```javascript
 {
@@ -99,7 +105,7 @@ The Authenticator is automatically wired up for dependency injection (Scoped).
   .
 }
 ```
-## In your Controller that you want to secure
+## 4. In your Controller that you want to secure
 
 You must mark the **Controller or Action** that you want to secure with **Authorize attribute** like:
 
@@ -176,7 +182,11 @@ Then, you can make calls to all secured endpoints (marked with Authorize attribu
 
 All **ClaimTypes** are available via this enum.
 
-The IdType you will use in your app is specified in the SecuritySettings of your appsettings.json.
+The **IdType** your app will use is specified in the **SecuritySettings** of your **appsettings.json**.
+
+If you want to use multiple (or custom IdType) you can specify IdTypes in your SecuritySettings
+
+That can be any one of the ones specified in the enum below: 
 
 ```C#
     public enum IdType
