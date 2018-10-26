@@ -18,6 +18,7 @@ Your custom User model must inherit from IAuthenticationUser.
         public DateTime DOB { get; set; }
     }
 ```
+## 1. Implement IAuthentication<TUserModel> interface in your app
 
 Validate your User model here.
 
