@@ -62,7 +62,12 @@ You can specify multiple Claim Types.
         public void ConfigureServices(IServiceCollection services)
         {
             .
-			.
+            .
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info { Title = "XXX API", Version = "v1" });
+            });
+
             services.AddSecurity<Authenticator, UserModel>(this.Configuration, builder =>
                 builder.AddIdType(IdType.Name, userModel => userModel.Id)
                        .AddIdType(IdType.Role, userModel => userModel.Role)
