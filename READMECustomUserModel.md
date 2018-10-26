@@ -3,10 +3,10 @@
 Your custom User model must inherit from IAuthenticationUser.
 
 ```C#
-	using AspNetCore.Security.Jwt;
-	using System;
-	.
-	.
+    using AspNetCore.Security.Jwt;
+    using System;
+    .
+    .
     public class UserModel : IAuthenticationUser
     {
         public string Id { get; set; }
@@ -18,7 +18,7 @@ Your custom User model must inherit from IAuthenticationUser.
         public DateTime DOB { get; set; }
     }
 ```
-## 1. Implement IAuthentication<TUserModel> interface in your app
+## 1. Implement IAuthentication\<TUserModel\> interface in your app
 
 Validate your User model here.
 
