@@ -3,6 +3,10 @@
 Your custom User model must inherit from IAuthenticationUser.
 
 ```C#
+	using AspNetCore.Security.Jwt;
+	using System;
+	.
+	.
     public class UserModel : IAuthenticationUser
     {
         public string Id { get; set; }
