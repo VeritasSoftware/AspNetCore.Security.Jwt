@@ -29,7 +29,7 @@ namespace AspNetCore.Security.Jwt
         /// To Claim Types extensions. Gets the ClaimTypes for a specified IdType
         /// </summary>
         /// <param name="idType"></param>
-        /// <returns></returns>
+        /// <returns>ClaimTypes</returns>
         public static string ToClaimTypes(this IdType idType)
         {
             if (claimTypes == null)

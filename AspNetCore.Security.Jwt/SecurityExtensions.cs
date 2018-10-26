@@ -14,9 +14,11 @@
         {
             var securitySettings = new SecuritySettings();
             configuration.Bind("SecuritySettings", securitySettings);
+            IdTypeHelpers.LoadClaimTypes();
+
             services.AddSingleton(securitySettings);
             services.AddScoped<ISecurityService, SecurityService>();
-            services.AddScoped<IAuthentication, TAuthenticator>();
+            services.AddScoped<IAuthentication, TAuthenticator>();            
 
             if (addSwaggerSecurity)
             {
