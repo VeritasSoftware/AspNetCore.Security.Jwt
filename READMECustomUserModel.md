@@ -81,8 +81,8 @@ You can specify multiple Claim Types.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             .
-			.
-			.
+            .
+            .
             // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), 
             // specifying the Swagger JSON endpoint.
             app.UseSwaggerUI(c =>
