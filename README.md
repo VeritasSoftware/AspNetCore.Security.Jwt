@@ -19,7 +19,7 @@
 
 Validate the Id and Password here.
 
-The **IdType** supported so far are **Name**, **Email**.
+See **Appendix A** for the **IdType** supported.
 
 After this validation, the Jwt token is issued by the **TokenController**.
 
@@ -169,3 +169,71 @@ Then you enter the token into the Value field after clicking on the Authorize bu
 ![Available Authorizations](https://github.com/VeritasSoftware/AspNetCore.Security.Jwt/blob/master/AvailableAuthorizations.jpg)
 
 Then, you can make calls to all secured endpoints (marked with Authorize attribute).
+
+## Appendix A
+
+**IdType** is an enum.
+
+All **ClaimTypes** are available via this enum.
+
+The IdType you will use in your app is specified in the SecuritySettings of your appsettings.json.
+
+```C#
+    public enum IdType
+    {
+        Actor,
+        PostalCode,
+        PrimaryGroupSid,
+        PrimarySid,
+        Role,
+        Rsa,
+        SerialNumber,
+        Sid,
+        Spn,
+        StateOrProvince,
+        StreetAddress,
+        Surname,
+        System,
+        Thumbprint,
+        Upn,
+        Uri,
+        UserData,
+        Version,
+        Webpage,
+        WindowsAccountName,
+        WindowsDeviceClaim,
+        WindowsDeviceGroup,
+        WindowsFqbnVersion,
+        WindowsSubAuthority,
+        OtherPhone,
+        NameIdentifier,
+        Name,
+        MobilePhone,
+        Anonymous,
+        Authentication,
+        AuthenticationInstant,
+        AuthenticationMethod,
+        AuthorizationDecision,
+        CookiePath,
+        Country,
+        DateOfBirth,
+        DenyOnlyPrimaryGroupSid,
+        DenyOnlyPrimarySid,
+        DenyOnlySid,
+        WindowsUserClaim,
+        DenyOnlyWindowsDeviceGroup,
+        Dsa,
+        Email,
+        Expiration,
+        Expired,
+        Gender,
+        GivenName,
+        GroupSid,
+        Hash,
+        HomePhone,
+        IsPersistent,
+        Locality,
+        Dns,
+        X500DistinguishedName
+    }
+```
