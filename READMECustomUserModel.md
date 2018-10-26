@@ -1,4 +1,4 @@
-## 0. Create the User Model
+## Create the User Model
 
 Your custom User model must inherit from IAuthenticationUser.
 
@@ -18,8 +18,6 @@ Your custom User model must inherit from IAuthenticationUser.
         public DateTime DOB { get; set; }
     }
 ```
-
-## 1. Implement IAuthentication<TUserModel> interface in your app
 
 Validate your User model here.
 
