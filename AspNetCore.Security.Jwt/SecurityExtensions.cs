@@ -1,5 +1,6 @@
 ﻿namespace AspNetCore.Security.Jwt
 {
+    using AspNetCore.Security.Jwt.Facebook;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
@@ -12,6 +13,8 @@
     /// </summary>
     public static class SecurityExtensions
     {
+        private static bool IsJwtSchemeAdded = false;
+
         /// <summary>
         /// Add Security extensions - Used to wire up the dependency injection
         /// </summary>
@@ -38,28 +41,11 @@
                 services.AddSecureSwaggerDocumentation();
             }
 
-            services.AddAuthentication(options => {
-                options.DefaultAuthenticateScheme = "JwtBearer";
-                options.DefaultChallengeScheme = "JwtBearer";
-            })
-            .AddJwtBearer("JwtBearer", jwtBearerOptions =>
-            {                
-                jwtBearerOptions.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(securitySettings.Secret)),
-
-                    ValidateIssuer = true,
-                    ValidIssuer = securitySettings.Issuer,
-
-                    ValidateAudience = true,
-                    ValidAudience = securitySettings.Audience,
-
-                    ValidateLifetime = true, //validate the expiration and not before values in the token
-
-                    ClockSkew = TimeSpan.FromMinutes(5) //5 minute tolerance for the expiration date
-                };
-            });
+            if (!IsJwtSchemeAdded)
+            {
+                services.AddJwtBearerScheme(securitySettings);
+                IsJwtSchemeAdded = true;
+            }            
 
             return services;
         }
@@ -94,6 +80,52 @@
                 services.AddSecureSwaggerDocumentation();
             }
 
+            if (!IsJwtSchemeAdded)
+            {
+                services.AddJwtBearerScheme(securitySettings);
+                IsJwtSchemeAdded = true;
+            }            
+
+            return services;
+        }
+
+        /// <summary>
+        /// Add Facebook security extension
+        /// </summary>
+        /// <param name="services">The services collection</param>
+        /// <param name="configuration">The configurations -- appsettings</param>
+        /// <param name="addClaims">Add the Claims using the IdTypeBuilder (<see cref="IdTypeBuilder{TUserModel}"/>)</param>
+        /// <param name="addSwaggerSecurity">Enable security in Swagger UI</param>
+        /// <returns>The services collection</returns>
+        public static IServiceCollection AddFacebookSecurity(this IServiceCollection services,
+                                                                IConfiguration configuration,
+                                                                Action<IIdTypeBuilder<FacebookAuthModel>> addClaims,
+                                                                bool addSwaggerSecurity = false)
+        {
+            var securitySettings = new FacebookSecuritySettings();
+            configuration.Bind("SecuritySettings", securitySettings);
+            IdTypeHelpers.LoadClaimTypes();
+
+            services.AddSingleton(securitySettings);
+            services.AddScoped<ISecurityService<FacebookAuthModel>>(x => new SecurityService<FacebookAuthModel>(securitySettings, addClaims));            
+            services.AddScoped<IAuthentication<FacebookAuthModel>>(x => new FacebookAuthenticator(securitySettings));
+
+            if (addSwaggerSecurity)
+            {
+                services.AddSecureSwaggerDocumentation();
+            }
+
+            if (!IsJwtSchemeAdded)
+            {
+                services.AddJwtBearerScheme(securitySettings);
+                IsJwtSchemeAdded = true;
+            }
+
+            return services;
+        }
+
+        private static IServiceCollection AddJwtBearerScheme(this IServiceCollection services, BaseSecuritySettings securitySettings)
+        {
             services.AddAuthentication(options => {
                 options.DefaultAuthenticateScheme = "JwtBearer";
                 options.DefaultChallengeScheme = "JwtBearer";

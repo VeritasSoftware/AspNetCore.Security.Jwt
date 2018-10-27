@@ -11,6 +11,8 @@
 
 *	And integrates the TokenContoller into your app automatically.
 
+*	Facebook integration.
+
 *	Also, **Swagger UI** integration!
 
 **Add a reference to the package and...**
@@ -138,7 +140,7 @@ namespace XXX.API.Controllers
 
 ## TokenController - Issues the Jwt token
 
-The **TokenContoller** has a POST Method which you can call with a Id and Password.
+The **TokenContoller** has a POST Method (/token) which you can call with a Id and Password.
 
 The Id has to match the specified **IdType**.
 
@@ -166,9 +168,13 @@ This is like below in Postman:
 
 In Angular 2+ app, you can do this using **HttpInterceptors**.
 
+## Facebook integration
+
+[**Using Facebook for authentication**](READMEFacebook.md)
+
 ## Swagger UI integration
 
-When you start Swagger you will see a **Token endpoint** automatically.
+When you start Swagger you will see a **Token endpoint (/token)** automatically.
 
 Also, you will see an **Authorize** button.
 

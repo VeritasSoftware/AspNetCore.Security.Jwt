@@ -7,25 +7,32 @@
 
     public static class SwaggerExtensions
     {
+        private static bool IsSwaggerAdded = false;
+
         public static IServiceCollection AddSecureSwaggerDocumentation(this IServiceCollection services)
         {
-            services.AddSwaggerGen(c =>
-            {            
-                // Swagger 2.+ support
-                var security = new Dictionary<string, IEnumerable<string>>
+            if (!IsSwaggerAdded)
+            {
+                services.AddSwaggerGen(c =>
                 {
-                    {"Bearer", new string[] { }},
-                };
+                    // Swagger 2.+ support
+                    var security = new Dictionary<string, IEnumerable<string>>
+                    {
+                        {"Bearer", new string[] { }},
+                    };
 
-                c.AddSecurityDefinition("Bearer", new ApiKeyScheme
-                {
-                    Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
-                    Name = "Authorization",
-                    In = "header",
-                    Type = "apiKey"
+                    c.AddSecurityDefinition("Bearer", new ApiKeyScheme
+                    {
+                        Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
+                        Name = "Authorization",
+                        In = "header",
+                        Type = "apiKey"
+                    });
+                    c.AddSecurityRequirement(security);
                 });
-                c.AddSecurityRequirement(security);
-            });
+
+                IsSwaggerAdded = true;
+            }            
 
             return services;
         }

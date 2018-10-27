@@ -19,8 +19,8 @@ namespace AspNetCore.Security.Jwt
         private readonly ISecurityService securityService;
         private readonly IAuthentication authentication;
 
-        public TokenController(ISecurityService securityService = null,
-                                IAuthentication authentication = null)
+        public TokenController(ISecurityService securityService,
+                                IAuthentication authentication)
         {
             this.securityService = securityService;;
             this.authentication = authentication;
@@ -74,17 +74,59 @@ namespace AspNetCore.Security.Jwt
         }
     }
 
-    public class GenericControllerFeatureProvider<TModel> : IApplicationFeatureProvider<ControllerFeature>
+    public class GenericTokenControllerFeatureProvider<TModel> : IApplicationFeatureProvider<ControllerFeature>
     {
         public void PopulateFeature(IEnumerable<ApplicationPart> parts, ControllerFeature feature)
         {
-            var typeName = typeof(TModel).Name + "Controller";
+            feature.Controllers.Remove(typeof(TokenController).GetTypeInfo());
 
             var controllerType = typeof(TokenController<>)
                         .MakeGenericType(typeof(TModel)).GetTypeInfo();
-            feature.Controllers.Add(controllerType);
+            feature.Controllers.Add(controllerType);            
+        }
+    }
 
-            feature.Controllers.Remove(typeof(TokenController).GetTypeInfo());
+    public class TokenControllerFeatureProvider : IApplicationFeatureProvider<ControllerFeature>
+    {
+        public void PopulateFeature(IEnumerable<ApplicationPart> parts, ControllerFeature feature)
+        {
+            feature.Controllers.Remove(typeof(TokenController<>).GetTypeInfo());
+
+            feature.Controllers.Add(typeof(TokenController).GetTypeInfo());                        
+        }
+    }
+
+    public class RemoveControllerFeatureProvider : IApplicationFeatureProvider<ControllerFeature>
+    {
+        public void PopulateFeature(IEnumerable<ApplicationPart> parts, ControllerFeature feature)
+        {            
+            if (feature.Controllers.Contains(typeof(TokenController).GetTypeInfo()))
+            {
+                feature.Controllers.Remove(typeof(TokenController).GetTypeInfo());
+            }
+            if (feature.Controllers.Contains(typeof(TokenController<>).GetTypeInfo()))
+            {
+                feature.Controllers.Remove(typeof(TokenController<>).GetTypeInfo());
+            }
+            if (feature.Controllers.Contains(typeof(FacebookController).GetTypeInfo()))
+            {
+                feature.Controllers.Remove(typeof(FacebookController).GetTypeInfo());
+            }
+        }
+    }
+
+    public class FacebookControllerFeatureProvider : IApplicationFeatureProvider<ControllerFeature>
+    {
+        public bool AddFacebookController { get; set; }
+
+        public void PopulateFeature(IEnumerable<ApplicationPart> parts, ControllerFeature feature)
+        {
+            feature.Controllers.Remove(typeof(FacebookController).GetTypeInfo());
+
+            if (this.AddFacebookController)
+            {
+                feature.Controllers.Add(typeof(FacebookController).GetTypeInfo());
+            }                                  
         }
     }
 

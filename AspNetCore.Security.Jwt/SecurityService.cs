@@ -62,16 +62,16 @@
     public class SecurityService<T> : ISecurityService<T>
         where T: class, IAuthenticationUser
     {
-        private readonly SecuritySettings securitySettings;
+        private readonly BaseSecuritySettings securitySettings;
         private Action<IIdTypeBuilder<T>> addClaims;
         const double DEFAULT_TOKEN_EXPIRY_IN_HOURS = 1;
 
-        public SecurityService(SecuritySettings securitySettings)
+        public SecurityService(BaseSecuritySettings securitySettings)
         {
             this.securitySettings = securitySettings;
         }
 
-        public SecurityService(SecuritySettings securitySettings, Action<IIdTypeBuilder<T>> addClaims)
+        public SecurityService(BaseSecuritySettings securitySettings, Action<IIdTypeBuilder<T>> addClaims)
         {
             this.securitySettings = securitySettings;
             this.addClaims = addClaims;
@@ -83,8 +83,6 @@
                 throw new ArgumentNullException(nameof(user));
 
             var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(this.securitySettings.Secret));
-
-            var idType = this.securitySettings.IdType;
 
             var builder = new IdTypeBuilder<T>(user);
 
