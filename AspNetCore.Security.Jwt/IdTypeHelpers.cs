@@ -5,14 +5,14 @@ using System.Security.Claims;
 
 namespace AspNetCore.Security.Jwt
 {
-    internal static class IdTypeHelpers
+    public static class IdTypeHelpers
     {
         private static Dictionary<string, string> claimTypes = null;
 
         /// <summary>
         /// Loads the Claim Types into a dictionary reflectively. Called in AddSecurity extension only once on start up.
         /// </summary>
-        public static void LoadClaimTypes()
+        internal static void LoadClaimTypes()
         {
             claimTypes = new Dictionary<string, string>();
 

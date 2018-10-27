@@ -47,7 +47,7 @@ The Authenticator is automatically wired up for dependency injection (Scoped).
 
 Specify your **IdTypes** (**ClaimTypes**) from your custom User model using **AddIdType**.
 
-Basically, this uses **Claim** under the covers. So you can verify these **Claims** in your Controllers just as usual.
+Basically, this uses **Claim** under the covers. So you can **verify** these **Claims** in your Controllers just as usual. See **Appendix A**.
 
 All these **ClaimTypes** will be used in the token generation.
 
@@ -110,4 +110,26 @@ You can specify multiple Claim Types.
   .
   .
 }
+```
+
+## Appendix A
+
+Verify Claims in your Controller.
+
+This is done as usual.
+
+```C#
+        [HttpGet("cheapest/{title}")]
+        public async Task<IEnumerable<ProviderMovie>> GetCheapestDeal(string title)
+        {
+            var currentUser = HttpContext.User;
+
+            //Verify Claim
+            if (currentUser.HasClaim(x => x.Type == "DOB") && currentUser.HasClaim(x => x.Type == IdType.Role.ToClaimTypes()))
+            {
+                //Do something here
+            }
+
+            return await _moviesRepository.GetCheapestDeal(title);
+        } 
 ```
