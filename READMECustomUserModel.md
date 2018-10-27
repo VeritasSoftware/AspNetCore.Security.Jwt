@@ -47,7 +47,7 @@ The Authenticator is automatically wired up for dependency injection (Scoped).
 
 Specify your **IdTypes** (**ClaimTypes**) from your custom User model using **AddIdType**.
 
-Basically, this uses **Claim** under the covers. So you can **verify** these **Claims** in your Controllers just as usual. See **Appendix A**.
+Basically, this uses **Claim** under the covers. So you can **verify** these **Claims** in your Controller's action just as usual. See **Appendix A**.
 
 All these **ClaimTypes** will be used in the token generation.
 
@@ -114,12 +114,14 @@ You can specify multiple Claim Types.
 
 ## Appendix A
 
-Verify Claims in your Controller.
+Verify **Claims** in your Controller action.
 
 This is done as usual.
-To map between IdType to ClaimTypes use **ToClaimTypes()**.
+To map between IdType to ClaimTypes use **ToClaimTypes()** extension.
 
 ```C#
+        using AspNetCore.Security.Jwt;
+        using Microsoft.AspNetCore.Authorization;
         using Microsoft.AspNetCore.Mvc;
         .
         .
