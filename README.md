@@ -93,6 +93,8 @@ The Authenticator is automatically wired up for dependency injection (Scoped).
 
 ## 3. In your appsettings.json
 
+**Note:-** You can put these settings in **Secret Manager** by using **Manage User Secrets** menu (right-click the Project).
+
 ```javascript
 {
   "SecuritySettings": {
