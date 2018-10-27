@@ -4,15 +4,17 @@
     <TargetFramework>netcoreapp2.0</TargetFramework>
 
     <PackageId>AspNetCore.Security.Jwt</PackageId>
-    <Description>Package makes integrating JWT Bearer Token Security to your ASP .NET Core 2.0+ app a breeze!! Also, Swagger UI integration!</Description>
-    <Version>1.0.0</Version>
+    <Description>Package makes integrating JWT Bearer Token Security to your ASP .NET Core 2.0+ app a breeze!! Facebook integration. Also, Swagger UI integration!</Description>
+    <Version>1.1.0</Version>
     <Authors>Shantanu</Authors>
     <Company>Veritas Software</Company>
     <Copyright>Veritas Software 2018</Copyright>
     <PackageProjectUrl>https://github.com/VeritasSoftware/AspNetCore.Security.Jwt</PackageProjectUrl>
-    <PackageTags>AspNetCore.Security.Jwt JWT Bearer Token Security Swagger UI integration ASP .NET Core 2.0+ app</PackageTags>
+    <PackageTags>AspNetCore.Security.Jwt JWT Bearer Token Security Swagger UI Facebook integration ASP .NET Core 2.0+ app</PackageTags>
     <RepositoryUrl>https://github.com/VeritasSoftware/AspNetCore.Security.Jwt</RepositoryUrl>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <PackageReleaseNotes>Added custom User model support.
+Also Facebook authentication support.</PackageReleaseNotes>
   </PropertyGroup>  
   
   <ItemGroup>

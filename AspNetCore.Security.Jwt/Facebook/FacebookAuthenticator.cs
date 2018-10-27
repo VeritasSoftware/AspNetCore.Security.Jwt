@@ -46,8 +46,8 @@ namespace AspNetCore.Security.Jwt.Facebook
                 if (this.logger != null)
                 {
                     logger.LogError(ex, $"Exception in {typeof(FacebookAuthenticator).Name}");
-                }                    
-                return false;
+                }
+                throw ex;
             }            
         }       
     }
