@@ -2,6 +2,10 @@
 
 Your custom User model must inherit from **IAuthenticationUser**.
 
+This interface does not need anything to be implemented.
+
+Just slap it on there to integrate the User model.
+
 ```C#
     using AspNetCore.Security.Jwt;
     using System;
