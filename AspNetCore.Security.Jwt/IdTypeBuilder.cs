@@ -16,28 +16,28 @@ namespace AspNetCore.Security.Jwt
             this.user = user;
         }
 
-        public IIdTypeBuilder<TUserModel> AddIdType(string type, string value)
+        public IIdTypeBuilder<TUserModel> AddClaim(string type, string value)
         {
             claims.Add(new Claim(type, value));
 
             return this;
         }
 
-        public IIdTypeBuilder<TUserModel> AddIdType(IdType idType, string value)
+        public IIdTypeBuilder<TUserModel> AddClaim(IdType idType, string value)
         {
             claims.Add(new Claim(idType.ToClaimTypes(), value));
 
             return this;
         }
 
-        public IIdTypeBuilder<TUserModel> AddIdType(string idType, Func<TUserModel, string> value)
+        public IIdTypeBuilder<TUserModel> AddClaim(string idType, Func<TUserModel, string> value)
         {
             claims.Add(new Claim(idType, value(user)));
 
             return this;
         }
 
-        public IIdTypeBuilder<TUserModel> AddIdType(IdType idType, Func<TUserModel, string> value)
+        public IIdTypeBuilder<TUserModel> AddClaim(IdType idType, Func<TUserModel, string> value)
         {
             claims.Add(new Claim(idType.ToClaimTypes(), value(user)));
 

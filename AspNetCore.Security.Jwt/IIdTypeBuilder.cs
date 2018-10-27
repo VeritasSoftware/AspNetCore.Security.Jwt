@@ -11,13 +11,13 @@ namespace AspNetCore.Security.Jwt
     public interface IIdTypeBuilder<TUserModel>
         where TUserModel : IAuthenticationUser
     {
-        IIdTypeBuilder<TUserModel> AddIdType(string type, string value);
+        IIdTypeBuilder<TUserModel> AddClaim(string type, string value);
 
-        IIdTypeBuilder<TUserModel> AddIdType(IdType idType, string value);
+        IIdTypeBuilder<TUserModel> AddClaim(IdType idType, string value);
 
-        IIdTypeBuilder<TUserModel> AddIdType(string idType, Func<TUserModel, string> value);
+        IIdTypeBuilder<TUserModel> AddClaim(string idType, Func<TUserModel, string> value);
 
-        IIdTypeBuilder<TUserModel> AddIdType(IdType idType, Func<TUserModel, string> value);
+        IIdTypeBuilder<TUserModel> AddClaim(IdType idType, Func<TUserModel, string> value);
     }
 
     /// <summary>

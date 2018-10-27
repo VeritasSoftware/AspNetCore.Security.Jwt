@@ -45,7 +45,7 @@ The Authenticator is automatically wired up for dependency injection (Scoped).
 
 ## 2. In your Startup.cs
 
-Specify your **IdTypes** (**ClaimTypes**) from your custom User model using **AddIdType**.
+Specify your **IdTypes** (**ClaimTypes**) from your custom User model using **AddClaim**.
 
 Basically, this uses **Claim** under the covers. So you can **verify** these **Claims** in your Controller's action just as usual. See **Appendix A**.
 
@@ -69,9 +69,9 @@ You can specify multiple Claim Types.
             });
 
             services.AddSecurity<Authenticator, UserModel>(this.Configuration, builder =>
-                builder.AddIdType(IdType.Name, userModel => userModel.Id)
-                       .AddIdType(IdType.Role, userModel => userModel.Role)
-                       .AddIdType("DOB", userModel => userModel.DOB.ToShortDateString())
+                builder.AddClaim(IdType.Name, userModel => userModel.Id)
+                       .AddClaim(IdType.Role, userModel => userModel.Role)
+                       .AddClaim("DOB", userModel => userModel.DOB.ToShortDateString())
             , true);
             services.AddMvc().AddSecurity<UserModel>();
         }
