@@ -113,7 +113,12 @@ The Authenticator is automatically wired up for dependency injection (Scoped).
   .
 }
 ```
-## 4. In your Controller that you want to secure
+
+## Facebook authentication integration
+
+[**Using Facebook for authentication**](READMEFacebook.md)
+
+## In your Controller that you want to secure
 
 You must mark the **Controller or Action** that you want to secure with **Authorize attribute** like:
 
@@ -167,10 +172,6 @@ This is like below in Postman:
 ![POST to secure API](https://github.com/VeritasSoftware/AspNetCore.Security.Jwt/blob/master/AuthorizationHeader.jpg)
 
 In Angular 2+ app, you can do this using **HttpInterceptors**.
-
-## Facebook integration
-
-[**Using Facebook for authentication**](READMEFacebook.md)
 
 ## Swagger UI integration
 
