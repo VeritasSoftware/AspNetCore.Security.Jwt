@@ -15,7 +15,7 @@
 
 **Add a reference to the package and...**
 
-# A. Use custom User model authentication
+## A. Use custom User model authentication
 
 If you want to use a **custom User model** in your app for authentication then do the following for below **steps 1, 2, 3**:
 
@@ -23,7 +23,7 @@ If you want to use a **custom User model** in your app for authentication then d
 
 **OR**
 
-# B. Use Default authentication (Id, Password)
+## B. Use Default authentication (Id, Password)
 
 ## 1. Implement IAuthentication interface in your app
 
