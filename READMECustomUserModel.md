@@ -117,8 +117,12 @@ You can specify multiple Claim Types.
 Verify Claims in your Controller.
 
 This is done as usual.
+To map between IdType to ClaimTypes use **ToClaimTypes()**.
 
 ```C#
+        using Microsoft.AspNetCore.Mvc;
+        .
+        .
         [HttpGet("cheapest/{title}")]
         public async Task<IEnumerable<ProviderMovie>> GetCheapestDeal(string title)
         {
