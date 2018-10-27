@@ -11,7 +11,7 @@
 
 *	And integrates the TokenContoller into your app automatically.
 
-*	Facebook integration.
+*	Facebook authentication integration.
 
 *	Also, **Swagger UI** integration!
 
