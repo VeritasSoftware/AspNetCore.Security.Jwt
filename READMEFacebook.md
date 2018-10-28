@@ -82,6 +82,8 @@ You will have to obtain a Facebook **User Access Token** (see Appendix A) and pa
 
 If authenticated by Facebook, you will get a JWT bearer token back.
 
+![Facebook Swagger UI integration](https://github.com/VeritasSoftware/AspNetCore.Security.Jwt/blob/master/FacebookSwaggerIntegration.jpg)
+
 ## Appendix A
 
 [**To obtain a Facebook User Access Token**](https://developers.facebook.com/docs/facebook-login/access-tokens/)
