@@ -4,7 +4,8 @@ The out of the box **FacebookAuthenticator** is automatically wired up for depen
 
 Note:- You can inject ILogger\<FacebookAuthenticator\>, if you want logging inside the FacebookAuthenticator.
 
-This handles the authentication of your Facebook **User Access Token** by Facebook.
+This handles the authentication of your Facebook **User Access Token**  (see Appendix A) by Facebook.
+
 
 ## 2. In your Startup.cs
 
@@ -71,12 +72,16 @@ This handles the authentication of your Facebook **User Access Token** by Facebo
 
 The out of the box **FacebookController** issues the JWT token.
 
-The **FacebookContoller** has a POST Method (/facebook) which you can call with a Facebook **User Access Token**.
+The **FacebookContoller** has a POST Method (/facebook) which you can call with a Facebook **User Access Token**  (see Appendix A).
 
 ## Swagger UI integration
 
 You will get a **Facebook endpoint (/facebook)** automatically in Swagger UI.
 
-You will have to obtain a Facebook **User Access Token** and pass that to the Facebook endpoint.
+You will have to obtain a Facebook **User Access Token** (see Appendix A) and pass that to the Facebook endpoint.
 
 If authenticated by Facebook, you will get a JWT bearer token back.
+
+## Appendix A
+
+[**To obtain a Facebook User Access Token**](https://developers.facebook.com/docs/facebook-login/access-tokens/)
