@@ -60,7 +60,10 @@ This handles the authentication of your Facebook **User Access Token**  (see App
     "Secret": "a secret that needs to be at least 16 characters long",
     "Issuer": "your app",
     "Audience": "the client of your app",
-    "TokenExpiryInHours" :  2
+    "IdType": "Name",
+    "TokenExpiryInHours": 1.2,
+    "AppId": "Your facebook app id",
+    "AppSecret": "Your facebook app secret"
   },
   .
   .
@@ -73,6 +76,8 @@ This handles the authentication of your Facebook **User Access Token**  (see App
 The out of the box **FacebookController** issues the JWT token.
 
 The **FacebookContoller** has a POST Method (/facebook) which you can call with a Facebook **User Access Token**  (see Appendix A).
+
+After authentication by Facebook, a JWT bearer token is issued.
 
 ## Swagger UI integration
 
