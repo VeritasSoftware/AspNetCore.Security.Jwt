@@ -189,6 +189,71 @@ Then you enter the token into the Value field after clicking on the Authorize bu
 
 Then, you can make calls to all secured endpoints (marked with Authorize attribute).
 
+## Using multiple Authentication
+
+You can use multiple authentications in your app.
+
+*	Default
+
+**OR**
+
+*	Custom User model
+
+**AND**
+
+*	Facebook
+
+```C#
+        public void ConfigureServices(IServiceCollection services)
+        {
+            .
+            .
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info { Title = "XXX API", Version = "v1" });
+            });
+
+			//Default Auth + Facebook
+            //services.AddSecurity<Authenticator>(this.Configuration, true)
+            //        .AddFacebookSecurity(this.Configuration, builder =>
+            //            builder.AddClaim("FacebookUser", userModel => userModel.UserAccessToken)
+            //        , true);;
+            //services.AddMvc().AddSecurity().AddFacebookSecurity();
+
+			//OR
+
+			//Custom User model auth + Facebook
+            services
+                 .AddSecurity<Authenticator, UserModel>(this.Configuration, builder =>
+                      builder.AddClaim(IdType.Name, userModel => userModel.Id)
+                           .AddClaim(IdType.Role, userModel => userModel.Role)
+                           .AddClaim("DOB", userModel => userModel.DOB.ToShortDateString())
+                 , true)
+                 .AddFacebookSecurity(this.Configuration, builder =>
+                      builder.AddClaim("FacebookUser", userModel => userModel.UserAccessToken)
+                 , true);
+
+            services.AddMvc().AddSecurity<UserModel>().AddFacebookSecurity();
+        }
+
+        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        {
+            .
+            .
+            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), 
+            // specifying the Swagger JSON endpoint.
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "XXX API V1");
+            });
+
+            app.UseSecurity(true);
+
+            app.UseMvc();
+        }
+```
+
 ## Appendix A
 
 **IdType** is an enum.
