@@ -254,6 +254,10 @@ You can use multiple authentications in your app.
         }
 ```
 
+In Swagger UI, you will see multiple endpoints:
+
+![Multiple Authorizations](https://github.com/VeritasSoftware/AspNetCore.Security.Jwt/blob/master/MultipleAuth.jpg)
+
 ## Appendix A
 
 **IdType** is an enum.

@@ -19,6 +19,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "images", "images", "{4A15B3
 		AuthorizationHeader.jpg = AuthorizationHeader.jpg
 		AvailableAuthorizations.jpg = AvailableAuthorizations.jpg
 		FacebookSwaggerIntegration.jpg = FacebookSwaggerIntegration.jpg
+		MultipleAuth.jpg = MultipleAuth.jpg
 		SwaggerIntegration.jpg = SwaggerIntegration.jpg
 		TokenRequest.jpg = TokenRequest.jpg
 	EndProjectSection
