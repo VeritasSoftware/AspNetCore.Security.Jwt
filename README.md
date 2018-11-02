@@ -213,16 +213,16 @@ You can use multiple authentications in your app.
                 c.SwaggerDoc("v1", new Info { Title = "XXX API", Version = "v1" });
             });
 
-			//Default Auth + Facebook
+            //Default Auth + Facebook
             //services.AddSecurity<Authenticator>(this.Configuration, true)
             //        .AddFacebookSecurity(this.Configuration, builder =>
             //            builder.AddClaim("FacebookUser", userModel => userModel.UserAccessToken)
             //        , true);;
             //services.AddMvc().AddSecurity().AddFacebookSecurity();
 
-			//OR
+            //OR
 
-			//Custom User model auth + Facebook
+            //Custom User model auth + Facebook
             services
                  .AddSecurity<Authenticator, UserModel>(this.Configuration, builder =>
                       builder.AddClaim(IdType.Name, userModel => userModel.Id)
