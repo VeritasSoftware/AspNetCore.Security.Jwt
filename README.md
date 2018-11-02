@@ -226,8 +226,8 @@ You can use multiple authentications in your app.
             services
                  .AddSecurity<Authenticator, UserModel>(this.Configuration, builder =>
                       builder.AddClaim(IdType.Name, userModel => userModel.Id)
-                           .AddClaim(IdType.Role, userModel => userModel.Role)
-                           .AddClaim("DOB", userModel => userModel.DOB.ToShortDateString())
+                             .AddClaim(IdType.Role, userModel => userModel.Role)
+                             .AddClaim("DOB", userModel => userModel.DOB.ToShortDateString())
                  , true)
                  .AddFacebookSecurity(this.Configuration, builder =>
                       builder.AddClaim("FacebookUser", userModel => userModel.UserAccessToken)
