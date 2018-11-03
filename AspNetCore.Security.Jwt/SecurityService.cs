@@ -10,7 +10,7 @@
     /// <summary>
     /// SecurityService class
     /// </summary>
-    public class SecurityService : ISecurityService
+    internal class SecurityService : ISecurityService
     {
         private readonly SecuritySettings securitySettings;
         const double DEFAULT_TOKEN_EXPIRY_IN_HOURS = 1;
@@ -59,7 +59,7 @@
     /// Generic SecurityService class
     /// </summary>
     /// <typeparam name="TUserModel">The User Model</typeparam>
-    public class SecurityService<TUserModel> : ISecurityService<TUserModel>
+    internal class SecurityService<TUserModel> : ISecurityService<TUserModel>
         where TUserModel: class, IAuthenticationUser
     {
         private readonly BaseSecuritySettings securitySettings;
