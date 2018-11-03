@@ -58,12 +58,12 @@
     /// <summary>
     /// Generic SecurityService class
     /// </summary>
-    /// <typeparam name="T">The User Model</typeparam>
-    public class SecurityService<T> : ISecurityService<T>
-        where T: class, IAuthenticationUser
+    /// <typeparam name="TUserModel">The User Model</typeparam>
+    public class SecurityService<TUserModel> : ISecurityService<TUserModel>
+        where TUserModel: class, IAuthenticationUser
     {
         private readonly BaseSecuritySettings securitySettings;
-        private Action<IIdTypeBuilder<T>> addClaims;
+        private Action<IIdTypeBuilder<TUserModel>> addClaims;
         const double DEFAULT_TOKEN_EXPIRY_IN_HOURS = 1;
 
         public SecurityService(BaseSecuritySettings securitySettings)
@@ -71,20 +71,20 @@
             this.securitySettings = securitySettings;
         }
 
-        public SecurityService(BaseSecuritySettings securitySettings, Action<IIdTypeBuilder<T>> addClaims)
+        public SecurityService(BaseSecuritySettings securitySettings, Action<IIdTypeBuilder<TUserModel>> addClaims)
         {
             this.securitySettings = securitySettings;
             this.addClaims = addClaims;
         }
 
-        public string GenerateToken(T user)
+        public string GenerateToken(TUserModel user)
         {
             if (user == null)
                 throw new ArgumentNullException(nameof(user));
 
             var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(this.securitySettings.Secret));
 
-            var builder = new IdTypeBuilder<T>(user);
+            var builder = new IdTypeBuilder<TUserModel>(user);
 
             this.addClaims(builder);
 

@@ -9,7 +9,7 @@ namespace AspNetCore.Security.Jwt
     /// </summary>
     /// <typeparam name="TUserModel">The custom User model</typeparam>
     public interface IIdTypeBuilder<TUserModel>
-        where TUserModel : IAuthenticationUser
+        where TUserModel : class, IAuthenticationUser
     {
         IIdTypeBuilder<TUserModel> AddClaim(string type, string value);
 
