@@ -12,7 +12,7 @@
     <PackageProjectUrl>https://github.com/VeritasSoftware/AspNetCore.Security.Jwt</PackageProjectUrl>
     <PackageTags>AspNetCore.Security.Jwt JWT Bearer Token Security Swagger UI Facebook integration ASP .NET Core 2.0+ app</PackageTags>
     <RepositoryUrl>https://github.com/VeritasSoftware/AspNetCore.Security.Jwt</RepositoryUrl>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <PackageReleaseNotes>Added custom User model auth support. Also added Facebook auth support.</PackageReleaseNotes>
   </PropertyGroup>  
   
