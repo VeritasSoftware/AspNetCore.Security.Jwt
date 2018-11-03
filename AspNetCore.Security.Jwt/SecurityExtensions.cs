@@ -71,8 +71,10 @@
             configuration.Bind("SecuritySettings", securitySettings);
             IdTypeHelpers.LoadClaimTypes();
 
-            services.AddSingleton(securitySettings);            
-            services.AddScoped<ISecurityService<TUserModel>>(x => new SecurityService<TUserModel>(securitySettings, addClaims));
+            services.AddSingleton(securitySettings);
+            services.AddSingleton<BaseSecuritySettings>(securitySettings);
+            services.AddSingleton<Action<IIdTypeBuilder<TUserModel>>>(x => addClaims);
+            services.AddScoped<ISecurityService<TUserModel>, SecurityService<TUserModel>>();
             services.AddScoped<IAuthentication<TUserModel>, TAuthenticator>();
 
             if (addSwaggerSecurity)
@@ -107,7 +109,9 @@
             IdTypeHelpers.LoadClaimTypes();
 
             services.AddSingleton(securitySettings);
-            services.AddScoped<ISecurityService<FacebookAuthModel>>(x => new SecurityService<FacebookAuthModel>(securitySettings, addClaims));            
+            services.AddSingleton<BaseSecuritySettings>(securitySettings);
+            services.AddSingleton<Action<IIdTypeBuilder<FacebookAuthModel>>>(x => addClaims);
+            services.AddScoped<ISecurityService<FacebookAuthModel>, SecurityService<FacebookAuthModel>>();           
             services.AddScoped<IAuthentication<FacebookAuthModel>, FacebookAuthenticator>();
 
             if (addSwaggerSecurity)
