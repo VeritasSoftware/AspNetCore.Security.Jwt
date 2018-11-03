@@ -108,7 +108,7 @@
 
             services.AddSingleton(securitySettings);
             services.AddScoped<ISecurityService<FacebookAuthModel>>(x => new SecurityService<FacebookAuthModel>(securitySettings, addClaims));            
-            services.AddScoped<IAuthentication<FacebookAuthModel>>(x => new FacebookAuthenticator(securitySettings));
+            services.AddScoped<IAuthentication<FacebookAuthModel>, FacebookAuthenticator>();
 
             if (addSwaggerSecurity)
             {
@@ -122,7 +122,7 @@
             }
 
             return services;
-        }
+        }        
 
         private static IServiceCollection AddJwtBearerScheme(this IServiceCollection services, BaseSecuritySettings securitySettings)
         {
