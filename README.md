@@ -3,6 +3,8 @@
 
 [**Nuget package**](https://www.nuget.org/packages/AspNetCore.Security.Jwt)
 
+[**Sample API (Microservice) project secured by package**](https://github.com/VeritasSoftware/AspNetCore.Security.Jwt.Microservice)
+
 **The package:**
 
 *	Makes adding **Jwt Bearer Token Security** to your **ASP NET Core 2.0 app** a breeze!!
@@ -14,8 +16,6 @@
 *	**Facebook** authentication integration.
 
 *	Also, **Swagger UI** integration!
-
-[**Sample API (Microservice) project secured by package**](https://github.com/VeritasSoftware/AspNetCore.Security.Jwt.Microservice)
 
 **Add a reference to the package and...**
 
