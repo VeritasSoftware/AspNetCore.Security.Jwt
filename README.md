@@ -15,6 +15,8 @@
 
 *	Also, **Swagger UI** integration!
 
+![**Sample API (Microservice) project secured by package**](https://github.com/VeritasSoftware/AspNetCore.Security.Jwt.Microservice)
+
 **Add a reference to the package and...**
 
 ## A. Use custom User model authentication
