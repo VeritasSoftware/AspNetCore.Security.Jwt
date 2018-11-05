@@ -62,7 +62,7 @@
         /// <returns>The services collection</returns>
         public static IServiceCollection AddSecurity<TAuthenticator, TUserModel>(this IServiceCollection services,
                                                                 IConfiguration configuration,
-                                                                Action<IIdTypeBuilder<TUserModel>> addClaims,
+                                                                Action<IIdTypeBuilder<TUserModel>> addClaims = null,
                                                                 bool addSwaggerSecurity = false)
             where TAuthenticator : class, IAuthentication<TUserModel>
             where TUserModel : class, IAuthenticationUser
@@ -73,7 +73,10 @@
 
             services.AddSingleton(securitySettings);
             services.AddSingleton<BaseSecuritySettings>(securitySettings);
-            services.AddSingleton<Action<IIdTypeBuilder<TUserModel>>>(x => addClaims);
+            if (addClaims != null)
+            {
+                services.AddSingleton<Action<IIdTypeBuilder<TUserModel>>>(x => addClaims);
+            }
             services.AddScoped<ISecurityService<TUserModel>, SecurityService<TUserModel>>();
             services.AddScoped<IAuthentication<TUserModel>, TAuthenticator>();
 
@@ -101,7 +104,7 @@
         /// <returns>The services collection</returns>
         public static IServiceCollection AddFacebookSecurity(this IServiceCollection services,
                                                                 IConfiguration configuration,
-                                                                Action<IIdTypeBuilder<FacebookAuthModel>> addClaims,
+                                                                Action<IIdTypeBuilder<FacebookAuthModel>> addClaims = null,
                                                                 bool addSwaggerSecurity = false)
         {
             var securitySettings = new FacebookSecuritySettings();
@@ -110,7 +113,10 @@
 
             services.AddSingleton(securitySettings);
             services.AddSingleton<BaseSecuritySettings>(securitySettings);
-            services.AddSingleton<Action<IIdTypeBuilder<FacebookAuthModel>>>(x => addClaims);
+            if (addClaims != null)
+            {
+                services.AddSingleton<Action<IIdTypeBuilder<FacebookAuthModel>>>(x => addClaims);
+            }
             services.AddScoped<ISecurityService<FacebookAuthModel>, SecurityService<FacebookAuthModel>>();           
             services.AddScoped<IAuthentication<FacebookAuthModel>, FacebookAuthenticator>();
 

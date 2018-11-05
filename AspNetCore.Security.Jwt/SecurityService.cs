@@ -66,7 +66,7 @@
         private Action<IIdTypeBuilder<TUserModel>> addClaims;
         const double DEFAULT_TOKEN_EXPIRY_IN_HOURS = 1;        
 
-        public SecurityService(BaseSecuritySettings securitySettings, Action<IIdTypeBuilder<TUserModel>> addClaims)
+        public SecurityService(BaseSecuritySettings securitySettings, Action<IIdTypeBuilder<TUserModel>> addClaims = null)
         {
             this.securitySettings = securitySettings;
             this.addClaims = addClaims;
@@ -81,14 +81,20 @@
 
             var builder = new IdTypeBuilder<TUserModel>(user);
 
-            this.addClaims(builder);
+            if (addClaims != null)
+            {
+                this.addClaims(builder);
+            }
 
             var claims = new List<Claim> {
                 new Claim(JwtRegisteredClaimNames.Exp, $"{new DateTimeOffset(DateTime.Now.AddHours(this.securitySettings.TokenExpiryInHours ?? DEFAULT_TOKEN_EXPIRY_IN_HOURS)).ToUnixTimeSeconds()}"),
                 new Claim(JwtRegisteredClaimNames.Nbf, $"{new DateTimeOffset(DateTime.Now).ToUnixTimeSeconds()}")
             };
 
-            claims.AddRange(builder.ToClaims());
+            if (addClaims != null)
+            {
+                claims.AddRange(builder.ToClaims());
+            }
 
             var token = new JwtSecurityToken(
                 issuer: this.securitySettings.Issuer,
