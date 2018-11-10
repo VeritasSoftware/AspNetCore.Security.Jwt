@@ -134,7 +134,7 @@
             return services;
         }        
 
-        private static IServiceCollection AddJwtBearerScheme(this IServiceCollection services, BaseSecuritySettings securitySettings)
+        internal static IServiceCollection AddJwtBearerScheme(this IServiceCollection services, BaseSecuritySettings securitySettings)
         {
             services.AddAuthentication(options => {
                 options.DefaultAuthenticateScheme = "JwtBearer";

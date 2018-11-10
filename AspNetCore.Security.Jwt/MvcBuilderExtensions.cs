@@ -12,9 +12,9 @@
     {
         const string ASSEMBLY_NAME = "AspNetCore.Security.Jwt";
 
-        private static bool IsDefaultSecurityAdded { get; set; }
-        private static bool IsUserModelSecurityAdded { get; set; }
-        private static bool IsFacebookSecurityAdded { get; set; }
+        internal static bool IsDefaultSecurityAdded { get; set; }
+        internal static bool IsUserModelSecurityAdded { get; set; }
+        internal static bool IsFacebookSecurityAdded { get; set; }
 
         /// <summary>
         /// Add Security extension. Adds Security assembly for default Authentication.
