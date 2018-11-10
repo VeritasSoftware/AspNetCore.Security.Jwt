@@ -12,6 +12,7 @@
     {
         const string ASSEMBLY_NAME = "AspNetCore.Security.Jwt";
 
+        private static bool IsDefaultSecurityAdded { get; set; }
         private static bool IsUserModelSecurityAdded { get; set; }
         private static bool IsFacebookSecurityAdded { get; set; }
 
@@ -22,13 +23,11 @@
         /// <returns><see cref="IMvcBuilder"/></returns>
         public static IMvcBuilder AddSecurity(this IMvcBuilder mvcBuilder)
         {
-            mvcBuilder.AddApplicationPart(Assembly.Load(new AssemblyName(ASSEMBLY_NAME)))
-                      .ConfigureApplicationPartManager(apm =>
-                                   apm.FeatureProviders.Add(new RemoveControllerFeatureProvider()))
-                      .ConfigureApplicationPartManager(apm =>
-                                   apm.FeatureProviders.Add(new TokenControllerFeatureProvider()))
-                      .ConfigureApplicationPartManager(IsFacebookSecurityAdded, apm =>
-                                   apm.FeatureProviders.Add(new FacebookControllerFeatureProvider() { AddFacebookController = true }));
+            mvcBuilder.SecurityInit();
+
+            mvcBuilder.ConfigureApplicationPartManager(!IsDefaultSecurityAdded, apm => apm.FeatureProviders.Add(new TokenControllerFeatureProvider()));                 
+
+            IsDefaultSecurityAdded = true;
 
             return mvcBuilder;
         }
@@ -42,16 +41,9 @@
         public static IMvcBuilder AddSecurity<TUserModel>(this IMvcBuilder mvcBuilder)
             where TUserModel: class, IAuthenticationUser            
         {
-            if (!IsUserModelSecurityAdded)
-            {
-                mvcBuilder.AddApplicationPart(Assembly.Load(new AssemblyName(ASSEMBLY_NAME)))
-                          .ConfigureApplicationPartManager(apm =>
-                                   apm.FeatureProviders.Add(new RemoveControllerFeatureProvider()))
-                          .ConfigureApplicationPartManager(apm =>
-                                   apm.FeatureProviders.Add(new GenericTokenControllerFeatureProvider<TUserModel>()))
-                          .ConfigureApplicationPartManager(IsFacebookSecurityAdded, apm =>
-                                   apm.FeatureProviders.Add(new FacebookControllerFeatureProvider() { AddFacebookController = true }));
-            }
+            mvcBuilder.SecurityInit();
+
+            mvcBuilder.ConfigureApplicationPartManager(!IsUserModelSecurityAdded, apm => apm.FeatureProviders.Add(new GenericTokenControllerFeatureProvider<TUserModel>()));            
             
             IsUserModelSecurityAdded = true;            
 
@@ -65,21 +57,16 @@
         /// <returns><see cref="IMvcBuilder"/></returns>
         public static IMvcBuilder AddFacebookSecurity(this IMvcBuilder mvcBuilder)
         {
-            if (!IsFacebookSecurityAdded)
-            {
-                mvcBuilder.AddApplicationPart(Assembly.Load(new AssemblyName(ASSEMBLY_NAME)))
-                          .ConfigureApplicationPartManager(apm =>
-                                   apm.FeatureProviders.Add(new RemoveControllerFeatureProvider()))
-                          .ConfigureApplicationPartManager(apm =>
-                                   apm.FeatureProviders.Add(new FacebookControllerFeatureProvider() { AddFacebookController = true }));
-            }
+            mvcBuilder.SecurityInit();
+
+            mvcBuilder.ConfigureApplicationPartManager(!IsFacebookSecurityAdded, apm => apm.FeatureProviders.Add(new FacebookControllerFeatureProvider() { AddFacebookController = true }));            
 
             IsFacebookSecurityAdded = true;
 
             return mvcBuilder;
-        }        
+        }
 
-        public static IMvcBuilder ConfigureApplicationPartManager(this IMvcBuilder builder, bool addIf, Action<ApplicationPartManager> setupAction)
+        internal static IMvcBuilder ConfigureApplicationPartManager(this IMvcBuilder builder, bool addIf, Action<ApplicationPartManager> setupAction)
         {
             if (addIf)
             {
@@ -87,6 +74,18 @@
             }
 
             return builder;
+        }
+
+        internal static IMvcBuilder SecurityInit(this IMvcBuilder mvcBuilder)
+        {
+            if (!IsDefaultSecurityAdded && !IsUserModelSecurityAdded && !IsFacebookSecurityAdded)
+            {
+                mvcBuilder.AddApplicationPart(Assembly.Load(new AssemblyName(ASSEMBLY_NAME)))
+                          .ConfigureApplicationPartManager(apm =>
+                                         apm.FeatureProviders.Add(new RemoveControllerFeatureProvider()));
+            }
+
+            return mvcBuilder;
         }
     }
 }
