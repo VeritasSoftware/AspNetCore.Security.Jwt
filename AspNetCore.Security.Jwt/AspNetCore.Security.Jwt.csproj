@@ -5,7 +5,7 @@
 
     <PackageId>AspNetCore.Security.Jwt</PackageId>
     <Description>Package makes integrating JWT Bearer Token Security to your ASP .NET Core 2.0+ app a breeze!! Facebook auth integration. Also, Swagger UI integration!</Description>
-    <Version>1.2.0</Version>
+    <Version>1.3.0</Version>
     <Authors>Shantanu</Authors>
     <Company>Veritas Software</Company>
     <Copyright>Veritas Software 2018</Copyright>
