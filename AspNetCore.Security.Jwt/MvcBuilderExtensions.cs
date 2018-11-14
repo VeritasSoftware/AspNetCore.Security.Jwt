@@ -23,9 +23,8 @@
         /// <returns><see cref="IMvcBuilder"/></returns>
         public static IMvcBuilder AddSecurity(this IMvcBuilder mvcBuilder)
         {
-            mvcBuilder.SecurityInit();
-
-            mvcBuilder.ConfigureApplicationPartManager(!IsDefaultSecurityAdded, apm => apm.FeatureProviders.Add(new TokenControllerFeatureProvider()));                 
+            mvcBuilder.SecurityInit()
+                      .ConfigureApplicationPartManager(!IsDefaultSecurityAdded, apm => apm.FeatureProviders.Add(new TokenControllerFeatureProvider()));                 
 
             IsDefaultSecurityAdded = true;
 
@@ -41,9 +40,8 @@
         public static IMvcBuilder AddSecurity<TUserModel>(this IMvcBuilder mvcBuilder)
             where TUserModel: class, IAuthenticationUser            
         {
-            mvcBuilder.SecurityInit();
-
-            mvcBuilder.ConfigureApplicationPartManager(!IsUserModelSecurityAdded, apm => apm.FeatureProviders.Add(new GenericTokenControllerFeatureProvider<TUserModel>()));            
+            mvcBuilder.SecurityInit()
+                      .ConfigureApplicationPartManager(!IsUserModelSecurityAdded, apm => apm.FeatureProviders.Add(new GenericTokenControllerFeatureProvider<TUserModel>()));            
             
             IsUserModelSecurityAdded = true;            
 
@@ -57,9 +55,8 @@
         /// <returns><see cref="IMvcBuilder"/></returns>
         public static IMvcBuilder AddFacebookSecurity(this IMvcBuilder mvcBuilder)
         {
-            mvcBuilder.SecurityInit();
-
-            mvcBuilder.ConfigureApplicationPartManager(!IsFacebookSecurityAdded, apm => apm.FeatureProviders.Add(new FacebookControllerFeatureProvider() { AddFacebookController = true }));            
+            mvcBuilder.SecurityInit()
+                      .ConfigureApplicationPartManager(!IsFacebookSecurityAdded, apm => apm.FeatureProviders.Add(new FacebookControllerFeatureProvider() { AddFacebookController = true }));            
 
             IsFacebookSecurityAdded = true;
 
