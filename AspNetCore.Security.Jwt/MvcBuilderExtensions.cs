@@ -24,7 +24,8 @@
         public static IMvcBuilder AddSecurity(this IMvcBuilder mvcBuilder)
         {
             mvcBuilder.SecurityInit()
-                      .ConfigureApplicationPartManager(!IsDefaultSecurityAdded, apm => apm.FeatureProviders.Add(new TokenControllerFeatureProvider()));                 
+                      .ConfigureApplicationPartManager(!IsDefaultSecurityAdded && !IsUserModelSecurityAdded, 
+                                                            apm => apm.FeatureProviders.Add(new TokenControllerFeatureProvider()));                 
 
             IsDefaultSecurityAdded = true;
 
@@ -41,7 +42,8 @@
             where TUserModel: class, IAuthenticationUser            
         {
             mvcBuilder.SecurityInit()
-                      .ConfigureApplicationPartManager(!IsUserModelSecurityAdded, apm => apm.FeatureProviders.Add(new GenericTokenControllerFeatureProvider<TUserModel>()));            
+                      .ConfigureApplicationPartManager(!IsDefaultSecurityAdded && !IsUserModelSecurityAdded, 
+                                                            apm => apm.FeatureProviders.Add(new GenericTokenControllerFeatureProvider<TUserModel>()));            
             
             IsUserModelSecurityAdded = true;            
 
@@ -56,7 +58,8 @@
         public static IMvcBuilder AddFacebookSecurity(this IMvcBuilder mvcBuilder)
         {
             mvcBuilder.SecurityInit()
-                      .ConfigureApplicationPartManager(!IsFacebookSecurityAdded, apm => apm.FeatureProviders.Add(new FacebookControllerFeatureProvider() { AddFacebookController = true }));            
+                      .ConfigureApplicationPartManager(!IsFacebookSecurityAdded, 
+                                                            apm => apm.FeatureProviders.Add(new FacebookControllerFeatureProvider() { AddFacebookController = true }));            
 
             IsFacebookSecurityAdded = true;
 
