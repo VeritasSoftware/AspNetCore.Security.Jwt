@@ -11,10 +11,10 @@ namespace AspNetCore.Security.Jwt.Facebook
     /// </summary>
     internal class FacebookAuthenticator : IAuthentication<FacebookAuthModel>
     {
-        private readonly FacebookSecuritySettings facebookSecuritySettings;
+        private readonly SecuritySettings facebookSecuritySettings;
         private readonly ILogger<FacebookAuthenticator> logger;
 
-        public FacebookAuthenticator(FacebookSecuritySettings facebookSecuritySettings, ILogger<FacebookAuthenticator> logger = null)
+        public FacebookAuthenticator(SecuritySettings facebookSecuritySettings, ILogger<FacebookAuthenticator> logger = null)
         {
             this.facebookSecuritySettings = facebookSecuritySettings;
             this.logger = logger;

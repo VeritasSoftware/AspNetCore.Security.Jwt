@@ -8,7 +8,7 @@
 
         public string Audience { get; set; }
 
-        public double? TokenExpiryInHours { get; set; }
+        public double? TokenExpiryInHours { get; set; }        
 
         public AzureADSecuritySettings AzureADSecuritySettings { get; set; }
     }
@@ -16,6 +16,10 @@
     public class SecuritySettings : BaseSecuritySettings
     {        
         public IdType IdType { get; set; }
+
+        public string AppId { get; set; }
+
+        public string AppSecret { get; set; }
     }
 
     public class FacebookSecuritySettings : BaseSecuritySettings
