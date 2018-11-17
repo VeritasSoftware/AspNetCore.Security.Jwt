@@ -23,12 +23,7 @@ namespace AspNetCore.Security.Jwt.Facebook
         public async Task<AzureADResponseModel> IsValidUser(AzureADAuthModel user)
         {
             try
-            {
-                if (this.logger != null)
-                {
-                    logger.LogInformation($"Azure AD User Id: {user.Id}");
-                }
-                
+            {                
                 string authority = String.Format(this.azureSecuritySettings.AADInstance, this.azureSecuritySettings.Tenant);
 
                 AuthenticationContext authContext = new AuthenticationContext(authority);
