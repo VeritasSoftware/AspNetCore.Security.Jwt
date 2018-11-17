@@ -1,10 +1,9 @@
-﻿using AspNetCore.Security.Jwt.AzureAD;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Clients.ActiveDirectory;
 using System;
 using System.Threading.Tasks;
 
-namespace AspNetCore.Security.Jwt.Facebook
+namespace AspNetCore.Security.Jwt.AzureAD
 {
     /// <summary>
     /// AzureAuthenticator class - Authericates the user with Azure AD and returns an access token
