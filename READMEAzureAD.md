@@ -10,6 +10,7 @@ Your Azure AD Security settings (Step 3) are specified in you API. These are use
 
 It returns the token issued by the Azure AD Security to the client.
 
+## 2. In your Startup.cs
 
 ```C#
 	using AspNetCore.Security.Jwt;
@@ -65,15 +66,24 @@ It returns the token issued by the Azure AD Security to the client.
       "Tenant": "<B2BADTenant>.onmicrosoft.com",
       "ResourceId": "https://<B2BADTenant>.onmicrosoft.com/<azureappname>",
       "ClientId": "<client-id-web-add>",
-      "ClientSecret": "<client-secret>"
+      "ClientSecret": "<client-secret>",
+      "APIKey": "c1bba8a7-8a68-4697-82a6-33b4563ca895"
     }
   },
 }
 ```
-Replace \<B2BADTenant\>, \<azureappname\>, \<client-id-web-add\>, \<client-secret\> in the settings above.
+Replace \<B2BADTenant\>, \<azureappname\>, \<client-id-web-add\>, \<client-secret\> in the settings above from your Azure configuration.
 
+The APIKey can be anything (like a GUID).
+This is used to access the Azure endpoint of your API. It is not an Azure config item.
 
-When the Azure endpoint is called, does the Azure AD authenication and returns the JWT Bearer Token (issued by Azure) to the client.
+## 2. Accessing Azure endpoint in your API
+
+In the Settings (Step 3), the API Key is specified for accessing the Azure endpoint.
+
+The client has to POST to the Azure endpoint with this API Key.
+
+When the Azure endpoint is called, it does the Azure AD authenication and returns the JWT Bearer Token (issued by Azure) to the client.
 
 This token can be used to access your APIs endpoints secured by Azure AD Security.
 

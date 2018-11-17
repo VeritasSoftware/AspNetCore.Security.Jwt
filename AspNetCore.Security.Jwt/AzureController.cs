@@ -21,11 +21,20 @@ namespace AspNetCore.Security.Jwt
 
         [Route("/azure")]
         [HttpPost]
-        public async Task<IActionResult> Create()
+        public async Task<IActionResult> Create([FromBody] AzureADAuthModel user)
         {
-            var response = await this.authentication.IsValidUser(null);
+            if (user == null)
+            {
+                throw new ArgumentNullException(nameof(user));
+            }
+            if (string.IsNullOrEmpty(user.APIKey))
+            {
+                throw new ArgumentNullException(nameof(user.APIKey));
+            }
 
-            if (!string.IsNullOrEmpty(response.AccessToken))
+            var response = await this.authentication.IsValidUser(user);
+
+            if (response.IsAuthenticated && !string.IsNullOrEmpty(response.AccessToken))
                 return new ObjectResult(response.AccessToken);
 
             return BadRequest();

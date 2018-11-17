@@ -24,6 +24,11 @@ namespace AspNetCore.Security.Jwt.Facebook
         {
             try
             {                
+                if (string.Compare(user.APIKey.Trim(), this.azureSecuritySettings.APIKey.Trim()) != 0)
+                {
+                    return new AzureADResponseModel { IsAuthenticated = false };
+                }
+
                 string authority = String.Format(this.azureSecuritySettings.AADInstance, this.azureSecuritySettings.Tenant);
 
                 AuthenticationContext authContext = new AuthenticationContext(authority);
@@ -31,7 +36,7 @@ namespace AspNetCore.Security.Jwt.Facebook
                 var response = await authContext.AcquireTokenAsync(this.azureSecuritySettings.ResourceId, new ClientCredential(
                                                                         this.azureSecuritySettings.ClientId, this.azureSecuritySettings.ClientSecret));
 
-                return new AzureADResponseModel { AccessToken = response.AccessToken };
+                return new AzureADResponseModel { IsAuthenticated = true, AccessToken = response.AccessToken };
             }
             catch (Exception ex)
             {
