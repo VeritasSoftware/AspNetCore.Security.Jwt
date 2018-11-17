@@ -221,20 +221,21 @@ You can use multiple authentications in your app.
                 c.SwaggerDoc("v1", new Info { Title = "XXX API", Version = "v1" });
             });
 
-            //Default Auth + Facebook
-            //services.AddSecurity<Authenticator>(this.Configuration, true)
-            //        .AddFacebookSecurity(this.Configuration, builder =>
-            //            builder.AddClaim("FacebookUser", userModel => userModel.UserAccessToken)
-            //        , true)
-            //        .AddAzureADSecurity(this.Configuration, true);
-            //services.AddMvc().AddSecurity().AddFacebookSecurity().AddAzureADSecurity();
-
-            //OR
-
-            //Custom User model auth + Azure AD + Facebook
             var securitySettings = new SecuritySettings();
             this.Configuration.Bind("SecuritySettings", securitySettings);
 
+            //Default Auth + Azure AD + Facebook
+            //services
+            //        .AddSecurity(securitySettings)
+            //        .AddSecurity<Authenticator>(true)
+            //        .AddFacebookSecurity(builder =>
+            //            builder.AddClaim("FacebookUser", userModel => userModel.UserAccessToken)
+            //        , true)
+            //        .AddAzureADSecurity(true);
+
+            //OR
+
+            //Custom User model auth + Azure AD + Facebook            
             services
                    .AddSecurity(securitySettings)
                    .AddSecurity<CustomAuthenticator, UserModel>(builder =>
