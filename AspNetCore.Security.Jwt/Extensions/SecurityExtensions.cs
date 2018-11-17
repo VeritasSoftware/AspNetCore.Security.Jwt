@@ -191,7 +191,7 @@
             return services;
         }
 
-        public static IAddSecurityBuilder AddSecuritySettings(this IServiceCollection services, SecuritySettings settings)
+        public static IAddSecurityBuilder AddSecurity(this IServiceCollection services, SecuritySettings settings)
         {
             securitySettings = settings;
             services.AddSingleton(securitySettings);            

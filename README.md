@@ -233,19 +233,19 @@ You can use multiple authentications in your app.
 
             //Custom User model auth + Azure AD + Facebook
             var securitySettings = new SecuritySettings();
-            Configuration.Bind("SecuritySettings", securitySettings);
+            this.Configuration.Bind("SecuritySettings", securitySettings);
 
             services
-                    .AddSecuritySettings(securitySettings)
-                    .AddSecurity<CustomAuthenticator, UserModel>(builder =>
-                        builder.AddClaim(IdType.Name, userModel => userModel.Id)
-                               .AddClaim(IdType.Role, userModel => userModel.Role)
-                               .AddClaim("DOB", userModel => userModel.DOB.ToShortDateString())
-                    , true)
-                    .AddFacebookSecurity(builder =>
-                        builder.AddClaim("FacebookUser", userModel => userModel.UserAccessToken.ToString())
-                    , true)
-                    .AddAzureADSecurity(true);
+                   .AddSecurity(securitySettings)
+                   .AddSecurity<CustomAuthenticator, UserModel>(builder =>
+                       builder.AddClaim(IdType.Name, userModel => userModel.Id)
+                              .AddClaim(IdType.Role, userModel => userModel.Role)
+                              .AddClaim("DOB", userModel => userModel.DOB.ToShortDateString())
+                   , true)
+                   .AddFacebookSecurity(builder =>
+                       builder.AddClaim("FacebookUser", userModel => userModel.UserAccessToken.ToString())
+                   , true)
+                   .AddAzureADSecurity(true);
 
             services.AddMvc().AddSecurity<UserModel>().AddFacebookSecurity().AddAzureADSecurity();
         }
