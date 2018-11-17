@@ -15,7 +15,6 @@
     public static class SecurityExtensions
     {
         private static bool IsJwtSchemeAdded = false;
-        private static bool IsSecuritySettingsAdded = false;
         private static SecuritySettings securitySettings;
 
         /// <summary>
@@ -49,42 +48,6 @@
                 services.AddJwtBearerScheme(securitySettings);
                 IsJwtSchemeAdded = true;
             }            
-
-            return services;
-        }
-
-        /// <summary>
-        /// Add Security extensions - Used to wire up the dependency injection
-        /// </summary>
-        /// <typeparam name="TAuthenticator">The authenticator - Used to authenticate the default authentication</typeparam>
-        /// <param name="services">The services collection</param>
-        /// <param name="addSwaggerSecurity">Enable security in Swagger UI</param>
-        /// <returns>The services collection</returns>
-        public static IServiceCollection AddSecurity<TAuthenticator>(this IServiceCollection services,
-                                                                        bool addSwaggerSecurity = false)
-            where TAuthenticator : class, IAuthentication
-        {
-            if (!IsSecuritySettingsAdded)
-            {
-                throw new Exception("use AddSecuritySettings to add your SecuritySettings.");
-            }
-
-            IdTypeHelpers.LoadClaimTypes();
-
-            services.AddSingleton(securitySettings);
-            services.AddScoped<ISecurityService, SecurityService>();
-            services.AddScoped<IAuthentication, TAuthenticator>();
-
-            if (addSwaggerSecurity)
-            {
-                services.AddSecureSwaggerDocumentation();
-            }
-
-            if (!IsJwtSchemeAdded)
-            {
-                services.AddJwtBearerScheme(securitySettings);
-                IsJwtSchemeAdded = true;
-            }
 
             return services;
         }
@@ -129,51 +92,6 @@
                 services.AddJwtBearerScheme(securitySettings);
                 IsJwtSchemeAdded = true;
             }            
-
-            return services;
-        }
-
-        /// <summary>
-        /// Add Security extensions - Used to wire up the dependency injection
-        /// </summary>
-        /// <typeparam name="TAuthenticator">The authenticator - Used to authenticate the custom User model</typeparam>
-        /// <typeparam name="TUserModel">The custom User model</typeparam>
-        /// <param name="services">The services collection</param>
-        /// <param name="addClaims">Add the Claims using the IdTypeBuilder (<see cref="IdTypeBuilder{TUserModel}"/>)</param>
-        /// <param name="addSwaggerSecurity">Enable security in Swagger UI</param>
-        /// <returns>The services collection</returns>
-        public static IServiceCollection AddSecurity<TAuthenticator, TUserModel>(this IServiceCollection services,
-                                                                Action<IIdTypeBuilder<TUserModel>> addClaims = null,
-                                                                bool addSwaggerSecurity = false)
-            where TAuthenticator : class, IAuthentication<TUserModel>
-            where TUserModel : class, IAuthenticationUser
-        {
-            if (!IsSecuritySettingsAdded)
-            {
-                throw new Exception("use AddSecuritySettings to add your SecuritySettings.");
-            }
-
-            IdTypeHelpers.LoadClaimTypes();
-
-            services.AddSingleton(securitySettings);
-            services.AddSingleton<BaseSecuritySettings>(securitySettings);
-            if (addClaims != null)
-            {
-                services.AddSingleton<Action<IIdTypeBuilder<TUserModel>>>(x => addClaims);
-            }
-            services.AddScoped<ISecurityService<TUserModel>, SecurityService<TUserModel>>();
-            services.AddScoped<IAuthentication<TUserModel>, TAuthenticator>();
-
-            if (addSwaggerSecurity)
-            {
-                services.AddSecureSwaggerDocumentation();
-            }
-
-            if (!IsJwtSchemeAdded)
-            {
-                services.AddJwtBearerScheme(securitySettings);
-                IsJwtSchemeAdded = true;
-            }
 
             return services;
         }
@@ -219,47 +137,6 @@
         }
 
         /// <summary>
-        /// Add Facebook security extension
-        /// </summary>
-        /// <param name="services">The services collection</param>
-        /// <param name="addClaims">Add the Claims using the IdTypeBuilder (<see cref="IdTypeBuilder{TUserModel}"/>)</param>
-        /// <param name="addSwaggerSecurity">Enable security in Swagger UI</param>
-        /// <returns>The services collection</returns>
-        public static IServiceCollection AddFacebookSecurity(this IServiceCollection services,
-                                                                Action<IIdTypeBuilder<FacebookAuthModel>> addClaims = null,
-                                                                bool addSwaggerSecurity = false)
-        {
-            if (!IsSecuritySettingsAdded)
-            {
-                throw new Exception("use AddSecuritySettings to add your SecuritySettings.");
-            }
-
-            IdTypeHelpers.LoadClaimTypes();
-
-            services.AddSingleton(securitySettings);
-            services.AddSingleton<BaseSecuritySettings>(securitySettings);
-            if (addClaims != null)
-            {
-                services.AddSingleton<Action<IIdTypeBuilder<FacebookAuthModel>>>(x => addClaims);
-            }
-            services.AddScoped<ISecurityService<FacebookAuthModel>, SecurityService<FacebookAuthModel>>();
-            services.AddScoped<IAuthentication<FacebookAuthModel>, FacebookAuthenticator>();
-
-            if (addSwaggerSecurity)
-            {
-                services.AddSecureSwaggerDocumentation();
-            }
-
-            if (!IsJwtSchemeAdded)
-            {
-                services.AddJwtBearerScheme(securitySettings);
-                IsJwtSchemeAdded = true;
-            }
-
-            return services;
-        }
-
-        /// <summary>
         /// Add Azure AD security extension
         /// </summary>
         /// <param name="services">The services collection</param>
@@ -284,35 +161,7 @@
             }            
 
             return services;
-        }
-
-        /// <summary>
-        /// Add Azure AD security extension
-        /// </summary>
-        /// <param name="services">The services collection</param>
-        /// <param name="addSwaggerSecurity">Enable security in Swagger UI</param>
-        /// <returns>The services collection</returns>
-        public static IServiceCollection AddAzureADSecurity(this IServiceCollection services,
-                                                        bool addSwaggerSecurity = false)
-        {
-            if (!IsSecuritySettingsAdded)
-            {
-                throw new Exception("use AddSecuritySettings to add your SecuritySettings.");
-            }
-
-            IdTypeHelpers.LoadClaimTypes();            
-
-            services.AddSingleton(securitySettings);
-            services.AddSingleton<AzureADSecuritySettings>(securitySettings.AzureADSecuritySettings);
-            services.AddScoped<IAuthentication<AzureADAuthModel, AzureADResponseModel>, AzureAuthenticator>();
-
-            if (addSwaggerSecurity)
-            {
-                services.AddSecureSwaggerDocumentation();
-            }
-
-            return services;
-        }
+        } 
 
         internal static IServiceCollection AddJwtBearerScheme(this IServiceCollection services, BaseSecuritySettings securitySettings)
         {
@@ -342,12 +191,14 @@
             return services;
         }
 
-        public static IServiceCollection AddSecuritySettings(this IServiceCollection services, SecuritySettings settings)
+        public static IAddSecurityBuilder AddSecuritySettings(this IServiceCollection services, SecuritySettings settings)
         {
             securitySettings = settings;
-            IsSecuritySettingsAdded = true;
+            services.AddSingleton(securitySettings);            
 
-            return services;
+            IAddSecurityBuilder addSecurityBuilder = new AddSecurityBuilder(securitySettings, IsJwtSchemeAdded, services);
+
+            return addSecurityBuilder;
         }        
 
         public static IApplicationBuilder UseSecurity(this IApplicationBuilder app, bool addSwaggerSecurity = false)
