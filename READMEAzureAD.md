@@ -1,4 +1,4 @@
-## 1. AzureAuthenticator
+## 1. Azure Authenticator
 
 The out of the box **AzureAuthenticator** is automatically wired up for dependency injection.
 
@@ -8,7 +8,7 @@ This handles the authentication of your  **Azure Active Directory (AD) account**
 
 Your Azure AD Security settings (Step 3) are specified in you API. These are used to automatically get a token from Azure.
 
-It returns the token issued by the Azure AD Security to the client.
+It returns the token issued by Azure to the client.
 
 ## 2. In your Startup.cs
 
@@ -70,6 +70,8 @@ It returns the token issued by the Azure AD Security to the client.
       "APIKey": "c1bba8a7-8a68-4697-82a6-33b4563ca895"
     }
   },
+  .
+  .
 }
 ```
 Replace \<B2BADTenant\>, \<azureappname\>, \<client-id-web-add\>, \<client-secret\> in the settings above from your Azure configuration.
@@ -91,6 +93,8 @@ This token can be used to access your APIs endpoints secured by Azure AD Securit
 
 You will get a **Azure AD endpoint (/azure)** automatically in Swagger UI.
 
-You will be returned a JWT bearer token issued by Azure AD Security.
+The client has to POST to the Azure endpoint with the API Key (Step 3).
+
+You will be returned a JWT bearer token issued by Azure.
 
 ![Facebook Swagger UI integration](https://github.com/VeritasSoftware/AspNetCore.Security.Jwt/blob/master/AzureADSwaggerIntegration.jpg)
