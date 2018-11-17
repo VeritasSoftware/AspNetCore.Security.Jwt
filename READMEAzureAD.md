@@ -58,6 +58,27 @@ You have to post the Azure AD User's Id and Password to the **Azure (/azure)** e
         }
 ```
 
+## 3. In your appsettings.json
+
+**Note:-** You can put these settings in **Secret Manager** by using **Manage User Secrets** menu (right-click your Project).
+
+```javascript
+{
+  "SecuritySettings": {
+    .
+    .
+    .
+    "AzureADSecuritySettings": {
+      "AADInstance": "https://login.windows.net/{0}",
+      "Tenant": "<B2BADTenant>.onmicrosoft.com",
+      "ResourceId": "https://B2BADTenant.onmicrosoft.com/<azureappname>",
+      "ClientId": "<client-id-web-add>",
+      "ClientSecret": "<client-secret>"
+    }
+  },
+}
+```
+
 When the user posts their Id and Password to the Azure endpoint, Azure AD authenication will be done and the JWT Bearer Token (issued by Azure) will be returned to the client.
 
 This token can be used to access your APIs endpoints secured by Azure AD Security.
