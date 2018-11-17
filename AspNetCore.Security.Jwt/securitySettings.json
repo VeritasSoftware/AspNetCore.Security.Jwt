@@ -4,6 +4,16 @@
     "Issuer": "your app",
     "Audience": "the client of your app",
     "IdType": "Name",
-    "TokenExpiryInHours": 2
+    "TokenExpiryInHours": 1.2,
+    "AppId": "your facebook app id here",
+    "AppSecret": "your facebook app secret here",
+    "AzureADSecuritySettings": {
+      "AADInstance": "https://login.windows.net/{0}",
+      "Tenant": "<B2BADTenant>.onmicrosoft.com",
+      "ResourceId": "https://<B2BADTenant>.onmicrosoft.com/<azureappname>",
+      "ClientId": "<client-id-web-add>",
+      "ClientSecret": "<client-secret>",
+      "APIKey": "c1bba8a7-8a68-4697-82a6-33b4563ca895"
+    }
   }
 }
