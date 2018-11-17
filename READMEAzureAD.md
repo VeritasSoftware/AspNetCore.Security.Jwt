@@ -83,7 +83,13 @@ This is used to access the Azure endpoint of your API. It is not an Azure config
 
 In the Settings (Step 3), the API Key is specified for accessing the Azure endpoint.
 
-The client has to POST to the Azure endpoint with this API Key.
+The client has to POST to the Azure endpoint with this API Key as shown below.
+
+```json
+{
+  "apiKey": "c1bba8a7-8a68-4697-82a6-33b4563ca895"
+}
+```
 
 When the Azure endpoint is called, it does the Azure AD authenication and returns the JWT Bearer Token (issued by Azure) to the client.
 
