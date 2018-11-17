@@ -118,9 +118,9 @@ The Authenticator is automatically wired up for dependency injection (Scoped).
 }
 ```
 
-## Azure Active Director (AD) authentication integration
+## Azure Active Directory (AD) authentication integration
 
-[**Using Azure AD for authentication**](READMEFacebook.md)
+[**Using Azure AD for authentication**](READMEAzureAD.md)
 
 ## Facebook authentication integration
 
