@@ -13,6 +13,8 @@
 
 *	And integrates the TokenContoller into your app automatically.
 
+*	**Azure Active Directory (AD)** authentication integration.
+
 *	**Facebook** authentication integration.
 
 *	Also, **Swagger UI** integration!
@@ -115,6 +117,10 @@ The Authenticator is automatically wired up for dependency injection (Scoped).
   .
 }
 ```
+
+## Azure Active Director (AD) authentication integration
+
+[**Using Azure AD for authentication**](READMEFacebook.md)
 
 ## Facebook authentication integration
 
@@ -219,23 +225,25 @@ You can use multiple authentications in your app.
             //services.AddSecurity<Authenticator>(this.Configuration, true)
             //        .AddFacebookSecurity(this.Configuration, builder =>
             //            builder.AddClaim("FacebookUser", userModel => userModel.UserAccessToken)
-            //        , true);;
-            //services.AddMvc().AddSecurity().AddFacebookSecurity();
+            //        , true)
+            //        .AddAzureADSecurity(this.Configuration, true);
+            //services.AddMvc().AddSecurity().AddFacebookSecurity().AddAzureADSecurity();
 
             //OR
 
-            //Custom User model auth + Facebook
-            services
-                 .AddSecurity<Authenticator, UserModel>(this.Configuration, builder =>
-                      builder.AddClaim(IdType.Name, userModel => userModel.Id)
-                             .AddClaim(IdType.Role, userModel => userModel.Role)
-                             .AddClaim("DOB", userModel => userModel.DOB.ToShortDateString())
-                 , true)
-                 .AddFacebookSecurity(this.Configuration, builder =>
-                      builder.AddClaim("FacebookUser", userModel => userModel.UserAccessToken)
-                 , true);
+            //Custom User model auth + Azure AD + Facebook
+             services
+					.AddSecurity<CustomAuthenticator, UserModel>(this.Configuration, builder =>
+						builder.AddClaim(IdType.Name, userModel => userModel.Id)
+							   .AddClaim(IdType.Role, userModel => userModel.Role)
+							   .AddClaim("DOB", userModel => userModel.DOB.ToShortDateString())
+					, true)
+					.AddFacebookSecurity(this.Configuration, builder =>
+						builder.AddClaim("FacebookUser", userModel => userModel.UserAccessToken)
+					, true)
+					.AddAzureADSecurity(this.Configuration, true);
 
-            services.AddMvc().AddSecurity<UserModel>().AddFacebookSecurity();
+            services.AddMvc().AddSecurity<UserModel>().AddFacebookSecurity().AddAzureADSecurity();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

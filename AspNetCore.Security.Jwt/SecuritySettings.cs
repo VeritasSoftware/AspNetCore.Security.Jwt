@@ -9,6 +9,8 @@
         public string Audience { get; set; }
 
         public double? TokenExpiryInHours { get; set; }
+
+        public AzureADSecuritySettings AzureADSecuritySettings { get; set; }
     }
         
     public class SecuritySettings : BaseSecuritySettings
@@ -22,4 +24,18 @@
 
         public string AppSecret { get; set; }
     }
+
+    public class AzureADSecuritySettings
+    {
+        public string AADInstance { get; set; }
+
+        public string Tenant { get; set; }
+
+        public string ResourceId { get; set; }
+
+        public string ClientId { get; set; }
+
+        public string ClientSecret { get; set; }
+    }
+
 }

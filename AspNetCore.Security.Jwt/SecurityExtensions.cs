@@ -1,5 +1,6 @@
 ﻿namespace AspNetCore.Security.Jwt
 {
+    using AspNetCore.Security.Jwt.AzureAD;
     using AspNetCore.Security.Jwt.Facebook;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.Extensions.Configuration;
@@ -132,7 +133,34 @@
             }
 
             return services;
-        }        
+        }
+
+        /// <summary>
+        /// Add Azure AD security extension
+        /// </summary>
+        /// <param name="services">The services collection</param>
+        /// <param name="configuration">The configurations -- appsettings</param>
+        /// <param name="addSwaggerSecurity">Enable security in Swagger UI</param>
+        /// <returns>The services collection</returns>
+        public static IServiceCollection AddAzureADSecurity(this IServiceCollection services,
+                                                                IConfiguration configuration,
+                                                                bool addSwaggerSecurity = false)
+        {
+            var securitySettings = new SecuritySettings();
+            configuration.Bind("SecuritySettings", securitySettings);
+            IdTypeHelpers.LoadClaimTypes();
+
+            services.AddSingleton(securitySettings);
+            services.AddSingleton<AzureADSecuritySettings>(securitySettings.AzureADSecuritySettings);            
+            services.AddScoped<IAuthentication<AzureADAuthModel, AzureADResponseModel>, AzureAuthenticator>();
+
+            if (addSwaggerSecurity)
+            {
+                services.AddSecureSwaggerDocumentation();
+            }            
+
+            return services;
+        }
 
         internal static IServiceCollection AddJwtBearerScheme(this IServiceCollection services, BaseSecuritySettings securitySettings)
         {

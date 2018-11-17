@@ -9,7 +9,7 @@ namespace AspNetCore.Security.Jwt.Facebook
     /// <summary>
     /// FacebookAuthenticator class - Authericates the Facebook Access Token
     /// </summary>
-    public class FacebookAuthenticator : IAuthentication<FacebookAuthModel>
+    internal class FacebookAuthenticator : IAuthentication<FacebookAuthModel>
     {
         private readonly FacebookSecuritySettings facebookSecuritySettings;
         private readonly ILogger<FacebookAuthenticator> logger;

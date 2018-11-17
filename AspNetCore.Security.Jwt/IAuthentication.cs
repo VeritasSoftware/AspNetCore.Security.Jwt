@@ -12,4 +12,11 @@
     {
         Task<bool> IsValidUser(TUserModel user);
     }
+
+    public interface IAuthentication<TUserModel, TResponseModel>
+        where TUserModel : class, IAuthenticationUser
+        where TResponseModel : class
+    {
+        Task<TResponseModel> IsValidUser(TUserModel user);
+    }
 }
