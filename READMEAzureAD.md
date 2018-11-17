@@ -70,7 +70,7 @@ It returns the token issued by the Azure AD Security to the client.
   },
 }
 ```
-Replace \<B2BADTenant\>, \<client-id-web-add\>, \<client-secret\> in the settings above.
+Replace \<B2BADTenant\>, \<azureappname\>, \<client-id-web-add\>, \<client-secret\> in the settings above.
 
 
 When the Azure endpoint is called, does the Azure AD authenication and returns the JWT Bearer Token (issued by Azure) to the client.
