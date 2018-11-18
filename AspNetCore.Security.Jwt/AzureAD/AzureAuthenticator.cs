@@ -30,7 +30,7 @@ namespace AspNetCore.Security.Jwt.AzureAD
 
                 string authority = String.Format(this.azureSecuritySettings.AADInstance, this.azureSecuritySettings.Tenant);
 
-                AuthenticationContext authContext = new AuthenticationContext(authority);
+                AuthenticationContext authContext = new AuthenticationContext(authority, true);
 
                 var response = await authContext.AcquireTokenAsync(this.azureSecuritySettings.ResourceId, new ClientCredential(
                                                                         this.azureSecuritySettings.ClientId, this.azureSecuritySettings.ClientSecret));
