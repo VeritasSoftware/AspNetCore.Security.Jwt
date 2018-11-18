@@ -209,6 +209,8 @@ You can use multiple authentications in your app.
 
 **AND**
 
+*	Azure Active Directory
+
 *	Facebook
 
 ```C#
