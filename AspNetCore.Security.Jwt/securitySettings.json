@@ -13,7 +13,7 @@
       "ResourceId": "https://<B2BADTenant>.onmicrosoft.com/<azureappname>",
       "ClientId": "<client-id-web-add>",
       "ClientSecret": "<client-secret>",
-      "APIKey": "c1bba8a7-8a68-4697-82a6-33b4563ca895"
+      "APIKey": "your api key for your azure endpoint here"
     }
   }
 }
