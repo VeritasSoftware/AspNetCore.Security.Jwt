@@ -22,7 +22,12 @@ namespace AspNetCore.Security.Jwt.AzureAD
         public async Task<AzureADResponseModel> IsValidUser(AzureADAuthModel user)
         {
             try
-            {                
+            {
+                if (string.IsNullOrEmpty(this.azureSecuritySettings.APIKey) || string.IsNullOrEmpty(user.APIKey))
+                {
+                    return new AzureADResponseModel { IsAuthenticated = false };
+                }
+
                 if (string.Compare(user.APIKey.Trim(), this.azureSecuritySettings.APIKey.Trim()) != 0)
                 {
                     return new AzureADResponseModel { IsAuthenticated = false };
