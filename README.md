@@ -244,6 +244,7 @@ You can use multiple authentications in your app.
                        builder.AddClaim("FacebookUser", userModel => userModel.UserAccessToken.ToString()))
                    .AddAzureADSecurity();
 
+            //services.AddMvc().AddSecurity().AddFacebookSecurity().AddAzureADSecurity
             services.AddMvc().AddSecurity<UserModel>().AddFacebookSecurity().AddAzureADSecurity();
         }
 
