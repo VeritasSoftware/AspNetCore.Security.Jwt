@@ -224,29 +224,25 @@ You can use multiple authentications in your app.
             var securitySettings = new SecuritySettings();
             this.Configuration.Bind("SecuritySettings", securitySettings);
 
-            //Default Auth + Azure AD + Facebook
             //services
-            //        .AddSecurity(securitySettings)
-            //        .AddSecurity<Authenticator>(true)
+            //        .AddSecurity(securitySettings, true)
+            //        .AddSecurity<Authenticator>()
             //        .AddFacebookSecurity(builder =>
-            //            builder.AddClaim("FacebookUser", userModel => userModel.UserAccessToken)
-            //        , true)
-            //        .AddAzureADSecurity(true);
+            //            builder.AddClaim("FacebookUser", userModel => userModel.UserAccessToken))
+            //        .AddAzureADSecurity();
 
             //OR
 
             //Custom User model auth + Azure AD + Facebook            
             services
-                   .AddSecurity(securitySettings)
+                   .AddSecurity(securitySettings, true)
                    .AddSecurity<CustomAuthenticator, UserModel>(builder =>
                        builder.AddClaim(IdType.Name, userModel => userModel.Id)
                               .AddClaim(IdType.Role, userModel => userModel.Role)
-                              .AddClaim("DOB", userModel => userModel.DOB.ToShortDateString())
-                   , true)
+                              .AddClaim("DOB", userModel => userModel.DOB.ToShortDateString()))
                    .AddFacebookSecurity(builder =>
-                       builder.AddClaim("FacebookUser", userModel => userModel.UserAccessToken.ToString())
-                   , true)
-                   .AddAzureADSecurity(true);
+                       builder.AddClaim("FacebookUser", userModel => userModel.UserAccessToken.ToString()))
+                   .AddAzureADSecurity();
 
             services.AddMvc().AddSecurity<UserModel>().AddFacebookSecurity().AddAzureADSecurity();
         }
