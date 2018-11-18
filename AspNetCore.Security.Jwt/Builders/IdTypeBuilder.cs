@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Security.Claims;
 
 namespace AspNetCore.Security.Jwt
@@ -40,6 +41,13 @@ namespace AspNetCore.Security.Jwt
         public IIdTypeBuilder<TUserModel> AddClaim(IdType idType, Func<TUserModel, string> value)
         {
             claims.Add(new Claim(idType.ToClaimTypes(), value(user)));
+
+            return this;
+        }
+
+        public IIdTypeBuilder<TUserModel> AddClaim(BinaryReader binaryReader)
+        {
+            claims.Add(new Claim(binaryReader));
 
             return this;
         }
