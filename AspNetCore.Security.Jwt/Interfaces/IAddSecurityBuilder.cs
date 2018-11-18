@@ -5,17 +5,15 @@ namespace AspNetCore.Security.Jwt
 {
     public interface IAddSecurityBuilder
     {
-        IAddSecurityBuilder AddSecurity<TAuthenticator>(bool addSwaggerSecurity = false)
+        IAddSecurityBuilder AddSecurity<TAuthenticator>()
              where TAuthenticator : class, IAuthentication;
 
-        IAddSecurityBuilder AddSecurity<TAuthenticator, TUserModel>(Action<IIdTypeBuilder<TUserModel>> addClaims = null,
-                                                                bool addSwaggerSecurity = false)
+        IAddSecurityBuilder AddSecurity<TAuthenticator, TUserModel>(Action<IIdTypeBuilder<TUserModel>> addClaims = null)
             where TAuthenticator : class, IAuthentication<TUserModel>
             where TUserModel : class, IAuthenticationUser;
 
-        IAddSecurityBuilder AddFacebookSecurity(Action<IIdTypeBuilder<FacebookAuthModel>> addClaims = null,
-                                                                bool addSwaggerSecurity = false);
+        IAddSecurityBuilder AddFacebookSecurity(Action<IIdTypeBuilder<FacebookAuthModel>> addClaims = null);
 
-        IAddSecurityBuilder AddAzureADSecurity(bool addSwaggerSecurity = false);
+        IAddSecurityBuilder AddAzureADSecurity();
     }
 }

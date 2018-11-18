@@ -191,12 +191,19 @@
             return services;
         }
 
-        public static IAddSecurityBuilder AddSecurity(this IServiceCollection services, SecuritySettings settings)
+        /// <summary>
+        /// Add Security extension - Invokes the AddSecurityBuilder
+        /// </summary>
+        /// <param name="services">The services collection</param>
+        /// <param name="settings">The settings <see cref="SecuritySettings"/></param>
+        /// <param name="addSwaggerSecurity">Enable security in Swagger UI</param>
+        /// <returns><see cref="IAddSecurityBuilder"/></returns>
+        public static IAddSecurityBuilder AddSecurity(this IServiceCollection services, SecuritySettings settings, bool addSwaggerSecurity = false)
         {
             securitySettings = settings;
             services.AddSingleton(securitySettings);            
 
-            IAddSecurityBuilder addSecurityBuilder = new AddSecurityBuilder(securitySettings, IsJwtSchemeAdded, services);
+            IAddSecurityBuilder addSecurityBuilder = new AddSecurityBuilder(securitySettings, IsJwtSchemeAdded, services, addSwaggerSecurity);
 
             return addSecurityBuilder;
         }        
