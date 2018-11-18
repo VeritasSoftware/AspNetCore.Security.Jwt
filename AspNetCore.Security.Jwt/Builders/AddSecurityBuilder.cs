@@ -25,6 +25,8 @@ namespace AspNetCore.Security.Jwt
             IsJwtSchemeAdded = isJwtSchemeAdded;
             Services = services;
 
+            IdTypeHelpers.LoadClaimTypes();
+
             if (!IsJwtSchemeAdded)
             {
                 Services.AddJwtBearerScheme(SecuritySettings);
@@ -42,9 +44,7 @@ namespace AspNetCore.Security.Jwt
         public IAddSecurityBuilder AddAzureADSecurity()
         {
             if (!IsAzureAdded)
-            {
-                IdTypeHelpers.LoadClaimTypes();
-
+            {                
                 Services.AddSingleton(SecuritySettings);
                 Services.AddSingleton<AzureADSecuritySettings>(SecuritySettings.AzureADSecuritySettings);
                 Services.AddScoped<IAuthentication<AzureADAuthModel, AzureADResponseModel>, AzureAuthenticator>();                
@@ -59,8 +59,6 @@ namespace AspNetCore.Security.Jwt
         {
             if (!IsFacebookAdded)
             {
-                IdTypeHelpers.LoadClaimTypes();
-
                 Services.AddSingleton<BaseSecuritySettings>(SecuritySettings);
                 if (addClaims != null)
                 {
@@ -79,8 +77,6 @@ namespace AspNetCore.Security.Jwt
         {
             if (!IsDefaultAdded && !IsCustomAdded)
             {
-                IdTypeHelpers.LoadClaimTypes();
-
                 Services.AddScoped<ISecurityService, SecurityService>();
                 Services.AddScoped<IAuthentication, TAuthenticator>();                
 
@@ -94,8 +90,6 @@ namespace AspNetCore.Security.Jwt
         {
             if (!IsDefaultAdded && !IsCustomAdded)
             {
-                IdTypeHelpers.LoadClaimTypes();
-
                 Services.AddSingleton(SecuritySettings);
                 Services.AddSingleton<BaseSecuritySettings>(SecuritySettings);
                 if (addClaims != null)
