@@ -45,7 +45,6 @@ namespace AspNetCore.Security.Jwt
         {
             if (!IsAzureAdded)
             {                
-                Services.AddSingleton(SecuritySettings);
                 Services.AddSingleton<AzureADSecuritySettings>(SecuritySettings.AzureADSecuritySettings);
                 Services.AddScoped<IAuthentication<AzureADAuthModel, AzureADResponseModel>, AzureAuthenticator>();                
 
@@ -90,7 +89,6 @@ namespace AspNetCore.Security.Jwt
         {
             if (!IsDefaultAdded && !IsCustomAdded)
             {
-                Services.AddSingleton(SecuritySettings);
                 Services.AddSingleton<BaseSecuritySettings>(SecuritySettings);
                 if (addClaims != null)
                 {
