@@ -6,7 +6,7 @@ using System.Security.Claims;
 namespace AspNetCore.Security.Jwt
 {
     /// <inheritdoc />
-    public class IdTypeBuilder<TUserModel> : IIdTypeBuilder<TUserModel>, IIdTypeBuilderToClaims
+    internal class IdTypeBuilder<TUserModel> : IIdTypeBuilder<TUserModel>, IIdTypeBuilderToClaims
         where TUserModel : class, IAuthenticationUser
     {
         private List<Claim> claims = new List<Claim>();
