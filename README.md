@@ -5,6 +5,10 @@
 
 [**Sample API (Microservice) project secured by package**](https://github.com/VeritasSoftware/AspNetCore.Security.Jwt.Microservice)
 
+|Packages|Version & Downloads|
+|---------------------------|:---:|
+|*AspNetCore.Security.Jwt*|[![NuGet Version and Downloads count](https://buildstats.info/nuget/AspNetCore.Security.Jwt)](https://www.nuget.org/packages/AspNetCore.Security.Jwt)|
+
 **The package:**
 
 *	Makes adding **Jwt Bearer Token Security** to your **ASP NET Core 2.0 app** a breeze!!
