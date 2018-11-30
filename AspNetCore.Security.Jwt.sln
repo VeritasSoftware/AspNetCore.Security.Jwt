@@ -26,6 +26,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "images", "images", "{4A15B3
 		TokenRequest.jpg = TokenRequest.jpg
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetCore.Security.Jwt.UnitTests", "AspNetCore.Security.Jwt.UnitTests\AspNetCore.Security.Jwt.UnitTests.csproj", "{1BAA09AB-EFFC-48A5-9308-B0962C32C73B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,6 +38,10 @@ Global
 		{45DC3CD9-DD19-4360-AED8-C4C53472E363}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{45DC3CD9-DD19-4360-AED8-C4C53472E363}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{45DC3CD9-DD19-4360-AED8-C4C53472E363}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1BAA09AB-EFFC-48A5-9308-B0962C32C73B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1BAA09AB-EFFC-48A5-9308-B0962C32C73B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1BAA09AB-EFFC-48A5-9308-B0962C32C73B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1BAA09AB-EFFC-48A5-9308-B0962C32C73B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

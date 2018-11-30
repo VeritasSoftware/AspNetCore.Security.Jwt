@@ -14,6 +14,8 @@
             if (claimTypes == null)
             {
                 IdTypeHelpers.LoadClaimTypes();
+
+                claimTypes = IdTypeHelpers.claimTypes;
             }
 
             return claimTypes[idType.ToString()];

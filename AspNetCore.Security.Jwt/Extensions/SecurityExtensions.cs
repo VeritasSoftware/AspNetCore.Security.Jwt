@@ -1,4 +1,7 @@
-﻿namespace AspNetCore.Security.Jwt
+﻿using System.Runtime.CompilerServices;
+
+[assembly: InternalsVisibleTo("AspNetCore.Security.Jwt.UnitTests")]
+namespace AspNetCore.Security.Jwt
 {
     using AspNetCore.Security.Jwt.AzureAD;
     using AspNetCore.Security.Jwt.Facebook;
