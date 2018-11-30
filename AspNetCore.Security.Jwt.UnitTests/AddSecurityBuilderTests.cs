@@ -1,5 +1,5 @@
 ﻿using AspNetCore.Security.Jwt.AzureAD;
-using Microsoft.AspNetCore.Hosting;
+using AspNetCore.Security.Jwt.Facebook;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using Xunit;
@@ -40,6 +40,37 @@ namespace AspNetCore.Security.Jwt.UnitTests
 
             Assert.True(securityService != null);
             Assert.IsType<SecurityService>(securityService);
+        }
+
+        [Fact]
+        public void Test_AddSecurityBuilder_CustomUserModel_Pass()
+        {
+            //Arrange
+            SecuritySettings securitySettings = new SecuritySettings()
+            {
+                Secret = "a secret that needs to be at least 16 characters long",
+                Issuer = "your app",
+                Audience = "the client of your app",
+                IdType = IdType.Name,
+                TokenExpiryInHours = 1.2,
+            };
+
+            var serviceCollection = new ServiceCollection();
+
+            serviceCollection.AddSecurity(securitySettings, false)
+                             .AddSecurity<CustomAuthenticator, UserModel>();
+
+            var sp = serviceCollection.BuildServiceProvider();
+
+            //Act
+            var authService = sp.GetService<IAuthentication<UserModel>>();
+            var securityService = sp.GetService<ISecurityService<UserModel>>();
+
+            Assert.True(authService != null);
+            Assert.IsType<CustomAuthenticator>(authService);
+
+            Assert.True(securityService != null);
+            Assert.IsType<SecurityService<UserModel>>(securityService);
         }
 
         [Fact]
@@ -88,6 +119,49 @@ namespace AspNetCore.Security.Jwt.UnitTests
 
             Assert.True(authAzure != null);
             Assert.IsType<AzureAuthenticator>(authAzure);
+        }
+
+        [Fact]
+        public void Test_AddSecurityBuilder_Facebook_Pass()
+        {
+            //Arrange
+            SecuritySettings securitySettings = new SecuritySettings()
+            {
+                Secret = "a secret that needs to be at least 16 characters long",
+                Issuer = "your app",
+                Audience = "the client of your app",
+                IdType = IdType.Name,
+                TokenExpiryInHours = 1.2,
+                AppId = "xxxxxxxxxxxxxx",
+                AppSecret = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+                AzureADSecuritySettings = new AzureADSecuritySettings
+                {
+                    AADInstance = "https://login.windows.net/{0}",
+                    Tenant = "<B2BADTenant>.onmicrosoft.com",
+                    ResourceId = "https://<B2BADTenant>.onmicrosoft.com/<azureappname>",
+                    ClientId = "<client-id-web-add>",
+                    ClientSecret = "<client-secret>",
+                    APIKey = Guid.NewGuid().ToString()
+                }
+            };
+
+            var serviceCollection = new ServiceCollection();
+
+            serviceCollection.AddSecurity(securitySettings, false)
+                             .AddFacebookSecurity();
+
+            var sp = serviceCollection.BuildServiceProvider();
+
+            //Act
+            var authFacebook = sp.GetService<IAuthentication<FacebookAuthModel>>();
+            var securityService = sp.GetService<ISecurityService<FacebookAuthModel>>();
+
+            //Assert            
+            Assert.True(authFacebook != null);
+            Assert.IsType<FacebookAuthenticator>(authFacebook);
+
+            Assert.True(securityService != null);
+            Assert.IsType<SecurityService<FacebookAuthModel>>(securityService);
         }
 
     }

@@ -26,6 +26,11 @@ namespace AspNetCore.Security.Jwt.UnitTests
     {
         bool returnValue;
 
+        public CustomAuthenticator()
+        {
+
+        }
+
         public CustomAuthenticator(bool returnValue)
         {
             this.returnValue = returnValue;
