@@ -18,7 +18,7 @@ namespace AspNetCore.Security.Jwt.UnitTests
 
         public async Task<bool> IsValidUser(string id, string password)
         {
-            return this.returnValue;
+            return await Task.Run(() => this.returnValue);
         }
     }
 
@@ -38,7 +38,7 @@ namespace AspNetCore.Security.Jwt.UnitTests
 
         public async Task<bool> IsValidUser(UserModel user)
         {
-            return this.returnValue;
+            return await Task.Run(() => this.returnValue);
         }
     }
 }
