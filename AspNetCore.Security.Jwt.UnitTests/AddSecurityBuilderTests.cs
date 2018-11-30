@@ -35,6 +35,7 @@ namespace AspNetCore.Security.Jwt.UnitTests
             var authService = sp.GetService<IAuthentication>();
             var securityService = sp.GetService<ISecurityService>();
 
+            //Assert
             Assert.True(authService != null);
             Assert.IsType<DefaultAuthenticator>(authService);
 
@@ -66,6 +67,7 @@ namespace AspNetCore.Security.Jwt.UnitTests
             var authService = sp.GetService<IAuthentication<UserModel>>();
             var securityService = sp.GetService<ISecurityService<UserModel>>();
 
+            //Assert
             Assert.True(authService != null);
             Assert.IsType<CustomAuthenticator>(authService);
 
@@ -133,16 +135,7 @@ namespace AspNetCore.Security.Jwt.UnitTests
                 IdType = IdType.Name,
                 TokenExpiryInHours = 1.2,
                 AppId = "xxxxxxxxxxxxxx",
-                AppSecret = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
-                AzureADSecuritySettings = new AzureADSecuritySettings
-                {
-                    AADInstance = "https://login.windows.net/{0}",
-                    Tenant = "<B2BADTenant>.onmicrosoft.com",
-                    ResourceId = "https://<B2BADTenant>.onmicrosoft.com/<azureappname>",
-                    ClientId = "<client-id-web-add>",
-                    ClientSecret = "<client-secret>",
-                    APIKey = Guid.NewGuid().ToString()
-                }
+                AppSecret = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
             };
 
             var serviceCollection = new ServiceCollection();
