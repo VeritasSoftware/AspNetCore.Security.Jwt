@@ -6,6 +6,11 @@ namespace AspNetCore.Security.Jwt.UnitTests
     {
         bool returnValue;
 
+        public DefaultAuthenticator()
+        {
+
+        }
+
         public DefaultAuthenticator(bool returnValue)
         {
             this.returnValue = returnValue;
