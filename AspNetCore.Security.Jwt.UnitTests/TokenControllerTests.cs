@@ -23,9 +23,9 @@ namespace AspNetCore.Security.Jwt.UnitTests
             var securityService = new SecurityService(securitySettings);
 
             //Authenticator returns a true, token is generated.
-            var defaultAuthenticator = new DefaultAuthenticator(true);
+            var authenticator = new DefaultAuthenticator(true);
 
-            var controller = new TokenController(securityService, defaultAuthenticator);
+            var controller = new TokenController(securityService, authenticator);
 
             User user = new User
             {
@@ -57,9 +57,9 @@ namespace AspNetCore.Security.Jwt.UnitTests
             var securityService = new SecurityService(securitySettings);
 
             //Authenticator returns a false, token is not generated.
-            var defaultAuthenticator = new DefaultAuthenticator(false);
+            var authenticator = new DefaultAuthenticator(false);
 
-            var controller = new TokenController(securityService, defaultAuthenticator);
+            var controller = new TokenController(securityService, authenticator);
 
             User user = new User
             {
@@ -103,9 +103,9 @@ namespace AspNetCore.Security.Jwt.UnitTests
             });
 
             //Authenticator returns a true, token is generated.
-            var defaultAuthenticator = new CustomAuthenticator(true);
+            var authenticator = new CustomAuthenticator(true);
 
-            var controller = new TokenController<UserModel>(securityService, defaultAuthenticator);
+            var controller = new TokenController<UserModel>(securityService, authenticator);
 
             //Act
             var result = await controller.Create(userModel);
@@ -144,9 +144,9 @@ namespace AspNetCore.Security.Jwt.UnitTests
             });
 
             //Authenticator returns a false, token is not generated.
-            var defaultAuthenticator = new CustomAuthenticator(false);
+            var authenticator = new CustomAuthenticator(false);
 
-            var controller = new TokenController<UserModel>(securityService, defaultAuthenticator);
+            var controller = new TokenController<UserModel>(securityService, authenticator);
 
             //Act
             var result = await controller.Create(userModel);
