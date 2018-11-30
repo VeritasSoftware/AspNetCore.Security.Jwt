@@ -1,0 +1,19 @@
+﻿{
+  "SecuritySettings": {
+    "Secret": "a secret that needs to be at least 16 characters long",
+    "Issuer": "your app",
+    "Audience": "the client of your app",
+    "IdType": "Name",
+    "TokenExpiryInHours": 1.2,
+    "AppId": "your facebook app id here",
+    "AppSecret": "your facebook app secret here",
+    "AzureADSecuritySettings": {
+      "AADInstance": "https://login.windows.net/{0}",
+      "Tenant": "<B2BADTenant>.onmicrosoft.com",
+      "ResourceId": "https://<B2BADTenant>.onmicrosoft.com/<azureappname>",
+      "ClientId": "<client-id-web-add>",
+      "ClientSecret": "<client-secret>",
+      "APIKey": "your api key for your azure endpoint here"
+    }
+  }
+}
