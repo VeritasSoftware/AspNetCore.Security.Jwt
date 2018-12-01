@@ -9,6 +9,15 @@
 |---------------------------|:---:|
 |*AspNetCore.Security.Jwt*|[![NuGet Version and Downloads count](https://buildstats.info/nuget/AspNetCore.Security.Jwt)](https://www.nuget.org/packages/AspNetCore.Security.Jwt)|
 
+## ![SonarCloud](https://sonarcloud.io/images/project_badges/sonarcloud-white.svg)
+
+[![SonarCloud](https://sonarcloud.io/api/project_badges/measure?project=VeritasSoftware_AspNetCore.Security.Jwt&metric=ncloc)](https://sonarcloud.io/dashboard?id=VeritasSoftware_AspNetCore.Security.Jwt)
+[![SonarCloud](https://sonarcloud.io/api/project_badges/measure?project=VeritasSoftware_AspNetCore.Security.Jwt&metric=coverage)](https://sonarcloud.io/dashboard?id=VeritasSoftware_AspNetCore.Security.Jwt)
+[![SonarCloud](https://sonarcloud.io/api/project_badges/measure?project=VeritasSoftware_AspNetCore.Security.Jwt&metric=duplicated_lines_density)](https://sonarcloud.io/dashboard?id=VeritasSoftware_AspNetCore.Security.Jwt)
+[![SonarCloud](https://sonarcloud.io/api/project_badges/measure?project=VeritasSoftware_AspNetCore.Security.Jwt&metric=sqale_index)](https://sonarcloud.io/dashboard?id=VeritasSoftware_AspNetCore.Security.Jwt)
+[![SonarCloud](https://sonarcloud.io/api/project_badges/measure?project=VeritasSoftware_AspNetCore.Security.Jwt&metric=bugs)](https://sonarcloud.io/dashboard?id=VeritasSoftware_AspNetCore.Security.Jwt)
+[![SonarCloud](https://sonarcloud.io/api/project_badges/measure?project=VeritasSoftware_AspNetCore.Security.Jwt&metric=vulnerabilities)](https://sonarcloud.io/dashboard?id=VeritasSoftware_AspNetCore.Security.Jwt)
+
 **The package:**
 
 *	Makes adding **Jwt Bearer Token Security** to your **ASP NET Core 2.0 app** a breeze!!
