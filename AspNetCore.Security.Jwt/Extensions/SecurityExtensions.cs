@@ -157,6 +157,7 @@ namespace AspNetCore.Security.Jwt
             services.AddSingleton(securitySettings);
             services.AddSingleton<AzureADSecuritySettings>(securitySettings.AzureADSecuritySettings);            
             services.AddScoped<IAuthentication<AzureADAuthModel, AzureADResponseModel>, AzureAuthenticator>();
+            services.AddScoped<ISecurityClient<AzureADResponseModel>, AzureClient>();
 
             if (addSwaggerSecurity)
             {

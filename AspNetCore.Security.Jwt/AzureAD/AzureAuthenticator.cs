@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.Logging;
-using Microsoft.IdentityModel.Clients.ActiveDirectory;
 using System;
 using System.Threading.Tasks;
 
@@ -12,11 +11,13 @@ namespace AspNetCore.Security.Jwt.AzureAD
     {
         private readonly AzureADSecuritySettings azureSecuritySettings;
         private readonly ILogger<AzureAuthenticator> logger;
+        private readonly ISecurityClient<AzureADResponseModel> securityClient;
 
-        public AzureAuthenticator(AzureADSecuritySettings azureSecuritySettings, ILogger<AzureAuthenticator> logger = null)
+        public AzureAuthenticator(AzureADSecuritySettings azureSecuritySettings, ISecurityClient<AzureADResponseModel> securityClient, ILogger<AzureAuthenticator> logger = null)
         {
             this.azureSecuritySettings = azureSecuritySettings;
-            this.logger = logger;
+            this.securityClient = securityClient;
+            this.logger = logger;            
         }
 
         public async Task<AzureADResponseModel> IsValidUser(AzureADAuthModel user)
@@ -33,14 +34,7 @@ namespace AspNetCore.Security.Jwt.AzureAD
                     return new AzureADResponseModel { IsAuthenticated = false };
                 }
 
-                string authority = String.Format(this.azureSecuritySettings.AADInstance, this.azureSecuritySettings.Tenant);
-
-                AuthenticationContext authContext = new AuthenticationContext(authority, false);
-
-                var response = await authContext.AcquireTokenAsync(this.azureSecuritySettings.ResourceId, new ClientCredential(
-                                                                        this.azureSecuritySettings.ClientId, this.azureSecuritySettings.ClientSecret));
-
-                return new AzureADResponseModel { IsAuthenticated = true, AccessToken = response.AccessToken };
+                return await this.securityClient.PostSecurityRequest();
             }
             catch (Exception ex)
             {
