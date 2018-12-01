@@ -67,6 +67,7 @@ namespace AspNetCore.Security.Jwt.UnitTests
             //Assert
             Assert.IsType<ObjectResult>(result);
             Assert.True((result as ObjectResult).Value.ToString().IsValidJwtToken());
+            this.MockAzureClient.Verify(x => x.PostSecurityRequest(), Times.Once);
         }
 
         [Fact]
@@ -91,6 +92,7 @@ namespace AspNetCore.Security.Jwt.UnitTests
 
             //Assert
             Assert.IsType<BadRequestResult>(result);
+            this.MockAzureClient.Verify(x => x.PostSecurityRequest(), Times.Once);
         }
 
         [Fact]
@@ -113,6 +115,7 @@ namespace AspNetCore.Security.Jwt.UnitTests
 
             //Assert
             Assert.IsType<BadRequestResult>(result);
+            this.MockAzureClient.Verify(x => x.PostSecurityRequest(), Times.Never);
         }
     }
 }
