@@ -21,6 +21,13 @@ namespace AspNetCore.Security.Jwt
 
         public AddSecurityBuilder(SecuritySettings securitySettings, bool isJwtSchemeAdded, IServiceCollection services, bool addSwaggerSecurity = false)
         {
+            IsJwtSchemeAdded = false;
+            IsAzureAdded = false;
+            IsCustomAdded = false;
+            IsDefaultAdded = false;
+            IsSwaggerAdded = false;
+            IsFacebookAdded = false;
+
             SecuritySettings = securitySettings;
             IsJwtSchemeAdded = isJwtSchemeAdded;
             Services = services;
