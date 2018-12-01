@@ -209,7 +209,7 @@ namespace AspNetCore.Security.Jwt
 
             AddSecurityBuilder.Create(securitySettings, IsJwtSchemeAdded, services, addSwaggerSecurity);
 
-            IAddSecurityBuilder addSecurityBuilder = AddSecurityBuilder.Instance;
+            IAddSecurityBuilder addSecurityBuilder = AddSecurityBuilder.TheInstance();
 
             return addSecurityBuilder;
         }        

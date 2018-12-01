@@ -13,56 +13,42 @@ namespace AspNetCore.Security.Jwt
         private static AddSecurityBuilder instance = null;
         private static readonly object padlock = new object();
 
-        private SecuritySettings SecuritySettings;
-        private bool IsJwtSchemeAdded = false;
+        private readonly SecuritySettings SecuritySettings;
         private bool IsDefaultAdded = false;
         private bool IsCustomAdded = false;
         private bool IsFacebookAdded = false;
         private bool IsAzureAdded = false;
-        private bool IsSwaggerAdded = false;
-        private IServiceCollection Services;
+        private readonly bool IsSwaggerAdded = false;
+        private readonly IServiceCollection Services;
 
-        public static AddSecurityBuilder Instance
+        public static AddSecurityBuilder TheInstance()
         {
-            get
-            {
-                lock (padlock)
-                {
-                    if (instance == null)
-                    {
-                        throw new Exception("AddSecurityBuilder instance not created");
-                    }
-                    return instance;
-                }
-            }
+            lock (padlock)
+            {                  
+                return instance;
+            }                           
         }
 
         private AddSecurityBuilder(SecuritySettings securitySettings, bool isJwtSchemeAdded, IServiceCollection services, bool addSwaggerSecurity = false)
         {
-            IsJwtSchemeAdded = false;
-            IsAzureAdded = false;
-            IsCustomAdded = false;
-            IsDefaultAdded = false;
-            IsSwaggerAdded = false;
-            IsFacebookAdded = false;
-
-            SecuritySettings = securitySettings;
-            IsJwtSchemeAdded = isJwtSchemeAdded;
-            Services = services;
-
-            IdTypeHelpers.LoadClaimTypes();
-
-            if (!IsJwtSchemeAdded)
+            if (!IsDefaultAdded || !IsCustomAdded || !IsAzureAdded || !IsFacebookAdded)
             {
-                Services.AddJwtBearerScheme(SecuritySettings);
-                IsJwtSchemeAdded = true;
-            }
+                SecuritySettings = securitySettings;
+                Services = services;
 
-            if (addSwaggerSecurity && !IsSwaggerAdded)
-            {
-                Services.AddSecureSwaggerDocumentation();
+                IdTypeHelpers.LoadClaimTypes();
 
-                IsSwaggerAdded = true;
+                if (!isJwtSchemeAdded)
+                {
+                    Services.AddJwtBearerScheme(SecuritySettings);
+                }
+
+                if (addSwaggerSecurity && !IsSwaggerAdded)
+                {
+                    Services.AddSecureSwaggerDocumentation();
+
+                    IsSwaggerAdded = true;
+                }
             }
         }
 
