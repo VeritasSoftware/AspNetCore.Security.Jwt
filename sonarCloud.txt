@@ -1,0 +1,11 @@
+Project instance:
+
+https://sonarcloud.io/dashboard?id=VeritasSoftware_AspNetCore.Security.Jwt
+
+
+From the Command Prompt:
+
+cd C:\Users\Shantanu\Source\Repos\AspNetCore.Security.Jwt
+dotnet sonarscanner begin /k:"VeritasSoftware_AspNetCore.Security.Jwt" /d:sonar.organization="veritassoftware-github" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.login="ae0d6c63425d79b68955bc89d20786c14b9dacf9"
+dotnet build /p:Configuration=Debug /p:Platform="Any CPU"
+dotnet sonarscanner end  /d:sonar.login="ae0d6c63425d79b68955bc89d20786c14b9dacf9"

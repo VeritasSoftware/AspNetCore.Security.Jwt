@@ -44,6 +44,42 @@ namespace AspNetCore.Security.Jwt.UnitTests
         }
 
         [Fact]
+        public void Test_AddSecurityBuilder_DefaultTwice_Pass()
+        {
+            //Arrange
+            SecuritySettings securitySettings = new SecuritySettings()
+            {
+                Secret = "a secret that needs to be at least 16 characters long",
+                Issuer = "your app",
+                Audience = "the client of your app",
+                IdType = IdType.Name,
+                TokenExpiryInHours = 1.2,
+            };
+
+            var serviceCollection = new ServiceCollection();
+
+            serviceCollection.AddSecurity(securitySettings, false)
+                             .AddSecurity<DefaultAuthenticator>()
+                             .AddSecurity<DefaultAuthenticator>();
+
+            serviceCollection.AddSecurity(securitySettings, false)
+                             .AddSecurity<DefaultAuthenticator>();
+
+            var sp = serviceCollection.BuildServiceProvider();
+
+            //Act
+            var authService = sp.GetService<IAuthentication>();
+            var securityService = sp.GetService<ISecurityService>();
+
+            //Assert
+            Assert.True(authService != null);
+            Assert.IsType<DefaultAuthenticator>(authService);
+
+            Assert.True(securityService != null);
+            Assert.IsType<SecurityService>(securityService);
+        }
+
+        [Fact]
         public void Test_AddSecurityBuilder_CustomUserModel_Pass()
         {
             //Arrange

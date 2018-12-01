@@ -205,9 +205,11 @@ namespace AspNetCore.Security.Jwt
         public static IAddSecurityBuilder AddSecurity(this IServiceCollection services, SecuritySettings settings, bool addSwaggerSecurity = false)
         {
             securitySettings = settings;
-            services.AddSingleton(securitySettings);            
+            services.AddSingleton(securitySettings);
 
-            IAddSecurityBuilder addSecurityBuilder = new AddSecurityBuilder(securitySettings, IsJwtSchemeAdded, services, addSwaggerSecurity);
+            AddSecurityBuilder.Create(securitySettings, IsJwtSchemeAdded, services, addSwaggerSecurity);
+
+            IAddSecurityBuilder addSecurityBuilder = AddSecurityBuilder.Instance;
 
             return addSecurityBuilder;
         }        
