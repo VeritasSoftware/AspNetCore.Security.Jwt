@@ -11,7 +11,7 @@
 
 ## ![SonarCloud](https://sonarcloud.io/images/project_badges/sonarcloud-white.svg)
 
-[![Quality Gate](http://localhost:9000/api/badges/measure?key=com.qualinsight.plugins.sonarqube:qualinsight-plugins-sonarqube-badges&metric=coverage)](https://sonarcloud.io/dashboard/index/com.qualinsight.plugins.sonarqube:qualinsight-plugins-sonarqube-badges)
+[![Quality Gate](https://sonarcloud.io/api/badges/measure?key=com.qualinsight.plugins.sonarqube:qualinsight-plugins-sonarqube-badges&metric=coverage)](https://sonarcloud.io/dashboard/index/com.qualinsight.plugins.sonarqube:qualinsight-plugins-sonarqube-badges)
 [![SonarCloud](https://sonarcloud.io/api/project_badges/measure?project=VeritasSoftware_AspNetCore.Security.Jwt&metric=ncloc)](https://sonarcloud.io/dashboard?id=VeritasSoftware_AspNetCore.Security.Jwt)
 [![SonarCloud](https://sonarcloud.io/api/project_badges/measure?project=VeritasSoftware_AspNetCore.Security.Jwt&metric=duplicated_lines_density)](https://sonarcloud.io/dashboard?id=VeritasSoftware_AspNetCore.Security.Jwt)
 [![SonarCloud](https://sonarcloud.io/api/project_badges/measure?project=VeritasSoftware_AspNetCore.Security.Jwt&metric=bugs)](https://sonarcloud.io/dashboard?id=VeritasSoftware_AspNetCore.Security.Jwt)
