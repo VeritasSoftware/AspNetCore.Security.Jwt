@@ -9,7 +9,6 @@
 |---------------------------|:---:|
 |*AspNetCore.Security.Jwt*|[![NuGet Version and Downloads count](https://buildstats.info/nuget/AspNetCore.Security.Jwt)](https://www.nuget.org/packages/AspNetCore.Security.Jwt)|
 
-| Sonar Cloud | Quality Gate |
 | ----------- | ------------ |
 | ![SonarCloud](https://sonarcloud.io/images/project_badges/sonarcloud-white.svg) | ![SonarCloud](https://sonarcloud.io/api/project_badges/quality_gate?project=VeritasSoftware_AspNetCore.Security.Jwt) |
 
