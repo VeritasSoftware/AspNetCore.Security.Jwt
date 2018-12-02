@@ -1,7 +1,6 @@
 ﻿using AspNetCore.Security.Jwt.Facebook;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
-using System;
 using System.Threading.Tasks;
 using Xunit;
 
