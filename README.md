@@ -9,8 +9,8 @@
 |---------------------------|:---:|
 |*AspNetCore.Security.Jwt*|[![NuGet Version and Downloads count](https://buildstats.info/nuget/AspNetCore.Security.Jwt)](https://www.nuget.org/packages/AspNetCore.Security.Jwt)|
 
-| ----------- | ------------ |
-| ![SonarCloud](https://sonarcloud.io/images/project_badges/sonarcloud-white.svg) | ![SonarCloud](https://sonarcloud.io/api/project_badges/quality_gate?project=VeritasSoftware_AspNetCore.Security.Jwt) |
+![SonarCloud](https://sonarcloud.io/images/project_badges/sonarcloud-white.svg)
+![SonarCloud](https://sonarcloud.io/api/project_badges/quality_gate?project=VeritasSoftware_AspNetCore.Security.Jwt)
 
 [![SonarCloud](https://sonarcloud.io/api/project_badges/measure?project=VeritasSoftware_AspNetCore.Security.Jwt&metric=alert_status)](https://sonarcloud.io/dashboard?id=VeritasSoftware_AspNetCore.Security.Jwt)
 [![SonarCloud](https://sonarcloud.io/api/project_badges/measure?project=VeritasSoftware_AspNetCore.Security.Jwt&metric=ncloc)](https://sonarcloud.io/dashboard?id=VeritasSoftware_AspNetCore.Security.Jwt)
