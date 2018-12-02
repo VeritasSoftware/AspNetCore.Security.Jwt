@@ -329,3 +329,5 @@ ASALocalRun/
 # MFractors (Xamarin productivity tool) working folder 
 .mfractor/
 /.sonarqube
+/AspNetCore.Security.Jwt.UnitTests/.sonarqube/conf
+/lcov.opencover.xml
