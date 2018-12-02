@@ -1,7 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 using System;
-using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace AspNetCore.Security.Jwt.Facebook
@@ -12,11 +10,13 @@ namespace AspNetCore.Security.Jwt.Facebook
     internal class FacebookAuthenticator : IAuthentication<FacebookAuthModel>
     {
         private readonly SecuritySettings facebookSecuritySettings;
+        private readonly ISecurityClient<FacebookAuthModel, bool> securityClient;
         private readonly ILogger<FacebookAuthenticator> logger;
 
-        public FacebookAuthenticator(SecuritySettings facebookSecuritySettings, ILogger<FacebookAuthenticator> logger = null)
+        public FacebookAuthenticator(SecuritySettings facebookSecuritySettings, ISecurityClient<FacebookAuthModel, bool> securityClient, ILogger<FacebookAuthenticator> logger = null)
         {
             this.facebookSecuritySettings = facebookSecuritySettings;
+            this.securityClient = securityClient;
             this.logger = logger;
         }
 
@@ -27,19 +27,14 @@ namespace AspNetCore.Security.Jwt.Facebook
                 if (this.logger != null)
                 {
                     logger.LogInformation($"User Access Token: {user.UserAccessToken}");
-                }                
-
-                using (HttpClient httpClient = new HttpClient())
-                {
-                    // 1.generate an app access token
-                    var appAccessTokenResponse = await httpClient.GetStringAsync($"https://graph.facebook.com/oauth/access_token?client_id={this.facebookSecuritySettings.AppId}&client_secret={this.facebookSecuritySettings.AppSecret}&grant_type=client_credentials");
-                    var appAccessToken = JsonConvert.DeserializeObject<FacebookAppAccessToken>(appAccessTokenResponse);
-                    // 2. validate the user access token
-                    var userAccessTokenValidationResponse = await httpClient.GetStringAsync($"https://graph.facebook.com/debug_token?input_token={user.UserAccessToken}&access_token={appAccessToken.AccessToken}");
-                    var userAccessTokenValidation = JsonConvert.DeserializeObject<FacebookUserAccessTokenValidation>(userAccessTokenValidationResponse);
-
-                    return userAccessTokenValidation.Data.IsValid;
                 }
+
+                if (string.IsNullOrEmpty(user.UserAccessToken))
+                {
+                    throw new ArgumentNullException(nameof(user.UserAccessToken));
+                }
+
+                return await this.securityClient.PostSecurityRequest(user);
             }
             catch (Exception ex)
             {

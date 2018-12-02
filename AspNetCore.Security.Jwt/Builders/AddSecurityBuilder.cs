@@ -81,7 +81,8 @@ namespace AspNetCore.Security.Jwt
                     Services.AddSingleton<Action<IIdTypeBuilder<FacebookAuthModel>>>(x => addClaims);
                 }
                 Services.AddScoped<ISecurityService<FacebookAuthModel>, SecurityService<FacebookAuthModel>>();
-                Services.AddScoped<IAuthentication<FacebookAuthModel>, FacebookAuthenticator>();                             
+                Services.AddScoped<IAuthentication<FacebookAuthModel>, FacebookAuthenticator>();
+                Services.AddScoped<ISecurityClient<FacebookAuthModel, bool>, FacebookClient>();
 
                 IsFacebookAdded = true;
             }            

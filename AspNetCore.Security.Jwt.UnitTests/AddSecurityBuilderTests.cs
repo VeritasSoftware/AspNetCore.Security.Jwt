@@ -143,6 +143,7 @@ namespace AspNetCore.Security.Jwt.UnitTests
             //Act
             var azureADSecuritySettings = sp.GetService<AzureADSecuritySettings>();
             var authAzure = sp.GetService<IAuthentication<AzureADAuthModel, AzureADResponseModel>>();
+            var securityClient = sp.GetService<ISecurityClient<AzureADResponseModel>>();
 
             //Assert            
             Assert.True(azureADSecuritySettings != null);
@@ -157,6 +158,9 @@ namespace AspNetCore.Security.Jwt.UnitTests
 
             Assert.True(authAzure != null);
             Assert.IsType<AzureAuthenticator>(authAzure);
+
+            Assert.True(securityClient != null);
+            Assert.IsType<AzureClient>(securityClient);
         }
 
         [Fact]
@@ -184,6 +188,7 @@ namespace AspNetCore.Security.Jwt.UnitTests
             //Act
             var authFacebook = sp.GetService<IAuthentication<FacebookAuthModel>>();
             var securityService = sp.GetService<ISecurityService<FacebookAuthModel>>();
+            var securityClient = sp.GetService<ISecurityClient<FacebookAuthModel, bool>>();
 
             //Assert            
             Assert.True(authFacebook != null);
@@ -191,6 +196,9 @@ namespace AspNetCore.Security.Jwt.UnitTests
 
             Assert.True(securityService != null);
             Assert.IsType<SecurityService<FacebookAuthModel>>(securityService);
+
+            Assert.True(securityClient != null);
+            Assert.IsType<FacebookClient>(securityClient);
         }
 
     }

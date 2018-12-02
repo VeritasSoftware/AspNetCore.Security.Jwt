@@ -6,4 +6,9 @@ namespace AspNetCore.Security.Jwt
     {
         Task<TResponse> PostSecurityRequest();
     }
+
+    internal interface ISecurityClient<TRequest, TResponse>
+    {
+        Task<TResponse> PostSecurityRequest(TRequest request);
+    }
 }

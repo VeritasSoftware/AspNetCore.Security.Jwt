@@ -124,6 +124,7 @@ namespace AspNetCore.Security.Jwt
             }
             services.AddScoped<ISecurityService<FacebookAuthModel>, SecurityService<FacebookAuthModel>>();           
             services.AddScoped<IAuthentication<FacebookAuthModel>, FacebookAuthenticator>();
+            services.AddScoped<ISecurityClient<FacebookAuthModel, bool>, FacebookClient>();
 
             if (addSwaggerSecurity)
             {
