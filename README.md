@@ -18,7 +18,7 @@
 [![SonarCloud](https://sonarcloud.io/api/project_badges/measure?project=VeritasSoftware_AspNetCore.Security.Jwt&metric=vulnerabilities)](https://sonarcloud.io/dashboard?id=VeritasSoftware_AspNetCore.Security.Jwt)
 [![SonarCloud](https://sonarcloud.io/api/project_badges/measure?project=VeritasSoftware_AspNetCore.Security.Jwt&metric=security_rating)](https://sonarcloud.io/dashboard?id=VeritasSoftware_AspNetCore.Security.Jwt)
 [![SonarCloud](https://sonarcloud.io/api/project_badges/measure?project=VeritasSoftware_AspNetCore.Security.Jwt&metric=reliability_rating)](https://sonarcloud.io/dashboard?id=VeritasSoftware_AspNetCore.Security.Jwt)
-[![SonarCloud](https://sonarcloud.io/api/project_badges/measure?project=VeritasSoftware_AspNetCore.Security.Jwt&metric=sqale)](https://sonarcloud.io/dashboard?id=VeritasSoftware_AspNetCore.Security.Jwt)
+[![SonarCloud](https://sonarcloud.io/api/project_badges/measure?project=VeritasSoftware_AspNetCore.Security.Jwt&metric=sqale_index)](https://sonarcloud.io/dashboard?id=VeritasSoftware_AspNetCore.Security.Jwt)
 [![SonarCloud](https://sonarcloud.io/api/project_badges/measure?project=VeritasSoftware_AspNetCore.Security.Jwt&metric=code_smells)](https://sonarcloud.io/dashboard?id=VeritasSoftware_AspNetCore.Security.Jwt)
 
 **The package:**
