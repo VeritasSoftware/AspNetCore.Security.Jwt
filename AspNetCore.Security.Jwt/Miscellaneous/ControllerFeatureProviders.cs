@@ -79,7 +79,7 @@ namespace AspNetCore.Security.Jwt
     }
 
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = true)]
-    public class GenericControllerNameConvention : Attribute, IControllerModelConvention
+    public class GenericControllerNameConventionAttribute : Attribute, IControllerModelConvention
     {
         public void Apply(ControllerModel controller)
         {

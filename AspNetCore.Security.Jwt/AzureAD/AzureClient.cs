@@ -6,7 +6,7 @@ namespace AspNetCore.Security.Jwt.AzureAD
 {
     public class AzureClient : ISecurityClient<AzureADResponseModel>
     {
-        AzureADSecuritySettings azureADSecuritySettings;
+        private readonly AzureADSecuritySettings azureADSecuritySettings;
 
         public AzureClient(AzureADSecuritySettings azureADSecuritySettings)
         {

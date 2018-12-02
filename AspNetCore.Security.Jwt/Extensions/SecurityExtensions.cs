@@ -18,7 +18,6 @@ namespace AspNetCore.Security.Jwt
     public static class SecurityExtensions
     {
         private static bool IsJwtSchemeAdded = false;
-        private static SecuritySettings securitySettings;
 
         /// <summary>
         /// Add Security extensions - Used to wire up the dependency injection
@@ -205,7 +204,7 @@ namespace AspNetCore.Security.Jwt
         /// <returns><see cref="IAddSecurityBuilder"/></returns>
         public static IAddSecurityBuilder AddSecurity(this IServiceCollection services, SecuritySettings settings, bool addSwaggerSecurity = false)
         {
-            securitySettings = settings;
+            var securitySettings = settings;
             services.AddSingleton(securitySettings);
 
             AddSecurityBuilder.Create(securitySettings, IsJwtSchemeAdded, services, addSwaggerSecurity);

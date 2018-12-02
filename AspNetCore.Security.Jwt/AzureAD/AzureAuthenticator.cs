@@ -42,7 +42,7 @@ namespace AspNetCore.Security.Jwt.AzureAD
                 {
                     logger.LogError(ex, $"Exception in {typeof(AzureAuthenticator).Name}");
                 }
-                throw ex;
+                throw;
             }            
         }       
     }

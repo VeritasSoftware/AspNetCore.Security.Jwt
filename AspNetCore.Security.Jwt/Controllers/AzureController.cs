@@ -23,14 +23,7 @@ namespace AspNetCore.Security.Jwt
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] AzureADAuthModel user)
         {
-            if (user == null)
-            {
-                throw new ArgumentNullException(nameof(user));
-            }
-            if (string.IsNullOrEmpty(user.APIKey))
-            {
-                throw new ArgumentNullException(nameof(user.APIKey));
-            }
+            ValidateInput(user);
 
             var response = await this.authentication.IsValidUser(user);
 
@@ -38,6 +31,18 @@ namespace AspNetCore.Security.Jwt
                 return new ObjectResult(response.AccessToken);
 
             return BadRequest();
+        }
+
+        private void ValidateInput(AzureADAuthModel user)
+        {
+            if (user == null)
+            {
+                throw new ArgumentNullException(nameof(user));
+            }
+            if (string.IsNullOrEmpty(user.APIKey))
+            {
+                throw new SecurityException($"{nameof(user.APIKey)} is null or empty.");
+            }
         }
     }
 }

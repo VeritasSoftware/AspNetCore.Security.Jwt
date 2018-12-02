@@ -17,7 +17,7 @@
     /// Generic ISecurityService interface
     /// </summary>
     /// <typeparam name="TUserModel">The custom User model</typeparam>
-    public interface ISecurityService<TUserModel>
+    public interface ISecurityService<in TUserModel>
         where TUserModel: class, IAuthenticationUser
     {
         /// <summary>

@@ -17,7 +17,7 @@ namespace AspNetCore.Security.Jwt
         public TokenController(ISecurityService securityService,
                                 IAuthentication authentication)
         {
-            this.securityService = securityService;;
+            this.securityService = securityService;
             this.authentication = authentication;
         }
 
@@ -25,16 +25,21 @@ namespace AspNetCore.Security.Jwt
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] User user)
         {
-            if (user == null)
-                throw new ArgumentNullException(nameof(user));
-
-            if (string.IsNullOrEmpty(user.Id))
-                throw new ArgumentNullException(nameof(user.Id));
+            ValidateInput(user);
 
             if (await this.authentication.IsValidUser(user.Id, user.Password))
                 return new ObjectResult(this.securityService.GenerateToken(user.Id));
             return BadRequest();
         }        
+
+        private void ValidateInput(User user)
+        {
+            if (user == null)
+                throw new ArgumentNullException(nameof(user));
+
+            if (string.IsNullOrEmpty(user.Id))
+                throw new ArgumentNullException("user.Id");
+        }
     }
 
     /// <summary>
@@ -43,7 +48,7 @@ namespace AspNetCore.Security.Jwt
     /// <typeparam name="TUserModel">The custom User model</typeparam>
     [Produces("application/json")]
     [Route("api/[controller]")]
-    [GenericControllerNameConvention]
+    [GenericControllerNameConventionAttribute]
     public class TokenController<TUserModel> : Controller where TUserModel : class, IAuthenticationUser
     {
         private readonly ISecurityService<TUserModel> securityService;
@@ -60,12 +65,17 @@ namespace AspNetCore.Security.Jwt
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] TUserModel user)
         {
-            if (user == null)
-                throw new ArgumentNullException(nameof(user));
+            ValidateInput(user);
 
             if (await this.authentication.IsValidUser(user))
                 return new ObjectResult(this.securityService.GenerateToken(user));
             return BadRequest();
+        }
+
+        private void ValidateInput(TUserModel user)
+        {
+            if (user == null)
+                throw new ArgumentNullException(nameof(user));
         }
     }
 

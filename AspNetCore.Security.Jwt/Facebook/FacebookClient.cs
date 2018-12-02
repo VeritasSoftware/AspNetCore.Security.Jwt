@@ -13,7 +13,7 @@ namespace AspNetCore.Security.Jwt.Facebook
             this.facebookSecuritySettings = facebookSecuritySettings;
         }
 
-        public virtual async Task<bool> PostSecurityRequest(FacebookAuthModel user)
+        public virtual async Task<bool> PostSecurityRequest(FacebookAuthModel request)
         {
             using (HttpClient httpClient = new HttpClient())
             {
@@ -21,7 +21,7 @@ namespace AspNetCore.Security.Jwt.Facebook
                 var appAccessTokenResponse = await httpClient.GetStringAsync($"https://graph.facebook.com/oauth/access_token?client_id={this.facebookSecuritySettings.AppId}&client_secret={this.facebookSecuritySettings.AppSecret}&grant_type=client_credentials");
                 var appAccessToken = JsonConvert.DeserializeObject<FacebookAppAccessToken>(appAccessTokenResponse);
                 // 2. validate the user access token
-                var userAccessTokenValidationResponse = await httpClient.GetStringAsync($"https://graph.facebook.com/debug_token?input_token={user.UserAccessToken}&access_token={appAccessToken.AccessToken}");
+                var userAccessTokenValidationResponse = await httpClient.GetStringAsync($"https://graph.facebook.com/debug_token?input_token={request.UserAccessToken}&access_token={appAccessToken.AccessToken}");
                 var userAccessTokenValidation = JsonConvert.DeserializeObject<FacebookUserAccessTokenValidation>(userAccessTokenValidationResponse);
 
                 return userAccessTokenValidation.Data.IsValid;

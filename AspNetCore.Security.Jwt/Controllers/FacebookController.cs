@@ -18,7 +18,7 @@ namespace AspNetCore.Security.Jwt
         public FacebookController(ISecurityService<FacebookAuthModel> securityService,
                                   IAuthentication<FacebookAuthModel> authentication)
         {
-            this.securityService = securityService; ;
+            this.securityService = securityService;
             this.authentication = authentication;
         }
 
@@ -26,14 +26,20 @@ namespace AspNetCore.Security.Jwt
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] FacebookAuthModel user)
         {
-            if (user == null)
-                throw new ArgumentNullException(nameof(user));
-            if (string.IsNullOrEmpty(user.UserAccessToken))
-                throw new ArgumentNullException(nameof(user.UserAccessToken));
+            ValidateInput(user);
 
             if (await this.authentication.IsValidUser(user))
                 return new ObjectResult(this.securityService.GenerateToken(user));
             return BadRequest();
         }
+
+        private void ValidateInput(FacebookAuthModel user)
+        {
+            if (user == null)
+                throw new ArgumentNullException(nameof(user));
+            if (string.IsNullOrEmpty(user.UserAccessToken))
+                throw new SecurityException($"{nameof(user.UserAccessToken)} is null or empty.");
+        }
+
     }
 }

@@ -9,13 +9,11 @@ namespace AspNetCore.Security.Jwt.Facebook
     /// </summary>
     internal class FacebookAuthenticator : IAuthentication<FacebookAuthModel>
     {
-        private readonly SecuritySettings facebookSecuritySettings;
         private readonly ISecurityClient<FacebookAuthModel, bool> securityClient;
         private readonly ILogger<FacebookAuthenticator> logger;
 
-        public FacebookAuthenticator(SecuritySettings facebookSecuritySettings, ISecurityClient<FacebookAuthModel, bool> securityClient, ILogger<FacebookAuthenticator> logger = null)
+        public FacebookAuthenticator(ISecurityClient<FacebookAuthModel, bool> securityClient, ILogger<FacebookAuthenticator> logger = null)
         {
-            this.facebookSecuritySettings = facebookSecuritySettings;
             this.securityClient = securityClient;
             this.logger = logger;
         }
@@ -24,15 +22,7 @@ namespace AspNetCore.Security.Jwt.Facebook
         {
             try
             {
-                if (this.logger != null)
-                {
-                    logger.LogInformation($"User Access Token: {user.UserAccessToken}");
-                }
-
-                if (string.IsNullOrEmpty(user.UserAccessToken))
-                {
-                    throw new ArgumentNullException(nameof(user.UserAccessToken));
-                }
+                ValidateInput(user);
 
                 return await this.securityClient.PostSecurityRequest(user);
             }
@@ -42,8 +32,22 @@ namespace AspNetCore.Security.Jwt.Facebook
                 {
                     logger.LogError(ex, $"Exception in {typeof(FacebookAuthenticator).Name}");
                 }
-                throw ex;
+                throw;
             }            
-        }       
+        }
+        
+        private void ValidateInput(FacebookAuthModel user)
+        {
+            if (this.logger != null)
+            {
+                logger.LogInformation($"User Access Token: {user.UserAccessToken}");
+            }
+
+            if (string.IsNullOrEmpty(user.UserAccessToken))
+            {
+                throw new ArgumentNullException("user.UserAccessToken");
+            }
+        }
+
     }
 }

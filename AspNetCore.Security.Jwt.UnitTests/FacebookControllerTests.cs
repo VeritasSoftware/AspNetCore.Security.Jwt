@@ -47,7 +47,7 @@ namespace AspNetCore.Security.Jwt.UnitTests
                 UserAccessToken = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
             };
 
-            FacebookAuthenticator authenticator = new FacebookAuthenticator(this.SecuritySettings, this.MockFacebookClient.Object);
+            FacebookAuthenticator authenticator = new FacebookAuthenticator(this.MockFacebookClient.Object);
 
             var securityService = new SecurityService<FacebookAuthModel>(this.SecuritySettings);
 
@@ -75,7 +75,7 @@ namespace AspNetCore.Security.Jwt.UnitTests
                 UserAccessToken = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
             };
 
-            FacebookAuthenticator authenticator = new FacebookAuthenticator(this.SecuritySettings, this.MockFacebookClient.Object);
+            FacebookAuthenticator authenticator = new FacebookAuthenticator(this.MockFacebookClient.Object);
 
             var securityService = new SecurityService<FacebookAuthModel>(this.SecuritySettings);
 
@@ -90,14 +90,14 @@ namespace AspNetCore.Security.Jwt.UnitTests
         }
 
         [Fact]
-        public async Task Test_FacebookController_InvalidAPIKey_Fail()
+        public async Task Test_FacebookController_NoUserToken_Fail()
         {
             //Arrange
 
             //Facebook User Token absent
             FacebookAuthModel facebookAuthModel = new FacebookAuthModel();
 
-            FacebookAuthenticator authenticator = new FacebookAuthenticator(this.SecuritySettings, this.MockFacebookClient.Object);
+            FacebookAuthenticator authenticator = new FacebookAuthenticator(this.MockFacebookClient.Object);
 
             var securityService = new SecurityService<FacebookAuthModel>(this.SecuritySettings);
 
@@ -108,7 +108,7 @@ namespace AspNetCore.Security.Jwt.UnitTests
                 //Act
                 var result = await controller.Create(facebookAuthModel);
             }
-            catch(ArgumentNullException ex)
+            catch(SecurityException)
             {
                 //Assert
                 this.MockFacebookClient.Verify(x => x.PostSecurityRequest(facebookAuthModel), Times.Never);

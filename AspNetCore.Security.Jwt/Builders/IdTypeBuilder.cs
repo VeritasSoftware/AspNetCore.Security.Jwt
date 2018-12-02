@@ -9,8 +9,8 @@ namespace AspNetCore.Security.Jwt
     internal class IdTypeBuilder<TUserModel> : IIdTypeBuilder<TUserModel>, IIdTypeBuilderToClaims
         where TUserModel : class, IAuthenticationUser
     {
-        private List<Claim> claims = new List<Claim>();
-        TUserModel user;
+        private readonly List<Claim> claims = new List<Claim>();
+        private readonly TUserModel user;
 
         public IdTypeBuilder(TUserModel user)
         {

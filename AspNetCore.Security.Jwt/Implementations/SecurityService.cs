@@ -63,7 +63,7 @@
         where TUserModel: class, IAuthenticationUser
     {
         private readonly BaseSecuritySettings securitySettings;
-        private Action<IIdTypeBuilder<TUserModel>> addClaims;
+        private readonly Action<IIdTypeBuilder<TUserModel>> addClaims;
         const double DEFAULT_TOKEN_EXPIRY_IN_HOURS = 1;        
 
         public SecurityService(BaseSecuritySettings securitySettings, Action<IIdTypeBuilder<TUserModel>> addClaims = null)
