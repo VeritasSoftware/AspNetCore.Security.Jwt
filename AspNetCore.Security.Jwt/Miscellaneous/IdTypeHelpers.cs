@@ -8,14 +8,16 @@ namespace AspNetCore.Security.Jwt
 {
     internal static class IdTypeHelpers
     {
-        internal static readonly Dictionary<string, string> claimTypes = new Dictionary<string, string>();        
+        internal static readonly Dictionary<string, string> claimTypesDictionary = new Dictionary<string, string>();
+
+        internal static Dictionary<string, string> ClaimTypes => claimTypesDictionary;
 
         /// <summary>
         /// Loads the Claim Types into a dictionary reflectively. Called in AddSecurity extension only once on start up.
         /// </summary>
         internal static void LoadClaimTypes()
         {
-            if (claimTypes != null && claimTypes.Any())
+            if (ClaimTypes != null && ClaimTypes.Any())
             {
                 return;
             }
@@ -25,7 +27,7 @@ namespace AspNetCore.Security.Jwt
 
             foreach (FieldInfo fi in fields)
             {
-                claimTypes.Add(fi.Name, fi.GetValue(null).ToString());
+                ClaimTypes.Add(fi.Name, fi.GetValue(null).ToString());
             }
         }        
     }

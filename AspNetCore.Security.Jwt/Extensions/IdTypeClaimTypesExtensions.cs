@@ -1,4 +1,6 @@
-﻿namespace AspNetCore.Security.Jwt
+﻿using System.Linq;
+
+namespace AspNetCore.Security.Jwt
 {
     public static class IdTypeClaimTypesExtensions
     {
@@ -9,13 +11,13 @@
         /// <returns>ClaimTypes</returns>
         public static string ToClaimTypes(this IdType idType)
         {
-            var claimTypes = IdTypeHelpers.claimTypes;
+            var claimTypes = IdTypeHelpers.ClaimTypes;
 
-            if (claimTypes == null)
+            if (claimTypes == null || !claimTypes.Any())
             {
                 IdTypeHelpers.LoadClaimTypes();
 
-                claimTypes = IdTypeHelpers.claimTypes;
+                claimTypes = IdTypeHelpers.ClaimTypes;
             }
 
             return claimTypes[idType.ToString()];

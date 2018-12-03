@@ -32,24 +32,14 @@ namespace AspNetCore.Security.Jwt
                                                                         bool addSwaggerSecurity = false)
             where TAuthenticator : class, IAuthentication
         {
-            var securitySettings = new SecuritySettings();
-            configuration.Bind("SecuritySettings", securitySettings);
+            var securitySettings = configuration.SecuritySettings();
             IdTypeHelpers.LoadClaimTypes();
 
             services.AddSingleton(securitySettings);            
             services.AddScoped<ISecurityService, SecurityService>();
-            services.AddScoped<IAuthentication, TAuthenticator>();            
+            services.AddScoped<IAuthentication, TAuthenticator>();
 
-            if (addSwaggerSecurity)
-            {
-                services.AddSecureSwaggerDocumentation();
-            }
-
-            if (!IsJwtSchemeAdded)
-            {
-                services.AddJwtBearerScheme(securitySettings);
-                IsJwtSchemeAdded = true;
-            }            
+            services.AddSwaggerAndJwtBearerScheme(addSwaggerSecurity, securitySettings);
 
             return services;
         }
@@ -71,8 +61,7 @@ namespace AspNetCore.Security.Jwt
             where TAuthenticator : class, IAuthentication<TUserModel>
             where TUserModel : class, IAuthenticationUser
         {
-            var securitySettings = new SecuritySettings();
-            configuration.Bind("SecuritySettings", securitySettings);
+            var securitySettings = configuration.SecuritySettings();
             IdTypeHelpers.LoadClaimTypes();
 
             services.AddSingleton(securitySettings);
@@ -84,16 +73,7 @@ namespace AspNetCore.Security.Jwt
             services.AddScoped<ISecurityService<TUserModel>, SecurityService<TUserModel>>();
             services.AddScoped<IAuthentication<TUserModel>, TAuthenticator>();
 
-            if (addSwaggerSecurity)
-            {
-                services.AddSecureSwaggerDocumentation();
-            }
-
-            if (!IsJwtSchemeAdded)
-            {
-                services.AddJwtBearerScheme(securitySettings);
-                IsJwtSchemeAdded = true;
-            }            
+            services.AddSwaggerAndJwtBearerScheme(addSwaggerSecurity, securitySettings);
 
             return services;
         }
@@ -111,8 +91,7 @@ namespace AspNetCore.Security.Jwt
                                                                 Action<IIdTypeBuilder<FacebookAuthModel>> addClaims = null,
                                                                 bool addSwaggerSecurity = false)
         {
-            var securitySettings = new SecuritySettings();
-            configuration.Bind("SecuritySettings", securitySettings);
+            var securitySettings = configuration.SecuritySettings();
             IdTypeHelpers.LoadClaimTypes();
 
             services.AddSingleton(securitySettings);
@@ -125,16 +104,7 @@ namespace AspNetCore.Security.Jwt
             services.AddScoped<IAuthentication<FacebookAuthModel>, FacebookAuthenticator>();
             services.AddScoped<ISecurityClient<FacebookAuthModel, bool>, FacebookClient>();
 
-            if (addSwaggerSecurity)
-            {
-                services.AddSecureSwaggerDocumentation();
-            }
-
-            if (!IsJwtSchemeAdded)
-            {
-                services.AddJwtBearerScheme(securitySettings);
-                IsJwtSchemeAdded = true;
-            }
+            services.AddSwaggerAndJwtBearerScheme(addSwaggerSecurity, securitySettings);
 
             return services;
         }
@@ -150,8 +120,7 @@ namespace AspNetCore.Security.Jwt
                                                                 IConfiguration configuration,
                                                                 bool addSwaggerSecurity = false)
         {
-            var securitySettings = new SecuritySettings();
-            configuration.Bind("SecuritySettings", securitySettings);
+            var securitySettings = configuration.SecuritySettings();
             IdTypeHelpers.LoadClaimTypes();
 
             services.AddSingleton(securitySettings);
@@ -193,6 +162,39 @@ namespace AspNetCore.Security.Jwt
             });
 
             return services;
+        }
+
+        /// <summary>
+        /// Get security settings from appsettings.json
+        /// </summary>
+        /// <param name="configuration">The configuration<see cref="IConfiguration"/></param>
+        /// <returns><see cref="SecuritySettings"/></returns>
+        internal static SecuritySettings SecuritySettings(this IConfiguration configuration)
+        {
+            var securitySettings = new SecuritySettings();
+            configuration.Bind("SecuritySettings", securitySettings);
+
+            return securitySettings;
+        }
+
+        /// <summary>
+        /// Add swagger and jwt bearer scheme
+        /// </summary>
+        /// <param name="services">The services collection</param>
+        /// <param name="addSwaggerSecurity">Add swagger security</param>
+        /// <param name="securitySettings">The security settings</param>
+        internal static void AddSwaggerAndJwtBearerScheme(this IServiceCollection services, bool addSwaggerSecurity, SecuritySettings securitySettings)
+        {
+            if (addSwaggerSecurity)
+            {
+                services.AddSecureSwaggerDocumentation();
+            }
+
+            if (!IsJwtSchemeAdded)
+            {
+                services.AddJwtBearerScheme(securitySettings);
+                IsJwtSchemeAdded = true;
+            }
         }
 
         /// <summary>
