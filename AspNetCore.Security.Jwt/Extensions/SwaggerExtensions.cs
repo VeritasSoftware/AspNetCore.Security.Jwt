@@ -7,7 +7,8 @@
 
     public static class SwaggerExtensions
     {
-        private static bool IsSwaggerAdded = false;
+        internal static bool IsSwaggerAdded { get; set; }
+        internal static bool IsSwaggerSecurityUsed { get; set; }
 
         public static IServiceCollection AddSecureSwaggerDocumentation(this IServiceCollection services)
         {
@@ -39,11 +40,16 @@
 
         public static IApplicationBuilder UseSwaggerDocumentation(this IApplicationBuilder app)
         {
-            app.UseSwagger();
-            app.UseSwaggerUI(c =>
+            if (!IsSwaggerSecurityUsed)
             {
-                c.DocExpansion(DocExpansion.None);
-            });
+                app.UseSwagger();
+                app.UseSwaggerUI(c =>
+                {
+                    c.DocExpansion(DocExpansion.None);
+                });
+
+                IsSwaggerSecurityUsed = true;
+            }            
 
             return app;
         }

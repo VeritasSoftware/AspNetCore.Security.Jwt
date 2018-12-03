@@ -1,5 +1,6 @@
 ﻿using AspNetCore.Security.Jwt.AzureAD;
 using AspNetCore.Security.Jwt.Facebook;
+using Microsoft.AspNetCore.Builder.Internal;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
@@ -131,5 +132,20 @@ namespace AspNetCore.Security.Jwt.UnitTests
             Assert.True(securityClient != null);
             Assert.IsType<FacebookClient>(securityClient);
         }
+
+        [Fact]
+        public void Test_SecurityExtensions_UseSecurity_Pass()
+        {
+            var serviceCollection = new ServiceCollection();
+            serviceCollection.AddSecurity<DefaultAuthenticator>(this.Configuration);
+
+            var serviceProvider = serviceCollection.BuildServiceProvider();
+            var app = new ApplicationBuilder(serviceProvider);
+
+            app.UseSecurity();
+
+            Assert.True(SecurityExtensions.IsSecurityUsed);
+        }
+
     }
 }

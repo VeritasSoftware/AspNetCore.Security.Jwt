@@ -18,6 +18,7 @@ namespace AspNetCore.Security.Jwt
     public static class SecurityExtensions
     {
         private static bool IsJwtSchemeAdded = false;
+        internal static bool IsSecurityUsed { get; set; }
 
         /// <summary>
         /// Add Security extensions - Used to wire up the dependency injection
@@ -218,11 +219,16 @@ namespace AspNetCore.Security.Jwt
 
         public static IApplicationBuilder UseSecurity(this IApplicationBuilder app, bool addSwaggerSecurity = false)
         {
-            if (addSwaggerSecurity)
+            if (!IsSecurityUsed)
             {
-                app.UseSwaggerDocumentation();
+                if (addSwaggerSecurity)
+                {
+                    app.UseSwaggerDocumentation();
+                }
+                app.UseAuthentication();
+
+                IsSecurityUsed = true;
             }            
-            app.UseAuthentication();
 
             return app;
         }
