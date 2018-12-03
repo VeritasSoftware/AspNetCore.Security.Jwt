@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.Controllers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using Xunit;
 
@@ -74,6 +75,24 @@ namespace AspNetCore.Security.Jwt.UnitTests
             Assert.True(controllerFeature.Controllers.Any());
             Assert.True(controllerFeature.Controllers.Count == 1);
             Assert.True(controllerFeature.Controllers.First() == typeof(FacebookController));
+        }
+
+        [Fact]
+        public void Test_ControllerFeatureProviders_RemoveControllerFeatureProvider_Pass()
+        {
+            var featureProvider = new RemoveControllerFeatureProvider();
+
+            var applicationParts = new List<ApplicationPart>();
+            var controllerFeature = new ControllerFeature();
+
+            controllerFeature.Controllers.Add(typeof(TokenController).GetTypeInfo());
+            controllerFeature.Controllers.Add(typeof(TokenController<>).GetTypeInfo());
+            controllerFeature.Controllers.Add(typeof(AzureController).GetTypeInfo());
+            controllerFeature.Controllers.Add(typeof(FacebookController).GetTypeInfo());
+            
+            featureProvider.PopulateFeature(applicationParts, controllerFeature);
+
+            Assert.True(!controllerFeature.Controllers.Any());
         }
 
     }

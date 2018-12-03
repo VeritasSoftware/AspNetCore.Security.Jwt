@@ -45,6 +45,10 @@ namespace AspNetCore.Security.Jwt
             {
                 feature.Controllers.Remove(typeof(FacebookController).GetTypeInfo());
             }
+            if (feature.Controllers.Contains(typeof(AzureController).GetTypeInfo()))
+            {
+                feature.Controllers.Remove(typeof(AzureController).GetTypeInfo());
+            }
         }
     }
 
