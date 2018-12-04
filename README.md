@@ -253,7 +253,7 @@ You can use multiple authentications in your app.
             var securitySettings = new SecuritySettings();
             this.Configuration.Bind("SecuritySettings", securitySettings);
 
-			//Default + AzureAD + Google + Facebook
+            //Default + AzureAD + Google + Facebook
             //services
             //        .AddSecurity(securitySettings, true)
             //        .AddSecurity<Authenticator>()
@@ -282,7 +282,7 @@ You can use multiple authentications in your app.
             //        .AddAzureADSecurity()
             //        .AddGoogleSecurity();
 			
-			//OR
+            //OR
 
             services.AddMvc()
                     .AddSecurity<UserModel>()
