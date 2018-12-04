@@ -55,19 +55,20 @@
     "IdType": "Name",
     "TokenExpiryInHours": 1.2,
     "AppId": "Your facebook app id",
-    "AppSecret": "Your facebook app secret"
-  },  
-  "GoogleSecuritySettings": {
-    "ClientId": "<client id>",
-    "ClientSecret": "<client secret>",
-    "RedirectUri": "http://localhost:59039/",
-    "APIKey": "Your Google endpoint access key"
+    "AppSecret": "Your facebook app secret",  
+    "GoogleSecuritySettings": {
+       "ClientId": "<client id>",
+       "ClientSecret": "<client secret>",
+       "RedirectUri": "http://localhost:59039/",
+       "APIKey": "Your Google endpoint access key"
+    }
   }
   .
   .
   .
 }
 ```
+Add your Google security settings.
 
 ## GoogleController
 
