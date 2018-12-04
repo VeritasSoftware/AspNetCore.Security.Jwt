@@ -39,28 +39,7 @@ namespace AspNetCore.Security.Jwt.Google
 
             tokenResponse.IsAuthenticated = true;
 
-            return tokenResponse;
-
-            //using (var httpClient = new HttpClient())
-            //{
-            //    HttpRequestMessage requestGoogle = new HttpRequestMessage(HttpMethod.Post, "https://accounts.google.com/o/oauth2/token");
-            //    requestGoogle.Content = new ByteArrayContent(bytes);
-
-            //    requestGoogle.Content.Headers.Add("Content-Type", "application/x-www-form-urlencoded");
-            //    requestGoogle.Content.Headers.Add("Content-Length", $"{bytes.Length}");
-
-            //    var response = await httpClient.SendAsync(requestGoogle);                      
-
-            //    response.EnsureSuccessStatusCode();
-
-            //    var responseStr = await response.Content.ReadAsStringAsync();
-
-            //    var tokenResponse = JsonConvert.DeserializeObject<GoogleResponseModel>(responseStr);
-
-            //    tokenResponse.IsAuthenticated = true;
-
-            //    return tokenResponse;
-            //}            
+            return tokenResponse;            
         }
     }
 }
