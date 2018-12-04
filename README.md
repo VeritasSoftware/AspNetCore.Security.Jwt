@@ -236,6 +236,8 @@ You can use multiple authentications in your app.
 
 *	Azure Active Directory
 
+*	Google
+
 *	Facebook
 
 ```C#
@@ -251,16 +253,18 @@ You can use multiple authentications in your app.
             var securitySettings = new SecuritySettings();
             this.Configuration.Bind("SecuritySettings", securitySettings);
 
+			//Default + AzureAD + Google + Facebook
             //services
             //        .AddSecurity(securitySettings, true)
             //        .AddSecurity<Authenticator>()
             //        .AddFacebookSecurity(builder =>
             //            builder.AddClaim("FacebookUser", userModel => userModel.UserAccessToken))
-            //        .AddAzureADSecurity();
+            //        .AddAzureADSecurity()
+            //        .AddGoogleSecurity();
 
             //OR
 
-            //Custom User model auth + Azure AD + Facebook            
+            //Custom User model auth + Azure AD + Google + Facebook            
             services
                    .AddSecurity(securitySettings, true)
                    .AddSecurity<CustomAuthenticator, UserModel>(builder =>
@@ -269,10 +273,22 @@ You can use multiple authentications in your app.
                               .AddClaim("DOB", userModel => userModel.DOB.ToShortDateString()))
                    .AddFacebookSecurity(builder =>
                        builder.AddClaim("FacebookUser", userModel => userModel.UserAccessToken.ToString()))
-                   .AddAzureADSecurity();
+                   .AddAzureADSecurity()
+                   .AddGoogleSecurity();
 
-            //services.AddMvc().AddSecurity().AddFacebookSecurity().AddAzureADSecurity();
-            services.AddMvc().AddSecurity<UserModel>().AddFacebookSecurity().AddAzureADSecurity();
+            //services.AddMvc()
+            //        .AddSecurity()
+            //        .AddFacebookSecurity()
+            //        .AddAzureADSecurity()
+            //        .AddGoogleSecurity();
+			
+			//OR
+
+            services.AddMvc()
+                    .AddSecurity<UserModel>()
+                    .AddFacebookSecurity()
+                    .AddAzureADSecurity()
+                    .AddGoogleSecurity();            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
