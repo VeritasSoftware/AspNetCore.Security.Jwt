@@ -14,6 +14,10 @@
       "ClientId": "<client-id-web-add>",
       "ClientSecret": "<client-secret>",
       "APIKey": "your api key for your azure endpoint here"
+    },
+    "GoogleSecuritySettings": {
+      "ClientId": "<client id>",
+      "ClientSecret": "<client secret>"
     }
   }
 }

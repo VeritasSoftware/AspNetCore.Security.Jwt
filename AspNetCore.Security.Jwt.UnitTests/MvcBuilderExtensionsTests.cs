@@ -69,6 +69,21 @@ namespace AspNetCore.Security.Jwt.UnitTests
         }
 
         [Fact]
+        public void Test_MvcBuilderExtensions_Google_Pass()
+        {
+            //Arrange
+            var serviceCollection = new ServiceCollection();
+
+            serviceCollection.AddMvc().AddGoogleSecurity();
+
+            //Act
+            var sp = serviceCollection.BuildServiceProvider();
+
+            //Assert
+            Assert.True(MvcBuilderExtensions.IsGoogleSecurityAdded);
+        }
+
+        [Fact]
         public void Test_MvcBuilderExtensions_Multiple_Pass()
         {
             //Arrange

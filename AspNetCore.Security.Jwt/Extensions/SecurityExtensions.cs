@@ -5,6 +5,7 @@ namespace AspNetCore.Security.Jwt
 {
     using AspNetCore.Security.Jwt.AzureAD;
     using AspNetCore.Security.Jwt.Facebook;
+    using AspNetCore.Security.Jwt.Google;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
@@ -104,6 +105,38 @@ namespace AspNetCore.Security.Jwt
             services.AddScoped<ISecurityService<FacebookAuthModel>, SecurityService<FacebookAuthModel>>();           
             services.AddScoped<IAuthentication<FacebookAuthModel>, FacebookAuthenticator>();
             services.AddScoped<ISecurityClient<FacebookAuthModel, bool>, FacebookClient>();
+
+            services.AddSwaggerAndJwtBearerScheme(addSwaggerSecurity, securitySettings);
+
+            return services;
+        }
+
+        /// <summary>
+        /// Add Facebook security extension
+        /// </summary>
+        /// <param name="services">The services collection</param>
+        /// <param name="configuration">The configurations -- appsettings</param>
+        /// <param name="addClaims">Add the Claims using the IdTypeBuilder (<see cref="IdTypeBuilder{TUserModel}"/>)</param>
+        /// <param name="addSwaggerSecurity">Enable security in Swagger UI</param>
+        /// <returns>The services collection</returns>
+        public static IServiceCollection AddGoogleSecurity(this IServiceCollection services,
+                                                                IConfiguration configuration,
+                                                                Action<IIdTypeBuilder<GoogleAuthModel>> addClaims = null,
+                                                                bool addSwaggerSecurity = false)
+        {
+            var securitySettings = configuration.SecuritySettings();
+            IdTypeHelpers.LoadClaimTypes();
+
+            services.AddSingleton(securitySettings);
+
+            services.AddSingleton<BaseSecuritySettings>(securitySettings);
+            if (addClaims != null)
+            {
+                services.AddSingleton<Action<IIdTypeBuilder<GoogleAuthModel>>>(x => addClaims);
+            }
+            services.AddSingleton<GoogleSecuritySettings>(securitySettings.GoogleSecuritySettings);
+            services.AddScoped<IAuthentication<GoogleAuthModel, GoogleResponseModel>, GoogleAuthenticator>();
+            services.AddScoped<ISecurityClient<GoogleAuthModel, GoogleResponseModel>, GoogleClient>();
 
             services.AddSwaggerAndJwtBearerScheme(addSwaggerSecurity, securitySettings);
 

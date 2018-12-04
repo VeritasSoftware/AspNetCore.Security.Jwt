@@ -34,6 +34,8 @@
 
 *	**Azure Active Directory (AD)** authentication integration.
 
+*	**Google OAuth2** authentication integration.
+
 *	**Facebook** authentication integration.
 
 *	Also, **Swagger UI** integration!
@@ -140,6 +142,10 @@ The Authenticator is automatically wired up for dependency injection (Scoped).
 ## Azure Active Directory (AD) authentication integration
 
 [**Using Azure AD for authentication**](READMEAzureAD.md)
+
+## Google OAuth2 authentication integration
+
+[**Using Google for authentication**](READMEGoogle.md)
 
 ## Facebook authentication integration
 

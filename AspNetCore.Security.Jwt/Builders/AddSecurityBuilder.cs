@@ -1,5 +1,6 @@
 ﻿using AspNetCore.Security.Jwt.AzureAD;
 using AspNetCore.Security.Jwt.Facebook;
+using AspNetCore.Security.Jwt.Google;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 
@@ -17,6 +18,7 @@ namespace AspNetCore.Security.Jwt
         private bool IsDefaultAdded = false;
         private bool IsCustomAdded = false;
         private bool IsFacebookAdded = false;
+        private bool IsGoogleAdded = false;
         private bool IsAzureAdded = false;
         private readonly bool IsSwaggerAdded = false;
         private readonly IServiceCollection Services;
@@ -86,6 +88,25 @@ namespace AspNetCore.Security.Jwt
 
                 IsFacebookAdded = true;
             }            
+
+            return this;
+        }
+
+        public IAddSecurityBuilder AddGoogleSecurity(Action<IIdTypeBuilder<GoogleAuthModel>> addClaims = null)
+        {
+            if (!IsGoogleAdded)
+            {
+                Services.AddSingleton<BaseSecuritySettings>(SecuritySettings);
+                if (addClaims != null)
+                {
+                    Services.AddSingleton<Action<IIdTypeBuilder<GoogleAuthModel>>>(x => addClaims);
+                }
+                Services.AddSingleton<GoogleSecuritySettings>(SecuritySettings.GoogleSecuritySettings);
+                Services.AddScoped<IAuthentication<GoogleAuthModel, GoogleResponseModel>, GoogleAuthenticator>();
+                Services.AddScoped<ISecurityClient<GoogleAuthModel, GoogleResponseModel>, GoogleClient>();
+
+                IsGoogleAdded = true;
+            }
 
             return this;
         }

@@ -117,5 +117,35 @@ namespace AspNetCore.Security.Jwt.UnitTests
             Assert.IsType<BadRequestResult>(result);
             this.MockAzureClient.Verify(x => x.PostSecurityRequest(), Times.Never);
         }
+
+        [Fact]
+        public async Task Test_AzureController_SecurityException_Fail()
+        {
+            //Arrange
+
+            //Authorization Code absent
+            AzureADAuthModel googleAuthModel = new AzureADAuthModel
+            {
+                APIKey = "<api key>"
+            };
+
+            AzureAuthenticator authenticator = new AzureAuthenticator(this.SecuritySettings,
+                                                                        this.MockAzureClient.Object);
+
+            var controller = new AzureController(authenticator);
+
+            try
+            {
+                //Act
+                var result = await controller.Create(googleAuthModel);
+            }
+            catch (SecurityException ex)
+            {
+                //Assert
+                Assert.IsType<SecurityException>(ex);
+                this.MockAzureClient.Verify(x => x.PostSecurityRequest(), Times.Never);
+            }
+        }
+
     }
 }

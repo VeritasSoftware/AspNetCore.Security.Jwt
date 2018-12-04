@@ -15,6 +15,7 @@
         internal static bool IsDefaultSecurityAdded { get; set; }
         internal static bool IsUserModelSecurityAdded { get; set; }
         internal static bool IsFacebookSecurityAdded { get; set; }
+        internal static bool IsGoogleSecurityAdded { get; set; }
         internal static bool IsAzureSecurityAdded { get; set; }
 
         /// <summary>
@@ -63,6 +64,22 @@
                                                             apm => apm.FeatureProviders.Add(new FacebookControllerFeatureProvider() { AddFacebookController = true }));            
 
             IsFacebookSecurityAdded = true;
+
+            return mvcBuilder;
+        }
+
+        /// <summary>
+        /// Add Google security extension
+        /// </summary>
+        /// <param name="mvcBuilder">The MvcBuilder</param>
+        /// <returns><see cref="IMvcBuilder"/></returns>
+        public static IMvcBuilder AddGoogleSecurity(this IMvcBuilder mvcBuilder)
+        {
+            mvcBuilder.SecurityInit()
+                      .ConfigureApplicationPartManager(!IsGoogleSecurityAdded,
+                                                            apm => apm.FeatureProviders.Add(new GoogleControllerFeatureProvider() { AddGoogleController = true }));
+
+            IsGoogleSecurityAdded = true;
 
             return mvcBuilder;
         }

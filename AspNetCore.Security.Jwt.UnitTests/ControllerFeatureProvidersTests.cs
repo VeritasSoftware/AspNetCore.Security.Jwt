@@ -78,6 +78,24 @@ namespace AspNetCore.Security.Jwt.UnitTests
         }
 
         [Fact]
+        public void Test_ControllerFeatureProviders_GoogleControllerFeatureProvider_Pass()
+        {
+            var featureProvider = new GoogleControllerFeatureProvider()
+            {
+                AddGoogleController = true
+            };
+
+            var applicationParts = new List<ApplicationPart>();
+            var controllerFeature = new ControllerFeature();
+
+            featureProvider.PopulateFeature(applicationParts, controllerFeature);
+
+            Assert.True(controllerFeature.Controllers.Any());
+            Assert.True(controllerFeature.Controllers.Count == 1);
+            Assert.True(controllerFeature.Controllers.First() == typeof(GoogleController));
+        }
+
+        [Fact]
         public void Test_ControllerFeatureProviders_RemoveControllerFeatureProvider_Pass()
         {
             var featureProvider = new RemoveControllerFeatureProvider();
@@ -89,7 +107,8 @@ namespace AspNetCore.Security.Jwt.UnitTests
             controllerFeature.Controllers.Add(typeof(TokenController<>).GetTypeInfo());
             controllerFeature.Controllers.Add(typeof(AzureController).GetTypeInfo());
             controllerFeature.Controllers.Add(typeof(FacebookController).GetTypeInfo());
-            
+            controllerFeature.Controllers.Add(typeof(GoogleController).GetTypeInfo());
+
             featureProvider.PopulateFeature(applicationParts, controllerFeature);
 
             Assert.True(!controllerFeature.Controllers.Any());

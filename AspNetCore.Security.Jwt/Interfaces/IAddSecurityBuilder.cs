@@ -1,4 +1,5 @@
 ﻿using AspNetCore.Security.Jwt.Facebook;
+using AspNetCore.Security.Jwt.Google;
 using System;
 
 namespace AspNetCore.Security.Jwt
@@ -13,6 +14,8 @@ namespace AspNetCore.Security.Jwt
             where TUserModel : class, IAuthenticationUser;
 
         IAddSecurityBuilder AddFacebookSecurity(Action<IIdTypeBuilder<FacebookAuthModel>> addClaims = null);
+
+        IAddSecurityBuilder AddGoogleSecurity(Action<IIdTypeBuilder<GoogleAuthModel>> addClaims = null);
 
         IAddSecurityBuilder AddAzureADSecurity();
     }

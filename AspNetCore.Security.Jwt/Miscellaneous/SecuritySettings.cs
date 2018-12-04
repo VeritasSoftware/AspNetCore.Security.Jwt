@@ -11,6 +11,8 @@
         public double? TokenExpiryInHours { get; set; }        
 
         public AzureADSecuritySettings AzureADSecuritySettings { get; set; }
+
+        public GoogleSecuritySettings GoogleSecuritySettings { get; set; }
     }
         
     public class SecuritySettings : BaseSecuritySettings
@@ -40,6 +42,17 @@
         public string ClientId { get; set; }
 
         public string ClientSecret { get; set; }
+
+        public string APIKey { get; set; }
+    }
+
+    public class GoogleSecuritySettings
+    {
+        public string ClientId { get; set; }
+
+        public string ClientSecret { get; set; }
+
+        public string RedirectUri { get; set; }        
 
         public string APIKey { get; set; }
     }

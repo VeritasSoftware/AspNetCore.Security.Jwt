@@ -107,9 +107,10 @@ namespace AspNetCore.Security.Jwt.UnitTests
                 //Act
                 var result = await controller.Create(facebookAuthModel);
             }
-            catch(SecurityException)
+            catch(SecurityException ex)
             {
                 //Assert
+                Assert.IsType<SecurityException>(ex);
                 this.MockFacebookClient.Verify(x => x.PostSecurityRequest(facebookAuthModel), Times.Never);
             }                        
         }

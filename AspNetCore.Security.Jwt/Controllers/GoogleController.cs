@@ -1,4 +1,4 @@
-﻿using AspNetCore.Security.Jwt.AzureAD;
+﻿using AspNetCore.Security.Jwt.Google;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
@@ -6,22 +6,22 @@ using System.Threading.Tasks;
 namespace AspNetCore.Security.Jwt
 {
     /// <summary>
-    /// Azure Contoller for authentication
+    /// Facebook Contoller for authentication
     /// </summary>
     [Produces("application/json")]
     [Route("api/[controller]")]
-    public class AzureController : Controller
+    public class GoogleController : Controller
     {
-        private readonly IAuthentication<AzureADAuthModel, AzureADResponseModel> authentication;
+        private readonly IAuthentication<GoogleAuthModel, GoogleResponseModel> authentication;
 
-        public AzureController(IAuthentication<AzureADAuthModel, AzureADResponseModel> authentication)
+        public GoogleController(IAuthentication<GoogleAuthModel, GoogleResponseModel> authentication)
         {
             this.authentication = authentication;
         }
 
-        [Route("/azure")]
+        [Route("/google")]
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] AzureADAuthModel user)
+        public async Task<IActionResult> Create([FromBody] GoogleAuthModel user)
         {
             try
             {
@@ -29,9 +29,8 @@ namespace AspNetCore.Security.Jwt
 
                 var response = await this.authentication.IsValidUser(user);
 
-                if (response.IsAuthenticated && !string.IsNullOrEmpty(response.AccessToken))
-                    return new ObjectResult(response.AccessToken);
-
+                if (response.IsAuthenticated)
+                    return new ObjectResult(response);
                 return BadRequest();
             }
             catch (Exception ex)
@@ -40,16 +39,14 @@ namespace AspNetCore.Security.Jwt
             }            
         }
 
-        private void ValidateInput(AzureADAuthModel user)
+        private void ValidateInput(GoogleAuthModel user)
         {
             if (user == null)
-            {
                 throw new ArgumentNullException(nameof(user));
-            }
             if (string.IsNullOrEmpty(user.APIKey))
-            {
                 throw new SecurityException($"{nameof(user.APIKey)} is null or empty.");
-            }
+            if (string.IsNullOrEmpty(user.AuthorizationCode))
+                throw new SecurityException($"{nameof(user.AuthorizationCode)} is null or empty.");            
         }
     }
 }

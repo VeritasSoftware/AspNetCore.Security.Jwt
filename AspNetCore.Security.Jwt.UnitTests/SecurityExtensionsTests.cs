@@ -1,5 +1,6 @@
 ﻿using AspNetCore.Security.Jwt.AzureAD;
 using AspNetCore.Security.Jwt.Facebook;
+using AspNetCore.Security.Jwt.Google;
 using Microsoft.AspNetCore.Builder.Internal;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -131,6 +132,33 @@ namespace AspNetCore.Security.Jwt.UnitTests
 
             Assert.True(securityClient != null);
             Assert.IsType<FacebookClient>(securityClient);
+        }
+
+        [Fact]
+        public void Test_SecurityExtensions_Google_Pass()
+        {
+            //Arrange
+            var serviceCollection = new ServiceCollection();
+
+            serviceCollection.AddGoogleSecurity(this.Configuration);
+            
+            serviceCollection.AddScoped<GoogleController>();
+
+            var sp = serviceCollection.BuildServiceProvider();
+
+            //Act
+            var securityClient = sp.GetService<ISecurityClient<GoogleAuthModel, GoogleResponseModel>>();
+            var autheticator = sp.GetService<IAuthentication<GoogleAuthModel, GoogleResponseModel>>();
+            var controller = sp.GetService<GoogleController>();
+
+            //Assert            
+            Assert.True(securityClient != null);
+            Assert.IsType<GoogleClient>(securityClient);
+
+            Assert.True(autheticator != null);
+            Assert.IsType<GoogleAuthenticator>(autheticator);
+
+            Assert.True(controller != null);
         }
 
         [Fact]

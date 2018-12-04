@@ -49,6 +49,10 @@ namespace AspNetCore.Security.Jwt
             {
                 feature.Controllers.Remove(typeof(AzureController).GetTypeInfo());
             }
+            if (feature.Controllers.Contains(typeof(GoogleController).GetTypeInfo()))
+            {
+                feature.Controllers.Remove(typeof(GoogleController).GetTypeInfo());
+            }
         }
     }
 
@@ -63,6 +67,21 @@ namespace AspNetCore.Security.Jwt
             if (this.AddFacebookController)
             {
                 feature.Controllers.Add(typeof(FacebookController).GetTypeInfo());
+            }
+        }
+    }
+
+    public class GoogleControllerFeatureProvider : IApplicationFeatureProvider<ControllerFeature>
+    {
+        public bool AddGoogleController { get; set; }
+
+        public void PopulateFeature(IEnumerable<ApplicationPart> parts, ControllerFeature feature)
+        {
+            feature.Controllers.Remove(typeof(GoogleController).GetTypeInfo());
+
+            if (this.AddGoogleController)
+            {
+                feature.Controllers.Add(typeof(GoogleController).GetTypeInfo());
             }
         }
     }

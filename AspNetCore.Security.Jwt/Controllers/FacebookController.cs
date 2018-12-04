@@ -26,11 +26,18 @@ namespace AspNetCore.Security.Jwt
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] FacebookAuthModel user)
         {
-            ValidateInput(user);
+            try
+            {
+                ValidateInput(user);
 
-            if (await this.authentication.IsValidUser(user))
-                return new ObjectResult(this.securityService.GenerateToken(user));
-            return BadRequest();
+                if (await this.authentication.IsValidUser(user))
+                    return new ObjectResult(this.securityService.GenerateToken(user));
+                return BadRequest();
+            }
+            catch (Exception ex)
+            {
+                throw new SecurityException(ex.Message);
+            }            
         }
 
         private void ValidateInput(FacebookAuthModel user)

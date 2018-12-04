@@ -1,5 +1,6 @@
 ﻿using AspNetCore.Security.Jwt.AzureAD;
 using AspNetCore.Security.Jwt.Facebook;
+using AspNetCore.Security.Jwt.Google;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using Xunit;
@@ -29,11 +30,14 @@ namespace AspNetCore.Security.Jwt.UnitTests
             serviceCollection.AddSecurity(securitySettings, false)
                              .AddSecurity<DefaultAuthenticator>();
 
+            serviceCollection.AddScoped<TokenController>();
+
             var sp = serviceCollection.BuildServiceProvider();
 
             //Act
             var authService = sp.GetService<IAuthentication>();
             var securityService = sp.GetService<ISecurityService>();
+            var controller = sp.GetService<TokenController>();
 
             //Assert
             Assert.True(authService != null);
@@ -41,6 +45,8 @@ namespace AspNetCore.Security.Jwt.UnitTests
 
             Assert.True(securityService != null);
             Assert.IsType<SecurityService>(securityService);
+
+            Assert.True(controller != null);
         }
 
         [Fact]
@@ -97,11 +103,14 @@ namespace AspNetCore.Security.Jwt.UnitTests
             serviceCollection.AddSecurity(securitySettings, false)
                              .AddSecurity<CustomAuthenticator, UserModel>();
 
+            serviceCollection.AddScoped<TokenController<UserModel>>();
+
             var sp = serviceCollection.BuildServiceProvider();
 
             //Act
             var authService = sp.GetService<IAuthentication<UserModel>>();
             var securityService = sp.GetService<ISecurityService<UserModel>>();
+            var controller = sp.GetService<TokenController<UserModel>>();
 
             //Assert
             Assert.True(authService != null);
@@ -109,6 +118,8 @@ namespace AspNetCore.Security.Jwt.UnitTests
 
             Assert.True(securityService != null);
             Assert.IsType<SecurityService<UserModel>>(securityService);
+
+            Assert.True(controller != null);
         }
 
         [Fact]
@@ -138,12 +149,15 @@ namespace AspNetCore.Security.Jwt.UnitTests
             serviceCollection.AddSecurity(securitySettings, false)
                              .AddAzureADSecurity();
 
+            serviceCollection.AddScoped<AzureController>();
+
             var sp = serviceCollection.BuildServiceProvider();
 
             //Act
             var azureADSecuritySettings = sp.GetService<AzureADSecuritySettings>();
             var authAzure = sp.GetService<IAuthentication<AzureADAuthModel, AzureADResponseModel>>();
             var securityClient = sp.GetService<ISecurityClient<AzureADResponseModel>>();
+            var controller = sp.GetService<AzureController>();
 
             //Assert            
             Assert.True(azureADSecuritySettings != null);
@@ -161,6 +175,7 @@ namespace AspNetCore.Security.Jwt.UnitTests
 
             Assert.True(securityClient != null);
             Assert.IsType<AzureClient>(securityClient);
+            Assert.True(controller != null);
         }
 
         [Fact]
@@ -183,12 +198,15 @@ namespace AspNetCore.Security.Jwt.UnitTests
             serviceCollection.AddSecurity(securitySettings, false)
                              .AddFacebookSecurity();
 
+            serviceCollection.AddScoped<FacebookController>();
+
             var sp = serviceCollection.BuildServiceProvider();
 
             //Act
+            var securityClient = sp.GetService<ISecurityClient<FacebookAuthModel, bool>>();
             var authFacebook = sp.GetService<IAuthentication<FacebookAuthModel>>();
             var securityService = sp.GetService<ISecurityService<FacebookAuthModel>>();
-            var securityClient = sp.GetService<ISecurityClient<FacebookAuthModel, bool>>();
+            var controller = sp.GetService<FacebookController>();
 
             //Assert            
             Assert.True(authFacebook != null);
@@ -199,6 +217,54 @@ namespace AspNetCore.Security.Jwt.UnitTests
 
             Assert.True(securityClient != null);
             Assert.IsType<FacebookClient>(securityClient);
+
+            Assert.True(controller != null);
+        }
+
+        [Fact]
+        public void Test_AddSecurityBuilder_Google_Pass()
+        {
+            //Arrange
+            SecuritySettings securitySettings = new SecuritySettings()
+            {
+                Secret = "a secret that needs to be at least 16 characters long",
+                Issuer = "your app",
+                Audience = "the client of your app",
+                IdType = IdType.Name,
+                TokenExpiryInHours = 1.2,
+                AppId = "xxxxxxxxxxxxxx",
+                AppSecret = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+                GoogleSecuritySettings = new GoogleSecuritySettings
+                {
+                    APIKey = "<api key>",
+                    ClientId = "<client id>",
+                    ClientSecret = "<client secret>",
+                    RedirectUri = "http://localhost/"
+                }
+            };
+
+            var serviceCollection = new ServiceCollection();
+
+            serviceCollection.AddSecurity(securitySettings, false)
+                             .AddGoogleSecurity();
+
+            serviceCollection.AddScoped<GoogleController>();
+
+            var sp = serviceCollection.BuildServiceProvider();
+
+            //Act
+            var securityClient = sp.GetService<ISecurityClient<GoogleAuthModel, GoogleResponseModel>>();
+            var autheticator = sp.GetService<IAuthentication<GoogleAuthModel, GoogleResponseModel>>();            
+            var controller = sp.GetService<GoogleController>();
+
+            //Assert            
+            Assert.True(securityClient != null);
+            Assert.IsType<GoogleClient>(securityClient);
+
+            Assert.True(autheticator != null);
+            Assert.IsType<GoogleAuthenticator>(autheticator);                       
+
+            Assert.True(controller != null);
         }
 
     }

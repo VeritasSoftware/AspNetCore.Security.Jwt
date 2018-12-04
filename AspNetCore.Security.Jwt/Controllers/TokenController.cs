@@ -25,11 +25,18 @@ namespace AspNetCore.Security.Jwt
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] User user)
         {
-            ValidateInput(user);
+            try
+            {
+                ValidateInput(user);
 
-            if (await this.authentication.IsValidUser(user.Id, user.Password))
-                return new ObjectResult(this.securityService.GenerateToken(user.Id));
-            return BadRequest();
+                if (await this.authentication.IsValidUser(user.Id, user.Password))
+                    return new ObjectResult(this.securityService.GenerateToken(user.Id));
+                return BadRequest();
+            }
+            catch (Exception ex)
+            {
+                throw new SecurityException(ex.Message);
+            }            
         }        
 
         private void ValidateInput(User user)
@@ -65,11 +72,18 @@ namespace AspNetCore.Security.Jwt
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] TUserModel user)
         {
-            ValidateInput(user);
+            try
+            {
+                ValidateInput(user);
 
-            if (await this.authentication.IsValidUser(user))
-                return new ObjectResult(this.securityService.GenerateToken(user));
-            return BadRequest();
+                if (await this.authentication.IsValidUser(user))
+                    return new ObjectResult(this.securityService.GenerateToken(user));
+                return BadRequest();
+            }
+            catch (Exception ex)
+            {
+                throw new SecurityException(ex.Message);
+            }            
         }
 
         private void ValidateInput(TUserModel user)

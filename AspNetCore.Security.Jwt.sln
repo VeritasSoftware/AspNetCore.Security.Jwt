@@ -13,6 +13,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		READMEAzureAD.md = READMEAzureAD.md
 		READMECustomUserModel.md = READMECustomUserModel.md
 		READMEFacebook.md = READMEFacebook.md
+		READMEGoogle.md = READMEGoogle.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "images", "images", "{4A15B3FD-E03B-4E78-B12D-D2E8C7EB9ADF}"
@@ -21,6 +22,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "images", "images", "{4A15B3
 		AvailableAuthorizations.jpg = AvailableAuthorizations.jpg
 		AzureADSwaggerIntegration.jpg = AzureADSwaggerIntegration.jpg
 		FacebookSwaggerIntegration.jpg = FacebookSwaggerIntegration.jpg
+		GoogleSwaggerIntegration.jpg = GoogleSwaggerIntegration.jpg
 		MultipleAuth.jpg = MultipleAuth.jpg
 		SwaggerIntegration.jpg = SwaggerIntegration.jpg
 		TokenRequest.jpg = TokenRequest.jpg

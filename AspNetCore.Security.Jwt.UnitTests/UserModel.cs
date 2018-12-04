@@ -1,6 +1,6 @@
 ﻿namespace AspNetCore.Security.Jwt.UnitTests
 {
-    class UserModel : IAuthenticationUser
+    public class UserModel : IAuthenticationUser
     {
         public string Id { get; set; }
         public string Pwd { get; set; }
