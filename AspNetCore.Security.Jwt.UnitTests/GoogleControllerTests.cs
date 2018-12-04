@@ -1,6 +1,7 @@
 ﻿using AspNetCore.Security.Jwt.Google;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -9,11 +10,12 @@ namespace AspNetCore.Security.Jwt.UnitTests
     public class GoogleControllerTests
     {
         private Mock<GoogleClient> MockGoogleClient { get; set; }
+        private Mock<HttpClientHandler> MockHttpClient { get; set; }
         private SecuritySettings SecuritySettings { get; set; }
 
         internal Mock<GoogleClient> InitMockGoogleClient(SecuritySettings securitySettings, bool isAuthenticated = true)
         {
-            var securityClient = new Mock<GoogleClient>(securitySettings.GoogleSecuritySettings);
+            var securityClient = new Mock<GoogleClient>(securitySettings.GoogleSecuritySettings, It.IsAny<HttpClientHandler>());
             securityClient.Setup(x => x.PostSecurityRequest(It.IsAny<GoogleAuthModel>())).ReturnsAsync(() => new GoogleResponseModel
             {
                 IsAuthenticated = isAuthenticated,
@@ -25,6 +27,22 @@ namespace AspNetCore.Security.Jwt.UnitTests
             });
 
             return securityClient;
+        }
+
+        internal Mock<HttpClientHandler> InitMockHttpClient(SecuritySettings securitySettings, bool isAuthenticated = true)
+        {
+            var httpClient = new Mock<HttpClientHandler>();
+            httpClient.Setup(x => x.SendAsync<GoogleResponseModel>(It.IsAny<string>(), It.IsAny<HttpRequestMessage>())).ReturnsAsync(() => new GoogleResponseModel
+            {
+                IsAuthenticated = isAuthenticated,
+                AccessToken = "ya29.GltoBsrJ_RRZzI-DEzU3l6nDz_qwy7RFM-zFv7MA1z6ZeU3IijEZa_ECHG70V-cFz7omdplXraYVjTvrZkkYqdaf0Z8-vnQ6NiLeOXW3GLCqnlYjabwf59RMaUv8",
+                RefreshToken = "1/PN_s59ZaV_pPDvYjM-EDeUlxg9OHTh8gzdAGmgsERrM",
+                ExpiresIn = 3600,
+                Scope = "create",
+                TokenType = "bearer"
+            });
+
+            return httpClient;
         }
 
         public GoogleControllerTests()
@@ -50,6 +68,7 @@ namespace AspNetCore.Security.Jwt.UnitTests
             this.SecuritySettings = securitySettings;
 
             this.MockGoogleClient = this.InitMockGoogleClient(this.SecuritySettings);
+            this.MockHttpClient = this.InitMockHttpClient(this.SecuritySettings);
         }
 
         [Fact]
@@ -62,8 +81,10 @@ namespace AspNetCore.Security.Jwt.UnitTests
                 AuthorizationCode = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
             };
 
+            GoogleClient client = new GoogleClient(this.SecuritySettings.GoogleSecuritySettings, this.MockHttpClient.Object);
+
             GoogleAuthenticator authenticator = new GoogleAuthenticator(this.SecuritySettings.GoogleSecuritySettings,
-                                                                        this.MockGoogleClient.Object);
+                                                                        client);
 
             var controller = new GoogleController(authenticator);
 
@@ -74,7 +95,7 @@ namespace AspNetCore.Security.Jwt.UnitTests
             //Assert
             Assert.IsType<ObjectResult>(result);
             Assert.True(googleResponse.AccessToken.IsValidJwtToken());
-            this.MockGoogleClient.Verify(x => x.PostSecurityRequest(googleAuthModel), Times.Once);
+            this.MockHttpClient.Verify(x => x.SendAsync<GoogleResponseModel>(It.IsAny<string>(), It.IsAny<HttpRequestMessage>()), Times.Once);
         }
 
         [Fact]
@@ -91,7 +112,7 @@ namespace AspNetCore.Security.Jwt.UnitTests
                 AuthorizationCode = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
             };
 
-            GoogleAuthenticator authenticator = new GoogleAuthenticator(this.SecuritySettings.GoogleSecuritySettings, 
+            GoogleAuthenticator authenticator = new GoogleAuthenticator(this.SecuritySettings.GoogleSecuritySettings,
                                                                         this.MockGoogleClient.Object);
 
             var controller = new GoogleController(authenticator);
@@ -115,8 +136,10 @@ namespace AspNetCore.Security.Jwt.UnitTests
                 AuthorizationCode = "<auth_code>"
             };
 
-            GoogleAuthenticator authenticator = new GoogleAuthenticator(this.SecuritySettings.GoogleSecuritySettings, 
-                                                                        this.MockGoogleClient.Object);
+            GoogleClient client = new GoogleClient(this.SecuritySettings.GoogleSecuritySettings, this.MockHttpClient.Object);
+
+            GoogleAuthenticator authenticator = new GoogleAuthenticator(this.SecuritySettings.GoogleSecuritySettings,
+                                                                        client);
 
             var controller = new GoogleController(authenticator);
 
@@ -143,8 +166,10 @@ namespace AspNetCore.Security.Jwt.UnitTests
                 APIKey = "<api key>"
             };
 
+            GoogleClient client = new GoogleClient(this.SecuritySettings.GoogleSecuritySettings, this.MockHttpClient.Object);
+
             GoogleAuthenticator authenticator = new GoogleAuthenticator(this.SecuritySettings.GoogleSecuritySettings,
-                                                                        this.MockGoogleClient.Object);
+                                                                        client);
 
             var controller = new GoogleController(authenticator);
 

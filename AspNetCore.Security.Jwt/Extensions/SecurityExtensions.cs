@@ -40,6 +40,7 @@ namespace AspNetCore.Security.Jwt
             services.AddSingleton(securitySettings);            
             services.AddScoped<ISecurityService, SecurityService>();
             services.AddScoped<IAuthentication, TAuthenticator>();
+            services.AddScoped<IHttpClient, HttpClientHandler>();
 
             services.AddSwaggerAndJwtBearerScheme(addSwaggerSecurity, securitySettings);
 
@@ -74,6 +75,7 @@ namespace AspNetCore.Security.Jwt
             }
             services.AddScoped<ISecurityService<TUserModel>, SecurityService<TUserModel>>();
             services.AddScoped<IAuthentication<TUserModel>, TAuthenticator>();
+            services.AddScoped<IHttpClient, HttpClientHandler>();
 
             services.AddSwaggerAndJwtBearerScheme(addSwaggerSecurity, securitySettings);
 
@@ -105,6 +107,7 @@ namespace AspNetCore.Security.Jwt
             services.AddScoped<ISecurityService<FacebookAuthModel>, SecurityService<FacebookAuthModel>>();           
             services.AddScoped<IAuthentication<FacebookAuthModel>, FacebookAuthenticator>();
             services.AddScoped<ISecurityClient<FacebookAuthModel, bool>, FacebookClient>();
+            services.AddScoped<IHttpClient, HttpClientHandler>();
 
             services.AddSwaggerAndJwtBearerScheme(addSwaggerSecurity, securitySettings);
 
@@ -137,6 +140,7 @@ namespace AspNetCore.Security.Jwt
             services.AddSingleton<GoogleSecuritySettings>(securitySettings.GoogleSecuritySettings);
             services.AddScoped<IAuthentication<GoogleAuthModel, GoogleResponseModel>, GoogleAuthenticator>();
             services.AddScoped<ISecurityClient<GoogleAuthModel, GoogleResponseModel>, GoogleClient>();
+            services.AddScoped<IHttpClient, HttpClientHandler>();
 
             services.AddSwaggerAndJwtBearerScheme(addSwaggerSecurity, securitySettings);
 
@@ -161,6 +165,7 @@ namespace AspNetCore.Security.Jwt
             services.AddSingleton<AzureADSecuritySettings>(securitySettings.AzureADSecuritySettings);            
             services.AddScoped<IAuthentication<AzureADAuthModel, AzureADResponseModel>, AzureAuthenticator>();
             services.AddScoped<ISecurityClient<AzureADResponseModel>, AzureClient>();
+            services.AddScoped<IHttpClient, HttpClientHandler>();
 
             if (addSwaggerSecurity)
             {

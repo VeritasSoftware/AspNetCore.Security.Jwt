@@ -9,10 +9,12 @@ namespace AspNetCore.Security.Jwt.Google
     public class GoogleClient : ISecurityClient<GoogleAuthModel, GoogleResponseModel>
     {
         private readonly GoogleSecuritySettings googleSecuritySettings;
+        private readonly IHttpClient httpClient;
 
-        public GoogleClient(GoogleSecuritySettings googleSecuritySettings)
+        public GoogleClient(GoogleSecuritySettings googleSecuritySettings, IHttpClient httpClient)
         {
             this.googleSecuritySettings = googleSecuritySettings;
+            this.httpClient = httpClient;
         }
 
         public virtual async Task<GoogleResponseModel> PostSecurityRequest(GoogleAuthModel request)
@@ -27,26 +29,38 @@ namespace AspNetCore.Security.Jwt.Google
 
             byte[] bytes = Encoding.UTF8.GetBytes(postString);
 
-            using (var httpClient = new HttpClient())
-            {
-                HttpRequestMessage requestGoogle = new HttpRequestMessage(HttpMethod.Post, "https://accounts.google.com/o/oauth2/token");
-                requestGoogle.Content = new ByteArrayContent(bytes);
+            HttpRequestMessage requestGoogle = new HttpRequestMessage(HttpMethod.Post, "https://accounts.google.com/o/oauth2/token");
+            requestGoogle.Content = new ByteArrayContent(bytes);
 
-                requestGoogle.Content.Headers.Add("Content-Type", "application/x-www-form-urlencoded");
-                requestGoogle.Content.Headers.Add("Content-Length", $"{bytes.Length}");
+            requestGoogle.Content.Headers.Add("Content-Type", "application/x-www-form-urlencoded");
+            requestGoogle.Content.Headers.Add("Content-Length", $"{bytes.Length}");
 
-                var response = await httpClient.SendAsync(requestGoogle);                      
+            var tokenResponse = await this.httpClient.SendAsync<GoogleResponseModel>("https://accounts.google.com/o/oauth2/token", requestGoogle);
 
-                response.EnsureSuccessStatusCode();
+            tokenResponse.IsAuthenticated = true;
 
-                var responseStr = await response.Content.ReadAsStringAsync();
+            return tokenResponse;
 
-                var tokenResponse = JsonConvert.DeserializeObject<GoogleResponseModel>(responseStr);
+            //using (var httpClient = new HttpClient())
+            //{
+            //    HttpRequestMessage requestGoogle = new HttpRequestMessage(HttpMethod.Post, "https://accounts.google.com/o/oauth2/token");
+            //    requestGoogle.Content = new ByteArrayContent(bytes);
 
-                tokenResponse.IsAuthenticated = true;
+            //    requestGoogle.Content.Headers.Add("Content-Type", "application/x-www-form-urlencoded");
+            //    requestGoogle.Content.Headers.Add("Content-Length", $"{bytes.Length}");
 
-                return tokenResponse;
-            }            
+            //    var response = await httpClient.SendAsync(requestGoogle);                      
+
+            //    response.EnsureSuccessStatusCode();
+
+            //    var responseStr = await response.Content.ReadAsStringAsync();
+
+            //    var tokenResponse = JsonConvert.DeserializeObject<GoogleResponseModel>(responseStr);
+
+            //    tokenResponse.IsAuthenticated = true;
+
+            //    return tokenResponse;
+            //}            
         }
     }
 }

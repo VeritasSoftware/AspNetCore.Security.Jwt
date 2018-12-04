@@ -66,6 +66,7 @@ namespace AspNetCore.Security.Jwt
                 Services.AddSingleton<AzureADSecuritySettings>(SecuritySettings.AzureADSecuritySettings);
                 Services.AddScoped<IAuthentication<AzureADAuthModel, AzureADResponseModel>, AzureAuthenticator>();
                 Services.AddScoped<ISecurityClient<AzureADResponseModel>, AzureClient>();
+                Services.AddScoped<IHttpClient, HttpClientHandler>();
 
                 IsAzureAdded = true;
             }            
@@ -85,6 +86,7 @@ namespace AspNetCore.Security.Jwt
                 Services.AddScoped<ISecurityService<FacebookAuthModel>, SecurityService<FacebookAuthModel>>();
                 Services.AddScoped<IAuthentication<FacebookAuthModel>, FacebookAuthenticator>();
                 Services.AddScoped<ISecurityClient<FacebookAuthModel, bool>, FacebookClient>();
+                Services.AddScoped<IHttpClient, HttpClientHandler>();
 
                 IsFacebookAdded = true;
             }            
@@ -104,6 +106,7 @@ namespace AspNetCore.Security.Jwt
                 Services.AddSingleton<GoogleSecuritySettings>(SecuritySettings.GoogleSecuritySettings);
                 Services.AddScoped<IAuthentication<GoogleAuthModel, GoogleResponseModel>, GoogleAuthenticator>();
                 Services.AddScoped<ISecurityClient<GoogleAuthModel, GoogleResponseModel>, GoogleClient>();
+                Services.AddScoped<IHttpClient, HttpClientHandler>();
 
                 IsGoogleAdded = true;
             }
@@ -116,7 +119,8 @@ namespace AspNetCore.Security.Jwt
             if (!IsDefaultAdded && !IsCustomAdded)
             {
                 Services.AddScoped<ISecurityService, SecurityService>();
-                Services.AddScoped<IAuthentication, TAuthenticator>();                
+                Services.AddScoped<IAuthentication, TAuthenticator>();
+                Services.AddScoped<IHttpClient, HttpClientHandler>();
 
                 IsDefaultAdded = true;
             }            
@@ -134,7 +138,8 @@ namespace AspNetCore.Security.Jwt
                     Services.AddSingleton<Action<IIdTypeBuilder<TUserModel>>>(x => addClaims);
                 }
                 Services.AddScoped<ISecurityService<TUserModel>, SecurityService<TUserModel>>();
-                Services.AddScoped<IAuthentication<TUserModel>, TAuthenticator>();                
+                Services.AddScoped<IAuthentication<TUserModel>, TAuthenticator>();
+                Services.AddScoped<IHttpClient, HttpClientHandler>();
 
                 IsCustomAdded = true;
             }
