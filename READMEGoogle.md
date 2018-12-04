@@ -56,11 +56,7 @@
     "TokenExpiryInHours": 1.2,
     "AppId": "Your facebook app id",
     "AppSecret": "Your facebook app secret"
-  },
-  "GoogleSecuritySettings": {
-    "ClientId": "<client id>",
-    "ClientSecret": "<client secret>"
-  },
+  },  
   "GoogleSecuritySettings": {
     "ClientId": "<client id>",
     "ClientSecret": "<client secret>",
