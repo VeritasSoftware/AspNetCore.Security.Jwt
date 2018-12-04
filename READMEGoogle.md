@@ -49,13 +49,9 @@
 ```javascript
 {
   "SecuritySettings": {
-    "Secret": "a secret that needs to be at least 16 characters long",
-    "Issuer": "your app",
-    "Audience": "the client of your app",
-    "IdType": "Name",
-    "TokenExpiryInHours": 1.2,
-    "AppId": "Your facebook app id",
-    "AppSecret": "Your facebook app secret",  
+    .
+    .
+    .
     "GoogleSecuritySettings": {
        "ClientId": "<client id>",
        "ClientSecret": "<client secret>",
