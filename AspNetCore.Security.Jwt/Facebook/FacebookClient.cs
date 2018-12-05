@@ -21,15 +21,6 @@ namespace AspNetCore.Security.Jwt.Facebook
             var userAccessTokenValidation = await this.httpClient.GetStringAsync<FacebookUserAccessTokenValidation>($"https://graph.facebook.com/debug_token?input_token={request.UserAccessToken}&access_token={appAccessToken.AccessToken}");
 
             return userAccessTokenValidation.Data.IsValid;
-
-            //// 1.generate an app access token
-            //var appAccessTokenResponse = await this.httpClient.GetStringAsync($"https://graph.facebook.com/oauth/access_token?client_id={this.facebookSecuritySettings.AppId}&client_secret={this.facebookSecuritySettings.AppSecret}&grant_type=client_credentials");
-            //var appAccessToken = JsonConvert.DeserializeObject<FacebookAppAccessToken>(appAccessTokenResponse);
-            //// 2. validate the user access token
-            //var userAccessTokenValidationResponse = await httpClient.GetStringAsync($"https://graph.facebook.com/debug_token?input_token={request.UserAccessToken}&access_token={appAccessToken.AccessToken}");
-            //var userAccessTokenValidation = JsonConvert.DeserializeObject<FacebookUserAccessTokenValidation>(userAccessTokenValidationResponse);
-
-            //return userAccessTokenValidation.Data.IsValid;
         }
     }
 }
