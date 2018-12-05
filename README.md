@@ -26,7 +26,7 @@
 
 **The package:**
 
-*	Makes adding **Jwt Bearer Token Security** to your **ASP NET Core 2.0 app** a breeze!!
+*	Makes adding **Jwt Bearer Token Security** to your **ASP NET Core 2.0+ app** a breeze!!
 
 *	Even gives you an out of the box **TokenController** to issue Jwt tokens. 
 
