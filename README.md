@@ -122,11 +122,18 @@ The Authenticator is automatically wired up for dependency injection (Scoped).
 
 ## 3. In your appsettings.json
 
-**Note:-** You can put these settings in **Secret Manager** by using **Manage User Secrets** menu (right-click your Project).
-
 ```javascript
 {
   "SecuritySettings": {
+    "SystemSettings": {
+      "FacebookAuthSettings": {
+        "OAuthUrl": "https://graph.facebook.com/oauth/access_token?client_id={0}&client_secret={1}&grant_type=client_credentials",
+        "UserTokenValidationUrl": "https://graph.facebook.com/debug_token?input_token={0}&access_token={1}"
+      },
+      "GoogleAuthSettings": {
+        "TokenUrl": "https://accounts.google.com/o/oauth2/token"
+      }
+    },
     "Secret": "a secret that needs to be at least 16 characters long",
     "Issuer": "your app",
     "Audience": "the client of your app",
@@ -138,6 +145,9 @@ The Authenticator is automatically wired up for dependency injection (Scoped).
   .
 }
 ```
+Do not touch the **SystemSettings**. 
+All other settings are configurable.
+
 
 ## Azure Active Directory (AD) authentication integration
 

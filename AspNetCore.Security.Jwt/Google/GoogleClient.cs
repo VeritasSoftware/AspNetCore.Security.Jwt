@@ -28,7 +28,7 @@ namespace AspNetCore.Security.Jwt.Google
 
             byte[] bytes = Encoding.UTF8.GetBytes(postString);
 
-            HttpRequestMessage requestGoogle = new HttpRequestMessage(HttpMethod.Post, this.securitySettings.AuthSettings.GoogleAuthSettings.TokenUrl);
+            HttpRequestMessage requestGoogle = new HttpRequestMessage(HttpMethod.Post, this.securitySettings.SystemSettings.GoogleAuthSettings.TokenUrl);
             requestGoogle.Content = new ByteArrayContent(bytes);
 
             requestGoogle.Content.Headers.Add("Content-Type", "application/x-www-form-urlencoded");

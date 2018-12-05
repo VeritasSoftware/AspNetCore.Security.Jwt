@@ -16,9 +16,9 @@ namespace AspNetCore.Security.Jwt.Facebook
         public virtual async Task<bool> PostSecurityRequest(FacebookAuthModel request)
         {
             // 1.generate an app access token
-            var appAccessToken = await this.httpClient.GetStringAsync<FacebookAppAccessToken>(string.Format(this.securitySettings.AuthSettings.FacebookAuthSettings.OAuthUrl, this.securitySettings.AppId, this.securitySettings.AppSecret));
+            var appAccessToken = await this.httpClient.GetStringAsync<FacebookAppAccessToken>(string.Format(this.securitySettings.SystemSettings.FacebookAuthSettings.OAuthUrl, this.securitySettings.AppId, this.securitySettings.AppSecret));
             // 2. validate the user access token
-            var userAccessTokenValidation = await this.httpClient.GetStringAsync<FacebookUserAccessTokenValidation>(string.Format(this.securitySettings.AuthSettings.FacebookAuthSettings.UserTokenValidationUrl, request.UserAccessToken, appAccessToken.AccessToken));
+            var userAccessTokenValidation = await this.httpClient.GetStringAsync<FacebookUserAccessTokenValidation>(string.Format(this.securitySettings.SystemSettings.FacebookAuthSettings.UserTokenValidationUrl, request.UserAccessToken, appAccessToken.AccessToken));
 
             return userAccessTokenValidation.Data.IsValid;
         }

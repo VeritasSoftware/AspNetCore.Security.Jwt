@@ -44,7 +44,7 @@ namespace AspNetCore.Security.Jwt.UnitTests
         {
             SecuritySettings securitySettings = new SecuritySettings()
             {
-                AuthSettings = new AuthSettings
+                SystemSettings = new SystemSettings
                 {
                     FacebookAuthSettings = new FacebookAuthSettings
                     {

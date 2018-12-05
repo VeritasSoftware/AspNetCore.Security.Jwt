@@ -1,6 +1,6 @@
 ﻿{
   "SecuritySettings": {
-    "AuthSettings": {
+    "SystemSettings": {
       "FacebookAuthSettings": {
         "OAuthUrl": "https://graph.facebook.com/oauth/access_token?client_id={0}&client_secret={1}&grant_type=client_credentials",
         "UserTokenValidationUrl": "https://graph.facebook.com/debug_token?input_token={0}&access_token={1}"

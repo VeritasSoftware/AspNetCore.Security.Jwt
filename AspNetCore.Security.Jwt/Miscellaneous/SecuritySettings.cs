@@ -2,7 +2,7 @@
 {
     public abstract class BaseSecuritySettings
     {
-        public AuthSettings AuthSettings { get; set; }
+        public SystemSettings SystemSettings { get; set; }
 
         public string Secret { get; set; }
 
@@ -59,7 +59,7 @@
         public string APIKey { get; set; }
     }
 
-    public class AuthSettings
+    public class SystemSettings
     {
         public FacebookAuthSettings FacebookAuthSettings { get; set; }
 
