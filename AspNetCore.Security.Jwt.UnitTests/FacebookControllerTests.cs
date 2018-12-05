@@ -9,14 +9,35 @@ namespace AspNetCore.Security.Jwt.UnitTests
     public class FacebookControllerTests
     {
         private Mock<FacebookClient> MockFacebookClient { get; set; }
+        private Mock<HttpClientHandler> MockHttpClient { get; set; }
         private SecuritySettings SecuritySettings { get; set; }
 
         internal Mock<FacebookClient> InitMockFacebookClient(SecuritySettings securitySettings, bool isAuthenticated = true)
         {
-            var securityClient = new Mock<FacebookClient>(securitySettings);
+            var securityClient = new Mock<FacebookClient>(securitySettings, It.IsAny<HttpClientHandler>());
             securityClient.Setup(x => x.PostSecurityRequest(It.IsAny<FacebookAuthModel>())).ReturnsAsync(() => isAuthenticated);
 
             return securityClient;
+        }
+
+        internal Mock<HttpClientHandler> InitMockHttpClient(SecuritySettings securitySettings, bool isAuthenticated = true)
+        {
+            var httpClient = new Mock<HttpClientHandler>();
+            httpClient.Setup(x => x.GetStringAsync<FacebookAppAccessToken>(It.IsAny<string>())).ReturnsAsync(() => new FacebookAppAccessToken
+            {
+                AccessToken = "ya29.GltoBsrJ_RRZzI-DEzU3l6nDz_qwy7RFM-zFv7MA1z6ZeU3IijEZa_ECHG70V-cFz7omdplXraYVjTvrZkkYqdaf0Z8-vnQ6NiLeOXW3GLCqnlYjabwf59RMaUv8",
+                TokenType = "bearer"
+            });
+            httpClient.Setup(x => x.GetStringAsync<FacebookUserAccessTokenValidation>(It.IsAny<string>())).ReturnsAsync(() => new FacebookUserAccessTokenValidation
+            {
+                Data = new FacebookUserAccessTokenData
+                {
+                    IsValid = isAuthenticated
+                }
+            });
+
+
+            return httpClient;
         }
 
         public FacebookControllerTests()
@@ -35,6 +56,7 @@ namespace AspNetCore.Security.Jwt.UnitTests
             this.SecuritySettings = securitySettings;
 
             this.MockFacebookClient = this.InitMockFacebookClient(this.SecuritySettings);
+            this.MockHttpClient = this.InitMockHttpClient(this.SecuritySettings);
         }
 
         [Fact]
@@ -46,7 +68,9 @@ namespace AspNetCore.Security.Jwt.UnitTests
                 UserAccessToken = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
             };
 
-            FacebookAuthenticator authenticator = new FacebookAuthenticator(this.MockFacebookClient.Object);
+            var client = new FacebookClient(this.SecuritySettings, this.MockHttpClient.Object);
+
+            FacebookAuthenticator authenticator = new FacebookAuthenticator(client);
 
             var securityService = new SecurityService<FacebookAuthModel>(this.SecuritySettings);
 
@@ -58,7 +82,8 @@ namespace AspNetCore.Security.Jwt.UnitTests
             //Assert
             Assert.IsType<ObjectResult>(result);
             Assert.True((result as ObjectResult).Value.ToString().IsValidJwtToken());
-            this.MockFacebookClient.Verify(x => x.PostSecurityRequest(facebookAuthModel), Times.Once);
+            this.MockHttpClient.Verify(x => x.GetStringAsync<FacebookAppAccessToken>(It.IsAny<string>()), Times.Once);
+            this.MockHttpClient.Verify(x => x.GetStringAsync<FacebookUserAccessTokenValidation>(It.IsAny<string>()), Times.Once);
         }
 
         [Fact]
