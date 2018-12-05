@@ -44,6 +44,18 @@ namespace AspNetCore.Security.Jwt.UnitTests
         {
             SecuritySettings securitySettings = new SecuritySettings()
             {
+                AuthSettings = new AuthSettings
+                {
+                    FacebookAuthSettings = new FacebookAuthSettings
+                    {
+                        OAuthUrl = "https://graph.facebook.com/oauth/access_token?client_id={0}&client_secret={1}&grant_type=client_credentials",
+                        UserTokenValidationUrl = "https://graph.facebook.com/debug_token?input_token={0}&access_token={1}"
+                    },
+                    GoogleAuthSettings = new GoogleAuthSettings
+                    {
+                        TokenUrl = "https://accounts.google.com/o/oauth2/token"
+                    }
+                },
                 Secret = "a secret that needs to be at least 16 characters long",
                 Issuer = "your app",
                 Audience = "the client of your app",

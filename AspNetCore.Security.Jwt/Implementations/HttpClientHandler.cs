@@ -23,7 +23,7 @@ namespace AspNetCore.Security.Jwt
             }
         }
 
-        public virtual async Task<TResponse> SendAsync<TResponse>(string uri, HttpRequestMessage request)
+        public virtual async Task<TResponse> SendAsync<TResponse>(HttpRequestMessage request)
         {
             using (var httpClient = new HttpClient())
             {

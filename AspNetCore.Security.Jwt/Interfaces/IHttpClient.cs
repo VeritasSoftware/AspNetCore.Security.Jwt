@@ -5,7 +5,7 @@ namespace AspNetCore.Security.Jwt
 {
     public interface IHttpClient
     {
-        Task<TResponse> SendAsync<TResponse>(string uri, HttpRequestMessage request);
+        Task<TResponse> SendAsync<TResponse>(HttpRequestMessage request);
 
         Task<string> GetStringAsync(string uri);
 

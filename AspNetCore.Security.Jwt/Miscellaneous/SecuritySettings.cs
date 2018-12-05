@@ -2,6 +2,8 @@
 {
     public abstract class BaseSecuritySettings
     {
+        public AuthSettings AuthSettings { get; set; }
+
         public string Secret { get; set; }
 
         public string Issuer { get; set; }
@@ -55,6 +57,24 @@
         public string RedirectUri { get; set; }        
 
         public string APIKey { get; set; }
+    }
+
+    public class AuthSettings
+    {
+        public FacebookAuthSettings FacebookAuthSettings { get; set; }
+
+        public GoogleAuthSettings GoogleAuthSettings { get; set; }
+    }
+
+    public class FacebookAuthSettings
+    {
+        public string OAuthUrl { get; set; }
+        public string UserTokenValidationUrl { get; set; }
+    }
+
+    public class GoogleAuthSettings
+    {
+        public string TokenUrl { get; set; }
     }
 
 }
