@@ -75,6 +75,15 @@ And an API Key for the endpoint, specified in GoogleSecuritySettings earlier.
 
 The access token issued by Google is returned to the client.
 
+Sample request to /google endpoint:
+
+```javascript
+{
+  "authorizationCode": "4/qwBI9KdU2ZS-AyAow4iloIA16kfUHi_epeAwk6y1uiIWP2uVuOga9v2TOQBZ8qR7XRotKoHtX5CKxamUS19TNrs",
+  "apiKey": "c1bba8a7-8a68-4697-82a6-33b4563ca895"
+}
+```
+
 Sample response:
 
 ```javascript
