@@ -49,6 +49,13 @@
 ```javascript
 {
   "SecuritySettings": {
+    "SystemSettings": {
+      .
+      .
+      "GoogleAuthSettings": {
+        "TokenUrl": "https://accounts.google.com/o/oauth2/token"
+      }
+    },
     .
     .
     .
@@ -64,7 +71,11 @@
   .
 }
 ```
-Add your Google security settings.
+Add your Google security settings. 
+
+Do not change the **SystemSettings**.
+
+The **GoogleSecuritySettings** are configurable.
 
 ## GoogleController
 
