@@ -26,8 +26,6 @@ namespace AspNetCore.Security.Jwt
         {
             try
             {
-                ValidateInput(user);
-
                 var response = await this.authentication.IsValidUser(user);
 
                 if (response.IsAuthenticated)
@@ -40,14 +38,5 @@ namespace AspNetCore.Security.Jwt
             }            
         }
 
-        private void ValidateInput(GoogleAuthModel user)
-        {
-            if (user == null)
-                throw new ArgumentNullException(nameof(user));
-            if (string.IsNullOrEmpty(user.APIKey))
-                throw new SecurityException($"{nameof(user.APIKey)} is null or empty.");
-            if (string.IsNullOrEmpty(user.AuthorizationCode))
-                throw new SecurityException($"{nameof(user.AuthorizationCode)} is null or empty.");            
-        }
     }
 }

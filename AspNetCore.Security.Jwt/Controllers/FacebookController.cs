@@ -29,8 +29,6 @@ namespace AspNetCore.Security.Jwt
         {
             try
             {
-                ValidateInput(user);
-
                 if (await this.authentication.IsValidUser(user))
                     return new ObjectResult(this.securityService.GenerateToken(user));
                 return BadRequest();
@@ -39,14 +37,6 @@ namespace AspNetCore.Security.Jwt
             {
                 throw new SecurityException(ex.Message);
             }            
-        }
-
-        private void ValidateInput(FacebookAuthModel user)
-        {
-            if (user == null)
-                throw new ArgumentNullException(nameof(user));
-            if (string.IsNullOrEmpty(user.UserAccessToken))
-                throw new SecurityException($"{nameof(user.UserAccessToken)} is null or empty.");
         }
 
     }

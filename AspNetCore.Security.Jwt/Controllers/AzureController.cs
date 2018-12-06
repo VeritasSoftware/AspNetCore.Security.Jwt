@@ -26,8 +26,6 @@ namespace AspNetCore.Security.Jwt
         {
             try
             {
-                ValidateInput(user);
-
                 var response = await this.authentication.IsValidUser(user);
 
                 if (response.IsAuthenticated && !string.IsNullOrEmpty(response.AccessToken))
@@ -41,16 +39,5 @@ namespace AspNetCore.Security.Jwt
             }            
         }
 
-        private void ValidateInput(AzureADAuthModel user)
-        {
-            if (user == null)
-            {
-                throw new ArgumentNullException(nameof(user));
-            }
-            if (string.IsNullOrEmpty(user.APIKey))
-            {
-                throw new SecurityException($"{nameof(user.APIKey)} is null or empty.");
-            }
-        }
     }
 }
