@@ -52,8 +52,6 @@ This handles the authentication of your Facebook **User Access Token**  (see App
 
 ## 3. In your appsettings.json
 
-**Note:-** You can put these settings in **Secret Manager** by using **Manage User Secrets** menu (right-click your Project).
-
 ```javascript
 {
   "SecuritySettings": {
@@ -75,7 +73,7 @@ This handles the authentication of your Facebook **User Access Token**  (see App
   .
 }
 ```
-Do not change the SystemSettings. Other settings are configurable.
+Do not change the **SystemSettings**. Other settings are configurable.
 
 
 ## FacebookController - Issues the Jwt token
