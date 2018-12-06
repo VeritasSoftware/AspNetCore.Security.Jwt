@@ -19,12 +19,10 @@ namespace AspNetCore.Security.Jwt.Facebook
 
     internal class FacebookAuthorizeFilter : IAuthorizationFilter
     {
-        private readonly SecuritySettings securitySettings;
         private readonly ILogger<FacebookAuthorizeFilter> logger;
 
-        public FacebookAuthorizeFilter(SecuritySettings securitySettings, ILogger<FacebookAuthorizeFilter> logger = null)
+        public FacebookAuthorizeFilter(ILogger<FacebookAuthorizeFilter> logger = null)
         {
-            this.securitySettings = securitySettings;
             this.logger = logger;
         }
 
