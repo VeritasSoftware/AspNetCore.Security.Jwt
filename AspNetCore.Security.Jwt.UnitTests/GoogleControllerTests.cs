@@ -231,6 +231,15 @@ namespace AspNetCore.Security.Jwt.UnitTests
 
             // Assert
             Assert.Equal(expected, response.StatusCode);
+
+            //Arrange
+            httpContent = new StringContent(string.Empty);
+
+            // Act
+            response = await client.PostAsync(url, httpContent);
+
+            // Assert
+            Assert.Equal(expected, response.StatusCode);
         }
 
     }
