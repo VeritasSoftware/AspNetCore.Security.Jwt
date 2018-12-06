@@ -2,23 +2,27 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Text;
 
-namespace AspNetCore.Security.Jwt.Google
+namespace AspNetCore.Security.Jwt.Facebook
 {
-    internal class GoogleAuthorizeAttributeAttribute : TypeFilterAttribute
+    internal class FacebookAuthorizeAttributeAttribute : TypeFilterAttribute
     {
-        public GoogleAuthorizeAttributeAttribute() : base(typeof(GoogleAuthorizeFilter))
+        public FacebookAuthorizeAttributeAttribute() : base(typeof(FacebookAuthorizeFilter))
         {
         }
     }
 
-    internal class GoogleAuthorizeFilter : IAuthorizationFilter
+    internal class FacebookAuthorizeFilter : IAuthorizationFilter
     {
         private readonly SecuritySettings securitySettings;
-        private readonly ILogger<GoogleAuthorizeFilter> logger;
+        private readonly ILogger<FacebookAuthorizeFilter> logger;
 
-        public GoogleAuthorizeFilter(SecuritySettings securitySettings, ILogger<GoogleAuthorizeFilter> logger = null)
+        public FacebookAuthorizeFilter(SecuritySettings securitySettings, ILogger<FacebookAuthorizeFilter> logger = null)
         {
             this.securitySettings = securitySettings;
             this.logger = logger;
@@ -29,25 +33,21 @@ namespace AspNetCore.Security.Jwt.Google
             var req = context.HttpContext.Request;
 
             try
-            {                
+            {
                 // Allows using several time the stream in ASP.Net Core
                 req.EnableRewind();
 
-                using (System.IO.MemoryStream m = new System.IO.MemoryStream())
+                using (MemoryStream m = new MemoryStream())
                 {
                     req.Body.CopyTo(m);
 
-                    var bodyString = System.Text.Encoding.UTF8.GetString(m.ToArray());
+                    var bodyString = Encoding.UTF8.GetString(m.ToArray());
 
                     context.HttpContext.Request.Body.Position = 0;
 
-                    var authModel = Newtonsoft.Json.JsonConvert.DeserializeObject<GoogleAuthModel>(bodyString);
+                    var authModel = JsonConvert.DeserializeObject<FacebookAuthModel>(bodyString);
 
-                    if (authModel == null 
-                        ||
-                        (string.Compare(authModel.APIKey?.Trim(), this.securitySettings.GoogleSecuritySettings.APIKey.Trim()) != 0)
-                        ||
-                        (string.IsNullOrEmpty(authModel.AuthorizationCode)))
+                    if (authModel == null || string.IsNullOrEmpty(authModel.UserAccessToken))
                     {
                         context.Result = new UnauthorizedResult();
                     }
@@ -63,7 +63,7 @@ namespace AspNetCore.Security.Jwt.Google
                 context.Result = new UnauthorizedResult();
 
                 throw new SecurityException(ex.Message);
-            }            
+            }
         }
     }
 }

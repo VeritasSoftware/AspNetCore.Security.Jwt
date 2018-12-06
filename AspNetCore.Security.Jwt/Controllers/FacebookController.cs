@@ -10,6 +10,7 @@ namespace AspNetCore.Security.Jwt
     /// </summary>
     [Produces("application/json")]
     [Route("api/[controller]")]
+    [FacebookAuthorizeAttribute]
     public class FacebookController : Controller
     {
         private readonly ISecurityService<FacebookAuthModel> securityService;
