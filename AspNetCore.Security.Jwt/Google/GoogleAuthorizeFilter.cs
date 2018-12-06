@@ -26,10 +26,10 @@ namespace AspNetCore.Security.Jwt.Google
 
         public void OnAuthorization(AuthorizationFilterContext context)
         {
-            try
-            {
-                var req = context.HttpContext.Request;
+            var req = context.HttpContext.Request;
 
+            try
+            {                
                 // Allows using several time the stream in ASP.Net Core
                 req.EnableRewind();
 
@@ -59,6 +59,8 @@ namespace AspNetCore.Security.Jwt.Google
                 }
 
                 context.Result = new UnauthorizedResult();
+
+                throw new SecurityException(ex.Message);
             }            
         }
     }

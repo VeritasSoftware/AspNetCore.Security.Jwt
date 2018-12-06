@@ -1,4 +1,5 @@
-﻿using AspNetCore.Security.Jwt.Google;
+﻿using AspNetCore.Security.Jwt;
+using AspNetCore.Security.Jwt.Google;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.TestHost;
@@ -227,20 +228,44 @@ namespace AspNetCore.Security.Jwt.UnitTests
             HttpContent httpContent = new StringContent(JsonConvert.SerializeObject(googleAuthModel));
 
             // Act
-            var response = await client.PostAsync(url, httpContent);            
+            var response = await client.PostAsync(url, httpContent);
 
             // Assert
-            Assert.Equal(expected, response.StatusCode);
+            Assert.Equal(HttpStatusCode.Unauthorized, response.StatusCode);
 
             //Arrange
             httpContent = new StringContent(string.Empty);
 
             // Act
-            response = await client.PostAsync(url, httpContent);
-
-            // Assert
-            Assert.Equal(expected, response.StatusCode);
+            try
+            {
+                response = await client.PostAsync(url, httpContent).ConfigureAwait(false);
+            }
+            catch(SecurityException ex)
+            {
+                // Assert
+                Assert.IsType<SecurityException>(ex);
+            }                        
         }
 
     }
+}
+
+public static class HttpResponseMessageExtension
+{
+    public static async Task<SecurityException> ExceptionResponse(this HttpResponseMessage httpResponseMessage)
+    {
+        string responseContent = await httpResponseMessage.Content.ReadAsStringAsync();
+        SecurityException exceptionResponse = JsonConvert.DeserializeObject<SecurityException>(responseContent);
+        return exceptionResponse;
+    }
+}
+
+public class ExceptionResponse
+{
+    public string Message { get; set; }
+    public string ExceptionMessage { get; set; }
+    public string ExceptionType { get; set; }
+    public string StackTrace { get; set; }
+    public ExceptionResponse InnerException { get; set; }
 }
