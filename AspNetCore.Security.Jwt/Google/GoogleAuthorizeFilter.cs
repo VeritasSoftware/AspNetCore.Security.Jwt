@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http.Internal;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace AspNetCore.Security.Jwt.Google
@@ -21,14 +22,18 @@ namespace AspNetCore.Security.Jwt.Google
 
         public void OnAuthorization(AuthorizationFilterContext context)
         {
-            using (System.IO.MemoryStream m = new System.IO.MemoryStream())
-            {
-                if (context.HttpContext.Request.Body.CanSeek == true)
-                    context.HttpContext.Request.Body.Position = 0;
+            var req = context.HttpContext.Request;
 
-                context.HttpContext.Request.Body.CopyTo(m);
+            // Allows using several time the stream in ASP.Net Core
+            req.EnableRewind();
+
+            using (System.IO.MemoryStream m = new System.IO.MemoryStream())
+            {                    
+                req.Body.CopyTo(m);
 
                 var bodyString = System.Text.Encoding.UTF8.GetString(m.ToArray());
+
+                context.HttpContext.Request.Body.Position = 0;
 
                 var authModel = Newtonsoft.Json.JsonConvert.DeserializeObject<GoogleAuthModel>(bodyString);
 
