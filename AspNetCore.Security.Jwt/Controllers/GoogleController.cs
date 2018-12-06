@@ -10,6 +10,7 @@ namespace AspNetCore.Security.Jwt
     /// </summary>
     [Produces("application/json")]
     [Route("api/[controller]")]
+    [GoogleAuthorizeAttribute]
     public class GoogleController : Controller
     {
         private readonly IAuthentication<GoogleAuthModel, GoogleResponseModel> authentication;

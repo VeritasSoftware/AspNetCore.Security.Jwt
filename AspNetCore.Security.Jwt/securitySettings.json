@@ -26,7 +26,9 @@
     },
     "GoogleSecuritySettings": {
       "ClientId": "<client id>",
-      "ClientSecret": "<client secret>"
+      "ClientSecret": "<client secret>",
+      "RedirectUri": "http://localhost:59039/",
+      "APIKey": "c1bba8a7-8a68-4697-82a6-33b4563ca895"
     }
   }
 }

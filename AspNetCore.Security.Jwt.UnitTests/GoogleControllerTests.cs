@@ -1,6 +1,11 @@
 ﻿using AspNetCore.Security.Jwt.Google;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Configuration;
 using Moq;
+using Newtonsoft.Json;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Xunit;
@@ -196,6 +201,36 @@ namespace AspNetCore.Security.Jwt.UnitTests
                 Assert.IsType<SecurityException>(ex);
                 this.MockGoogleClient.Verify(x => x.PostSecurityRequest(googleAuthModel), Times.Never);
             }
+        }
+
+        [Fact]
+        public async Task Test_GoogleController_GoogleAuthorizeAttribute_InvalidAPIKey_ReturnsUnauthorizedResult()
+        {
+            var config = new ConfigurationBuilder()
+                .AddJsonFile("securitySettings.json")
+                .Build();
+
+            // Arrange
+            var server = new TestServer(new WebHostBuilder()
+                                .UseConfiguration(config)
+                                .UseStartup<Startup>());
+            var client = server.CreateClient();
+            var url = "/google";
+            var expected = HttpStatusCode.Unauthorized;
+
+            GoogleAuthModel googleAuthModel = new GoogleAuthModel
+            {
+                AuthorizationCode = "string",
+                APIKey = "invalid api key"
+            };
+
+            HttpContent httpContent = new StringContent(JsonConvert.SerializeObject(googleAuthModel));
+
+            // Act
+            var response = await client.PostAsync(url, httpContent);            
+
+            // Assert
+            Assert.Equal(expected, response.StatusCode);
         }
 
     }
