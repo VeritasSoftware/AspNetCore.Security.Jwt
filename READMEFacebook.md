@@ -57,11 +57,16 @@ This handles the authentication of your Facebook **User Access Token**  (see App
 ```javascript
 {
   "SecuritySettings": {
-    "Secret": "a secret that needs to be at least 16 characters long",
-    "Issuer": "your app",
-    "Audience": "the client of your app",
-    "IdType": "Name",
-    "TokenExpiryInHours": 1.2,
+    "SystemSettings": {
+      "FacebookAuthSettings": {
+        "OAuthUrl": "https://graph.facebook.com/oauth/access_token?client_id={0}&client_secret={1}&grant_type=client_credentials",
+        "UserTokenValidationUrl": "https://graph.facebook.com/debug_token?input_token={0}&access_token={1}"
+      },
+      .
+      .
+    },
+    .
+    .
     "AppId": "Your facebook app id",
     "AppSecret": "Your facebook app secret"
   },
@@ -70,6 +75,8 @@ This handles the authentication of your Facebook **User Access Token**  (see App
   .
 }
 ```
+Do not change the SystemSettings. Other settings are configurable.
+
 
 ## FacebookController - Issues the Jwt token
 
