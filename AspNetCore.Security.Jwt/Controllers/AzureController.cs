@@ -10,6 +10,7 @@ namespace AspNetCore.Security.Jwt
     /// </summary>
     [Produces("application/json")]
     [Route("api/[controller]")]
+    [AzureAuthorizeAttribute]
     public class AzureController : Controller
     {
         private readonly IAuthentication<AzureADAuthModel, AzureADResponseModel> authentication;

@@ -1,6 +1,12 @@
 ﻿using AspNetCore.Security.Jwt.AzureAD;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Configuration;
 using Moq;
+using Newtonsoft.Json;
+using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -144,6 +150,51 @@ namespace AspNetCore.Security.Jwt.UnitTests
                 //Assert
                 Assert.IsType<SecurityException>(ex);
                 this.MockAzureClient.Verify(x => x.PostSecurityRequest(), Times.Never);
+            }
+        }
+
+        [Fact]
+        public async Task Test_AzureController_AzureAuthorizeAttribute_InvalidAPIKey_ReturnsUnauthorizedResult()
+        {
+            var config = new ConfigurationBuilder()
+                .AddJsonFile("securitySettings.json")
+                .Build();
+
+            // Arrange
+            var server = new TestServer(new WebHostBuilder()
+                                .UseConfiguration(config)
+                                .UseStartup<Startup>());
+            var client = server.CreateClient();
+            var url = "/azure";
+            var expected = HttpStatusCode.Unauthorized;
+
+            AzureADAuthModel azureADAuthModel = new AzureADAuthModel
+            {
+                APIKey = "invalid api key"
+            };
+
+            HttpContent httpContent = new StringContent(JsonConvert.SerializeObject(azureADAuthModel));
+
+            // Act
+            var response = await client.PostAsync(url, httpContent);
+
+            // Assert
+            Assert.Equal(expected, response.StatusCode);
+
+            //Arrange
+            var bytes = new byte[2] { 103, 104 };
+
+            httpContent = new ByteArrayContent(bytes);
+            
+            try
+            {
+                // Act
+                response = await client.PostAsync(url, httpContent);
+            }
+            catch (SecurityException ex)
+            {
+                // Assert
+                Assert.IsType<SecurityException>(ex);
             }
         }
 
