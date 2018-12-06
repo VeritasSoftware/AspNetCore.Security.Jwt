@@ -231,7 +231,7 @@ namespace AspNetCore.Security.Jwt.UnitTests
             var response = await client.PostAsync(url, httpContent);
 
             // Assert
-            Assert.Equal(HttpStatusCode.Unauthorized, response.StatusCode);
+            Assert.Equal(expected, response.StatusCode);
 
             //Arrange
             httpContent = new StringContent(string.Empty);
