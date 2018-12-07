@@ -12,6 +12,7 @@
     {
         const string ASSEMBLY_NAME = "AspNetCore.Security.Jwt";
 
+        internal static bool IsSecurityInitDone { get; set; }
         internal static bool IsDefaultSecurityAdded { get; set; }
         internal static bool IsUserModelSecurityAdded { get; set; }
         internal static bool IsFacebookSecurityAdded { get; set; }
@@ -112,11 +113,13 @@
 
         internal static IMvcBuilder SecurityInit(this IMvcBuilder mvcBuilder)
         {
-            if (!IsDefaultSecurityAdded && !IsUserModelSecurityAdded && !IsFacebookSecurityAdded)
+            if (!IsSecurityInitDone)
             {
                 mvcBuilder.AddApplicationPart(Assembly.Load(new AssemblyName(ASSEMBLY_NAME)))
                           .ConfigureApplicationPartManager(apm =>
                                          apm.FeatureProviders.Add(new RemoveControllerFeatureProvider()));
+
+                IsSecurityInitDone = true;
             }
 
             return mvcBuilder;
