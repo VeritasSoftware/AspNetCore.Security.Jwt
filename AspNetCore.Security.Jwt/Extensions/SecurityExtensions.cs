@@ -6,6 +6,7 @@ namespace AspNetCore.Security.Jwt
     using AspNetCore.Security.Jwt.AzureAD;
     using AspNetCore.Security.Jwt.Facebook;
     using AspNetCore.Security.Jwt.Google;
+    using AspNetCore.Security.Jwt.Twitter;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
@@ -119,12 +120,10 @@ namespace AspNetCore.Security.Jwt
         /// </summary>
         /// <param name="services">The services collection</param>
         /// <param name="configuration">The configurations -- appsettings</param>
-        /// <param name="addClaims">Add the Claims using the IdTypeBuilder (<see cref="IdTypeBuilder{TUserModel}"/>)</param>
         /// <param name="addSwaggerSecurity">Enable security in Swagger UI</param>
         /// <returns>The services collection</returns>
         public static IServiceCollection AddGoogleSecurity(this IServiceCollection services,
                                                                 IConfiguration configuration,
-                                                                Action<IIdTypeBuilder<GoogleAuthModel>> addClaims = null,
                                                                 bool addSwaggerSecurity = false)
         {
             var securitySettings = configuration.SecuritySettings();
@@ -133,13 +132,38 @@ namespace AspNetCore.Security.Jwt
             services.AddSingleton(securitySettings);
 
             services.AddSingleton<BaseSecuritySettings>(securitySettings);
-            if (addClaims != null)
-            {
-                services.AddSingleton<Action<IIdTypeBuilder<GoogleAuthModel>>>(x => addClaims);
-            }
             services.AddSingleton<GoogleSecuritySettings>(securitySettings.GoogleSecuritySettings);
             services.AddScoped<IAuthentication<GoogleAuthModel, GoogleResponseModel>, GoogleAuthenticator>();
             services.AddScoped<ISecurityClient<GoogleAuthModel, GoogleResponseModel>, GoogleClient>();
+            services.AddScoped<IHttpClient, HttpClientHandler>();
+
+            services.AddSwaggerAndJwtBearerScheme(addSwaggerSecurity, securitySettings);
+
+            return services;
+        }
+
+        /// <summary>
+        /// Add Facebook security extension
+        /// </summary>
+        /// <param name="services">The services collection</param>
+        /// <param name="configuration">The configurations -- appsettings</param>
+        /// <param name="addClaims">Add the Claims using the IdTypeBuilder (<see cref="IdTypeBuilder{TUserModel}"/>)</param>
+        /// <param name="addSwaggerSecurity">Enable security in Swagger UI</param>
+        /// <returns>The services collection</returns>
+        public static IServiceCollection AddTwitterSecurity(this IServiceCollection services,
+                                                                IConfiguration configuration,
+                                                                bool addSwaggerSecurity = false)
+        {
+            var securitySettings = configuration.SecuritySettings();
+            IdTypeHelpers.LoadClaimTypes();
+
+            services.AddSingleton(securitySettings);
+
+            services.AddSingleton<BaseSecuritySettings>(securitySettings);
+
+            services.AddSingleton<TwitterSecuritySettings>(securitySettings.TwitterSecuritySettings);
+            services.AddScoped<IAuthentication<TwitterAuthModel, TwitterResponseModel>, TwitterAuthenticator>();
+            services.AddScoped<ISecurityClient<TwitterResponseModel>, TwitterClient>();
             services.AddScoped<IHttpClient, HttpClientHandler>();
 
             services.AddSwaggerAndJwtBearerScheme(addSwaggerSecurity, securitySettings);

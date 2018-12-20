@@ -86,6 +86,21 @@ namespace AspNetCore.Security.Jwt
         }
     }
 
+    public class TwitterControllerFeatureProvider : IApplicationFeatureProvider<ControllerFeature>
+    {
+        public bool AddTwitterController { get; set; }
+
+        public void PopulateFeature(IEnumerable<ApplicationPart> parts, ControllerFeature feature)
+        {
+            feature.Controllers.Remove(typeof(TwitterController).GetTypeInfo());
+
+            if (this.AddTwitterController)
+            {
+                feature.Controllers.Add(typeof(TwitterController).GetTypeInfo());
+            }
+        }
+    }
+
     public class AzureControllerFeatureProvider : IApplicationFeatureProvider<ControllerFeature>
     {
         public bool AddAzureController { get; set; }

@@ -1,6 +1,7 @@
 ﻿using AspNetCore.Security.Jwt.AzureAD;
 using AspNetCore.Security.Jwt.Facebook;
 using AspNetCore.Security.Jwt.Google;
+using AspNetCore.Security.Jwt.Twitter;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using Xunit;
@@ -265,6 +266,52 @@ namespace AspNetCore.Security.Jwt.UnitTests
             Assert.IsType<GoogleAuthenticator>(autheticator);                       
 
             Assert.True(controller != null);
+        }
+
+        [Fact]
+        public void Test_AddSecurityBuilder_Twitter_Pass()
+        {
+            //Arrange
+            SecuritySettings securitySettings = new SecuritySettings()
+            {
+                Secret = "a secret that needs to be at least 16 characters long",
+                Issuer = "your app",
+                Audience = "the client of your app",
+                IdType = IdType.Name,
+                TokenExpiryInHours = 1.2,
+                AppId = "xxxxxxxxxxxxxx",
+                AppSecret = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+                TwitterSecuritySettings = new TwitterSecuritySettings
+                {
+                    APIKey = "<api key>",
+                    ConsumerKey = "<consumer key>",
+                    ConsumerSecret = "<consumer secret>"
+                }
+            };
+
+            var serviceCollection = new ServiceCollection();
+
+            serviceCollection.AddSecurity(securitySettings, false)
+                             .AddTwitterSecurity();
+
+            serviceCollection.AddScoped<TwitterController>();
+
+            var sp = serviceCollection.BuildServiceProvider();
+
+            //Act
+            var securityClient = sp.GetService<ISecurityClient<TwitterResponseModel>>();
+            var autheticator = sp.GetService<IAuthentication<TwitterAuthModel, TwitterResponseModel>>();
+            var controller = sp.GetService<TwitterController>();
+
+            //Assert            
+            Assert.True(securityClient != null);
+            Assert.IsType<TwitterClient>(securityClient);
+
+            Assert.True(autheticator != null);
+            Assert.IsType<TwitterAuthenticator>(autheticator);
+
+            Assert.True(controller != null);
+            Assert.IsType<TwitterController>(controller);
         }
 
     }

@@ -1,6 +1,7 @@
 ﻿using AspNetCore.Security.Jwt.AzureAD;
 using AspNetCore.Security.Jwt.Facebook;
 using AspNetCore.Security.Jwt.Google;
+using AspNetCore.Security.Jwt.Twitter;
 using Microsoft.AspNetCore.Builder.Internal;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -157,6 +158,33 @@ namespace AspNetCore.Security.Jwt.UnitTests
 
             Assert.True(autheticator != null);
             Assert.IsType<GoogleAuthenticator>(autheticator);
+
+            Assert.True(controller != null);
+        }
+
+        [Fact]
+        public void Test_SecurityExtensions_Twitter_Pass()
+        {
+            //Arrange
+            var serviceCollection = new ServiceCollection();
+
+            serviceCollection.AddTwitterSecurity(this.Configuration);
+
+            serviceCollection.AddScoped<TwitterController>();
+
+            var sp = serviceCollection.BuildServiceProvider();
+
+            //Act
+            var securityClient = sp.GetService<ISecurityClient<TwitterResponseModel>>();
+            var autheticator = sp.GetService<IAuthentication<TwitterAuthModel, TwitterResponseModel>>();
+            var controller = sp.GetService<TwitterController>();
+
+            //Assert            
+            Assert.True(securityClient != null);
+            Assert.IsType<TwitterClient>(securityClient);
+
+            Assert.True(autheticator != null);
+            Assert.IsType<TwitterAuthenticator>(autheticator);
 
             Assert.True(controller != null);
         }

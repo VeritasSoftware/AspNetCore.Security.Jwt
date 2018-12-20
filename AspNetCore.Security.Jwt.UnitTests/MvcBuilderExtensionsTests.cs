@@ -84,6 +84,21 @@ namespace AspNetCore.Security.Jwt.UnitTests
         }
 
         [Fact]
+        public void Test_MvcBuilderExtensions_Twitter_Pass()
+        {
+            //Arrange
+            var serviceCollection = new ServiceCollection();
+
+            serviceCollection.AddMvc().AddTwitterSecurity();
+
+            //Act
+            var sp = serviceCollection.BuildServiceProvider();
+
+            //Assert
+            Assert.True(MvcBuilderExtensions.IsTwitterSecurityAdded);
+        }
+
+        [Fact]
         public void Test_MvcBuilderExtensions_Multiple_Pass()
         {
             //Arrange

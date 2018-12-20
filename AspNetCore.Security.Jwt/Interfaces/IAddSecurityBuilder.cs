@@ -15,7 +15,9 @@ namespace AspNetCore.Security.Jwt
 
         IAddSecurityBuilder AddFacebookSecurity(Action<IIdTypeBuilder<FacebookAuthModel>> addClaims = null);
 
-        IAddSecurityBuilder AddGoogleSecurity(Action<IIdTypeBuilder<GoogleAuthModel>> addClaims = null);
+        IAddSecurityBuilder AddGoogleSecurity();
+
+        IAddSecurityBuilder AddTwitterSecurity();
 
         IAddSecurityBuilder AddAzureADSecurity();
     }

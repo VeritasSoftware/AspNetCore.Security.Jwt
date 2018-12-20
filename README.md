@@ -38,6 +38,8 @@
 
 *	**Facebook** authentication integration.
 
+*	**Twitter** authentication integration.
+
 *	Also, **Swagger UI** integration!
 
 **Add a reference to the package and...**
@@ -161,6 +163,10 @@ All other settings are configurable.
 
 [**Using Facebook for authentication**](READMEFacebook.md)
 
+## Twitter authentication integration
+
+[**Using Twitter for authentication**](READMETwitter.md)
+
 ## In your Controller that you want to secure
 
 You must mark the **Controller or Action** that you want to secure with **Authorize attribute** like:
@@ -250,6 +256,8 @@ You can use multiple authentications in your app.
 
 *	Facebook
 
+*	Twitter
+
 ```C#
         public void ConfigureServices(IServiceCollection services)
         {
@@ -269,6 +277,7 @@ You can use multiple authentications in your app.
             //        .AddSecurity<Authenticator>()
             //        .AddFacebookSecurity(builder =>
             //            builder.AddClaim("FacebookUser", userModel => userModel.UserAccessToken))
+            //        .AddTwitterSecurity()
             //        .AddAzureADSecurity()
             //        .AddGoogleSecurity();
 
@@ -283,12 +292,14 @@ You can use multiple authentications in your app.
                               .AddClaim("DOB", userModel => userModel.DOB.ToShortDateString()))
                    .AddFacebookSecurity(builder =>
                        builder.AddClaim("FacebookUser", userModel => userModel.UserAccessToken.ToString()))
+                   .AddTwitterSecurity()
                    .AddAzureADSecurity()
                    .AddGoogleSecurity();
 
             //services.AddMvc()
             //        .AddSecurity()
             //        .AddFacebookSecurity()
+            //        .AddTwitterSecurity()
             //        .AddAzureADSecurity()
             //        .AddGoogleSecurity();
 			
@@ -297,8 +308,9 @@ You can use multiple authentications in your app.
             services.AddMvc()
                     .AddSecurity<UserModel>()
                     .AddFacebookSecurity()
+                    .AddTwitterSecurity()
                     .AddAzureADSecurity()
-                    .AddGoogleSecurity();            
+                    .AddGoogleSecurity();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

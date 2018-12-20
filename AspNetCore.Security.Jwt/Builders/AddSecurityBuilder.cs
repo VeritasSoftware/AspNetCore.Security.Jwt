@@ -1,6 +1,7 @@
 ﻿using AspNetCore.Security.Jwt.AzureAD;
 using AspNetCore.Security.Jwt.Facebook;
 using AspNetCore.Security.Jwt.Google;
+using AspNetCore.Security.Jwt.Twitter;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 
@@ -19,6 +20,7 @@ namespace AspNetCore.Security.Jwt
         private bool IsCustomAdded = false;
         private bool IsFacebookAdded = false;
         private bool IsGoogleAdded = false;
+        private bool IsTwitterAdded = false;
         private bool IsAzureAdded = false;
         private readonly bool IsSwaggerAdded = false;
         private readonly IServiceCollection Services;
@@ -94,21 +96,35 @@ namespace AspNetCore.Security.Jwt
             return this;
         }
 
-        public IAddSecurityBuilder AddGoogleSecurity(Action<IIdTypeBuilder<GoogleAuthModel>> addClaims = null)
+        public IAddSecurityBuilder AddGoogleSecurity()
         {
             if (!IsGoogleAdded)
             {
                 Services.AddSingleton<BaseSecuritySettings>(SecuritySettings);
-                if (addClaims != null)
-                {
-                    Services.AddSingleton<Action<IIdTypeBuilder<GoogleAuthModel>>>(x => addClaims);
-                }
+                
                 Services.AddSingleton<GoogleSecuritySettings>(SecuritySettings.GoogleSecuritySettings);
                 Services.AddScoped<IAuthentication<GoogleAuthModel, GoogleResponseModel>, GoogleAuthenticator>();
                 Services.AddScoped<ISecurityClient<GoogleAuthModel, GoogleResponseModel>, GoogleClient>();
                 Services.AddScoped<IHttpClient, HttpClientHandler>();
 
                 IsGoogleAdded = true;
+            }
+
+            return this;
+        }
+
+        public IAddSecurityBuilder AddTwitterSecurity()
+        {
+            if (!IsTwitterAdded)
+            {
+                Services.AddSingleton<BaseSecuritySettings>(SecuritySettings);
+                
+                Services.AddSingleton<TwitterSecuritySettings>(SecuritySettings.TwitterSecuritySettings);
+                Services.AddScoped<IAuthentication<TwitterAuthModel, TwitterResponseModel>, TwitterAuthenticator>();
+                Services.AddScoped<ISecurityClient<TwitterResponseModel>, TwitterClient>();
+                Services.AddScoped<IHttpClient, HttpClientHandler>();
+
+                IsTwitterAdded = true;
             }
 
             return this;

@@ -15,6 +15,8 @@
         public AzureADSecuritySettings AzureADSecuritySettings { get; set; }
 
         public GoogleSecuritySettings GoogleSecuritySettings { get; set; }
+
+        public TwitterSecuritySettings TwitterSecuritySettings { get; set; }
     }
         
     public class SecuritySettings : BaseSecuritySettings
@@ -59,11 +61,22 @@
         public string APIKey { get; set; }
     }
 
+    public class TwitterSecuritySettings
+    {
+        public string ConsumerKey { get; set; }
+
+        public string ConsumerSecret { get; set; }
+
+        public string APIKey { get; set; }
+    }
+
     public class SystemSettings
     {
         public FacebookAuthSettings FacebookAuthSettings { get; set; }
 
         public GoogleAuthSettings GoogleAuthSettings { get; set; }
+
+        public TwitterAuthSettings TwitterAuthSettings { get; set; }
     }
 
     public class FacebookAuthSettings
@@ -73,6 +86,11 @@
     }
 
     public class GoogleAuthSettings
+    {
+        public string TokenUrl { get; set; }
+    }
+
+    public class TwitterAuthSettings
     {
         public string TokenUrl { get; set; }
     }
