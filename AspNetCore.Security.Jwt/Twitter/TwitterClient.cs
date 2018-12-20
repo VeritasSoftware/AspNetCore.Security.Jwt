@@ -23,8 +23,6 @@ namespace AspNetCore.Security.Jwt.Twitter
             string oauth_consumer_key = this.securitySettings.TwitterSecuritySettings.ConsumerKey.Trim();
             string oauth_consumer_secret = this.securitySettings.TwitterSecuritySettings.ConsumerSecret.Trim();
 
-            //string url = "https://api.twitter.com/oauth2/token?oauth_consumer_key=" + oauth_consumer_key + "&oauth_consumer_secret=" + oauth_consumer_secret;
-
             var customerInfo = Convert.ToBase64String(new UTF8Encoding()
                                 .GetBytes(oauth_consumer_key + ":" + oauth_consumer_secret));
 
