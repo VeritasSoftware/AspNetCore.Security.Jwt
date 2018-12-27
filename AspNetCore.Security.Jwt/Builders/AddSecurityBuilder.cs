@@ -16,6 +16,7 @@ namespace AspNetCore.Security.Jwt
         private static readonly object padlock = new object();
 
         private readonly SecuritySettings SecuritySettings;
+        private readonly bool IsInitDone = false;
         private bool IsDefaultAdded = false;
         private bool IsCustomAdded = false;
         private bool IsFacebookAdded = false;
@@ -35,7 +36,7 @@ namespace AspNetCore.Security.Jwt
 
         private AddSecurityBuilder(SecuritySettings securitySettings, bool isJwtSchemeAdded, IServiceCollection services, bool addSwaggerSecurity = false)
         {
-            if (!IsDefaultAdded || !IsCustomAdded || !IsAzureAdded || !IsFacebookAdded)
+            if (!IsInitDone)
             {
                 SecuritySettings = securitySettings;
                 Services = services;
@@ -53,6 +54,8 @@ namespace AspNetCore.Security.Jwt
 
                     IsSwaggerAdded = true;
                 }
+
+                IsInitDone = true;
             }
         }
 
