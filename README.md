@@ -134,6 +134,9 @@ The Authenticator is automatically wired up for dependency injection (Scoped).
       },
       "GoogleAuthSettings": {
         "TokenUrl": "https://accounts.google.com/o/oauth2/token"
+      },
+      "TwitterAuthSettings": {
+        "TokenUrl": "https://api.twitter.com/oauth2/token"
       }
     },
     "Secret": "a secret that needs to be at least 16 characters long",
@@ -147,7 +150,7 @@ The Authenticator is automatically wired up for dependency injection (Scoped).
   .
 }
 ```
-Do not touch the **SystemSettings**. 
+Do not change the **SystemSettings**. 
 All other settings are configurable.
 
 
