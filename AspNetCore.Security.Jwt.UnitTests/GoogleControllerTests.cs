@@ -37,7 +37,7 @@ namespace AspNetCore.Security.Jwt.UnitTests
 
         internal Mock<HttpClientHandler> InitMockHttpClient(SecuritySettings securitySettings, bool isAuthenticated = true)
         {
-            var httpClient = new Mock<HttpClientHandler>();
+            var httpClient = new Mock<HttpClientHandler>(new HttpClient());
             httpClient.Setup(x => x.SendAsync<GoogleResponseModel>(It.IsAny<HttpRequestMessage>())).ReturnsAsync(() => new GoogleResponseModel
             {
                 IsAuthenticated = isAuthenticated,

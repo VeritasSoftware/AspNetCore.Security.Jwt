@@ -28,7 +28,7 @@ namespace AspNetCore.Security.Jwt.UnitTests
 
         internal Mock<HttpClientHandler> InitMockHttpClient(SecuritySettings securitySettings, bool isAuthenticated = true)
         {
-            var httpClient = new Mock<HttpClientHandler>();
+            var httpClient = new Mock<HttpClientHandler>(new HttpClient());
             httpClient.Setup(x => x.GetStringAsync<FacebookAppAccessToken>(It.IsAny<string>())).ReturnsAsync(() => new FacebookAppAccessToken
             {
                 AccessToken = "ya29.GltoBsrJ_RRZzI-DEzU3l6nDz_qwy7RFM-zFv7MA1z6ZeU3IijEZa_ECHG70V-cFz7omdplXraYVjTvrZkkYqdaf0Z8-vnQ6NiLeOXW3GLCqnlYjabwf59RMaUv8",

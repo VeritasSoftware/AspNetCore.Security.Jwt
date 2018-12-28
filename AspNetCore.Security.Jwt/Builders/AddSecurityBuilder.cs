@@ -4,6 +4,7 @@ using AspNetCore.Security.Jwt.Google;
 using AspNetCore.Security.Jwt.Twitter;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Net.Http;
 
 namespace AspNetCore.Security.Jwt
 {
@@ -71,7 +72,7 @@ namespace AspNetCore.Security.Jwt
                 Services.AddSingleton<AzureADSecuritySettings>(SecuritySettings.AzureADSecuritySettings);
                 Services.AddScoped<IAuthentication<AzureADAuthModel, AzureADResponseModel>, AzureAuthenticator>();
                 Services.AddScoped<ISecurityClient<AzureADResponseModel>, AzureClient>();
-                Services.AddScoped<IHttpClient, HttpClientHandler>();
+                Services.AddScoped<IHttpClient, HttpClientHandler>(x => new HttpClientHandler(new HttpClient()));
 
                 IsAzureAdded = true;
             }            
@@ -91,7 +92,7 @@ namespace AspNetCore.Security.Jwt
                 Services.AddScoped<ISecurityService<FacebookAuthModel>, SecurityService<FacebookAuthModel>>();
                 Services.AddScoped<IAuthentication<FacebookAuthModel>, FacebookAuthenticator>();
                 Services.AddScoped<ISecurityClient<FacebookAuthModel, bool>, FacebookClient>();
-                Services.AddScoped<IHttpClient, HttpClientHandler>();
+                Services.AddScoped<IHttpClient, HttpClientHandler>(x => new HttpClientHandler(new HttpClient()));
 
                 IsFacebookAdded = true;
             }            
@@ -108,7 +109,7 @@ namespace AspNetCore.Security.Jwt
                 Services.AddSingleton<GoogleSecuritySettings>(SecuritySettings.GoogleSecuritySettings);
                 Services.AddScoped<IAuthentication<GoogleAuthModel, GoogleResponseModel>, GoogleAuthenticator>();
                 Services.AddScoped<ISecurityClient<GoogleAuthModel, GoogleResponseModel>, GoogleClient>();
-                Services.AddScoped<IHttpClient, HttpClientHandler>();
+                Services.AddScoped<IHttpClient, HttpClientHandler>(x => new HttpClientHandler(new HttpClient()));
 
                 IsGoogleAdded = true;
             }
@@ -125,7 +126,7 @@ namespace AspNetCore.Security.Jwt
                 Services.AddSingleton<TwitterSecuritySettings>(SecuritySettings.TwitterSecuritySettings);
                 Services.AddScoped<IAuthentication<TwitterAuthModel, TwitterResponseModel>, TwitterAuthenticator>();
                 Services.AddScoped<ISecurityClient<TwitterResponseModel>, TwitterClient>();
-                Services.AddScoped<IHttpClient, HttpClientHandler>();
+                Services.AddScoped<IHttpClient, HttpClientHandler>(x => new HttpClientHandler(new HttpClient()));
 
                 IsTwitterAdded = true;
             }
@@ -139,7 +140,7 @@ namespace AspNetCore.Security.Jwt
             {
                 Services.AddScoped<ISecurityService, SecurityService>();
                 Services.AddScoped<IAuthentication, TAuthenticator>();
-                Services.AddScoped<IHttpClient, HttpClientHandler>();
+                Services.AddScoped<IHttpClient, HttpClientHandler>(x => new HttpClientHandler(new HttpClient()));
 
                 IsDefaultAdded = true;
             }            
@@ -158,7 +159,7 @@ namespace AspNetCore.Security.Jwt
                 }
                 Services.AddScoped<ISecurityService<TUserModel>, SecurityService<TUserModel>>();
                 Services.AddScoped<IAuthentication<TUserModel>, TAuthenticator>();
-                Services.AddScoped<IHttpClient, HttpClientHandler>();
+                Services.AddScoped<IHttpClient, HttpClientHandler>(x => new HttpClientHandler(new HttpClient()));
 
                 IsCustomAdded = true;
             }

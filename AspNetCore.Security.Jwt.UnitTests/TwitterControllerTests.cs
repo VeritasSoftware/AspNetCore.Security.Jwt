@@ -25,7 +25,7 @@ namespace AspNetCore.Security.Jwt.UnitTests
             securityClient.Setup(x => x.PostSecurityRequest()).ReturnsAsync(() => new TwitterResponseModel
             {
                 IsAuthenticated = isAuthenticated,
-                AccessToken = "ya29.GltoBsrJ_RRZzI-DEzU3l6nDz_qwy7RFM-zFv7MA1z6ZeU3IijEZa_ECHG70V-cFz7omdplXraYVjTvrZkkYqdaf0Z8-vnQ6NiLeOXW3GLCqnlYjabwf59RMaUv8"
+                AccessToken = "eyJhbGciOiJIUzI1NiJ9.e30.FXibJVNHsvJ6Ff-N9XtTTom9cGExRqsldHbrhAOqRUg"
             });
 
             return securityClient;
@@ -33,10 +33,10 @@ namespace AspNetCore.Security.Jwt.UnitTests
 
         internal Mock<HttpClientHandler> InitMockHttpClient(SecuritySettings securitySettings, bool isAuthenticated = true)
         {
-            var httpClient = new Mock<HttpClientHandler>();
+            var httpClient = new Mock<HttpClientHandler>(new HttpClient());
             httpClient.Setup(x => x.SendAsync<TwitterResponseModel>(It.IsAny<HttpRequestMessage>())).ReturnsAsync(() => new TwitterResponseModel
             {
-                AccessToken = "ya29.GltoBsrJ_RRZzI-DEzU3l6nDz_qwy7RFM-zFv7MA1z6ZeU3IijEZa_ECHG70V-cFz7omdplXraYVjTvrZkkYqdaf0Z8-vnQ6NiLeOXW3GLCqnlYjabwf59RMaUv8"
+                AccessToken = "eyJhbGciOiJIUzI1NiJ9.e30.FXibJVNHsvJ6Ff-N9XtTTom9cGExRqsldHbrhAOqRUg"
             });
 
             return httpClient;
