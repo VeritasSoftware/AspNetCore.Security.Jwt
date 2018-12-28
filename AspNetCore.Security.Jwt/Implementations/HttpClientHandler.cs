@@ -9,6 +9,13 @@ namespace AspNetCore.Security.Jwt
     {
         public void Dispose()
         {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            // Cleanup
             if (this.httpClient != null)
             {
                 this.httpClient.Dispose();
