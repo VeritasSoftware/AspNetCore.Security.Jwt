@@ -35,7 +35,7 @@ namespace AspNetCore.Security.Jwt.UnitTests
             //Arrange
             var serviceCollection = new ServiceCollection();
 
-            serviceCollection.AddSecurity<DefaultAuthenticator>(this.Configuration);
+            serviceCollection.AddSecurity<DefaultAuthenticator>(this.Configuration, true);
 
             var sp = serviceCollection.BuildServiceProvider();
 
@@ -57,7 +57,7 @@ namespace AspNetCore.Security.Jwt.UnitTests
             //Arrange
             var serviceCollection = new ServiceCollection();
 
-            serviceCollection.AddSecurity<CustomAuthenticator, UserModel>(this.Configuration);
+            serviceCollection.AddSecurity<CustomAuthenticator, UserModel>(this.Configuration, builder => builder.AddClaim("ABC", "XYZ"));
 
             var sp = serviceCollection.BuildServiceProvider();
 
@@ -79,7 +79,7 @@ namespace AspNetCore.Security.Jwt.UnitTests
             //Arrange
             var serviceCollection = new ServiceCollection();
 
-            serviceCollection.AddAzureADSecurity(this.Configuration);
+            serviceCollection.AddAzureADSecurity(this.Configuration, true);
 
             var sp = serviceCollection.BuildServiceProvider();
 
@@ -115,7 +115,8 @@ namespace AspNetCore.Security.Jwt.UnitTests
             //Arrange
             var serviceCollection = new ServiceCollection();
 
-            serviceCollection.AddFacebookSecurity(this.Configuration);
+            serviceCollection.AddFacebookSecurity(this.Configuration, builder => 
+                                                    builder.AddClaim("FacebookUser", userModel => userModel.UserAccessToken));
 
             var sp = serviceCollection.BuildServiceProvider();
 
@@ -141,7 +142,7 @@ namespace AspNetCore.Security.Jwt.UnitTests
             //Arrange
             var serviceCollection = new ServiceCollection();
 
-            serviceCollection.AddGoogleSecurity(this.Configuration);
+            serviceCollection.AddGoogleSecurity(this.Configuration, true);
             
             serviceCollection.AddScoped<GoogleController>();
 
@@ -168,7 +169,7 @@ namespace AspNetCore.Security.Jwt.UnitTests
             //Arrange
             var serviceCollection = new ServiceCollection();
 
-            serviceCollection.AddTwitterSecurity(this.Configuration);
+            serviceCollection.AddTwitterSecurity(this.Configuration, true);
 
             serviceCollection.AddScoped<TwitterController>();
 
