@@ -13,9 +13,6 @@ namespace AspNetCore.Security.Jwt
     /// </summary>
     internal class AddSecurityBuilder : IAddSecurityBuilder
     {
-        private static AddSecurityBuilder instance = null;
-        private static readonly object padlock = new object();
-
         private readonly SecuritySettings SecuritySettings;
         private readonly bool IsInitDone = false;
         private bool IsDefaultAdded = false;
@@ -27,15 +24,7 @@ namespace AspNetCore.Security.Jwt
         private readonly bool IsSwaggerAdded = false;
         private readonly IServiceCollection Services;
 
-        public static AddSecurityBuilder TheInstance()
-        {
-            lock (padlock)
-            {                  
-                return instance;
-            }                           
-        }
-
-        private AddSecurityBuilder(SecuritySettings securitySettings, bool isJwtSchemeAdded, IServiceCollection services, bool addSwaggerSecurity = false)
+        public AddSecurityBuilder(SecuritySettings securitySettings, bool isJwtSchemeAdded, IServiceCollection services, bool addSwaggerSecurity = false)
         {
             if (!IsInitDone)
             {
@@ -60,19 +49,14 @@ namespace AspNetCore.Security.Jwt
             }
         }
 
-        public static void Create(SecuritySettings securitySettings, bool isJwtSchemeAdded, IServiceCollection services, bool addSwaggerSecurity = false)
-        {
-            instance = new AddSecurityBuilder(securitySettings, isJwtSchemeAdded, services, addSwaggerSecurity);
-        }
-
         public IAddSecurityBuilder AddAzureADSecurity()
         {
             if (!IsAzureAdded)
             {                
-                Services.AddSingleton<AzureADSecuritySettings>(SecuritySettings.AzureADSecuritySettings);
-                Services.AddScoped<IAuthentication<AzureADAuthModel, AzureADResponseModel>, AzureAuthenticator>();
-                Services.AddScoped<ISecurityClient<AzureADResponseModel>, AzureClient>();
-                Services.AddScoped<IHttpClient, HttpClientHandler>(x => new HttpClientHandler(new HttpClient()));
+                Services.AddSingletonIfNotExists<AzureADSecuritySettings>(SecuritySettings.AzureADSecuritySettings);
+                Services.AddScopedIfNotExists<IAuthentication<AzureADAuthModel, AzureADResponseModel>, AzureAuthenticator>();
+                Services.AddScopedIfNotExists<ISecurityClient<AzureADResponseModel>, AzureClient>();
+                Services.AddScopedIfNotExists<IHttpClient, HttpClientHandler>(x => new HttpClientHandler(new HttpClient()));
 
                 IsAzureAdded = true;
             }            
@@ -84,15 +68,15 @@ namespace AspNetCore.Security.Jwt
         {
             if (!IsFacebookAdded)
             {
-                Services.AddSingleton<BaseSecuritySettings>(SecuritySettings);
+                Services.AddSingletonIfNotExists<BaseSecuritySettings>(SecuritySettings);
                 if (addClaims != null)
                 {
-                    Services.AddSingleton<Action<IIdTypeBuilder<FacebookAuthModel>>>(x => addClaims);
+                    Services.AddSingletonIfNotExists<Action<IIdTypeBuilder<FacebookAuthModel>>>(x => addClaims);
                 }
-                Services.AddScoped<ISecurityService<FacebookAuthModel>, SecurityService<FacebookAuthModel>>();
-                Services.AddScoped<IAuthentication<FacebookAuthModel>, FacebookAuthenticator>();
-                Services.AddScoped<ISecurityClient<FacebookAuthModel, bool>, FacebookClient>();
-                Services.AddScoped<IHttpClient, HttpClientHandler>(x => new HttpClientHandler(new HttpClient()));
+                Services.AddScopedIfNotExists<ISecurityService<FacebookAuthModel>, SecurityService<FacebookAuthModel>>();
+                Services.AddScopedIfNotExists<IAuthentication<FacebookAuthModel>, FacebookAuthenticator>();
+                Services.AddScopedIfNotExists<ISecurityClient<FacebookAuthModel, bool>, FacebookClient>();
+                Services.AddScopedIfNotExists<IHttpClient, HttpClientHandler>(x => new HttpClientHandler(new HttpClient()));
 
                 IsFacebookAdded = true;
             }            
@@ -104,12 +88,12 @@ namespace AspNetCore.Security.Jwt
         {
             if (!IsGoogleAdded)
             {
-                Services.AddSingleton<BaseSecuritySettings>(SecuritySettings);
+                Services.AddSingletonIfNotExists<BaseSecuritySettings>(SecuritySettings);
                 
-                Services.AddSingleton<GoogleSecuritySettings>(SecuritySettings.GoogleSecuritySettings);
-                Services.AddScoped<IAuthentication<GoogleAuthModel, GoogleResponseModel>, GoogleAuthenticator>();
-                Services.AddScoped<ISecurityClient<GoogleAuthModel, GoogleResponseModel>, GoogleClient>();
-                Services.AddScoped<IHttpClient, HttpClientHandler>(x => new HttpClientHandler(new HttpClient()));
+                Services.AddSingletonIfNotExists<GoogleSecuritySettings>(SecuritySettings.GoogleSecuritySettings);
+                Services.AddScopedIfNotExists<IAuthentication<GoogleAuthModel, GoogleResponseModel>, GoogleAuthenticator>();
+                Services.AddScopedIfNotExists<ISecurityClient<GoogleAuthModel, GoogleResponseModel>, GoogleClient>();
+                Services.AddScopedIfNotExists<IHttpClient, HttpClientHandler>(x => new HttpClientHandler(new HttpClient()));
 
                 IsGoogleAdded = true;
             }
@@ -121,12 +105,12 @@ namespace AspNetCore.Security.Jwt
         {
             if (!IsTwitterAdded)
             {
-                Services.AddSingleton<BaseSecuritySettings>(SecuritySettings);
+                Services.AddSingletonIfNotExists<BaseSecuritySettings>(SecuritySettings);
                 
-                Services.AddSingleton<TwitterSecuritySettings>(SecuritySettings.TwitterSecuritySettings);
-                Services.AddScoped<IAuthentication<TwitterAuthModel, TwitterResponseModel>, TwitterAuthenticator>();
-                Services.AddScoped<ISecurityClient<TwitterResponseModel>, TwitterClient>();
-                Services.AddScoped<IHttpClient, HttpClientHandler>(x => new HttpClientHandler(new HttpClient()));
+                Services.AddSingletonIfNotExists<TwitterSecuritySettings>(SecuritySettings.TwitterSecuritySettings);
+                Services.AddScopedIfNotExists<IAuthentication<TwitterAuthModel, TwitterResponseModel>, TwitterAuthenticator>();
+                Services.AddScopedIfNotExists<ISecurityClient<TwitterResponseModel>, TwitterClient>();
+                Services.AddScopedIfNotExists<IHttpClient, HttpClientHandler>(x => new HttpClientHandler(new HttpClient()));
 
                 IsTwitterAdded = true;
             }
@@ -138,9 +122,9 @@ namespace AspNetCore.Security.Jwt
         {
             if (!IsDefaultAdded && !IsCustomAdded)
             {
-                Services.AddScoped<ISecurityService, SecurityService>();
-                Services.AddScoped<IAuthentication, TAuthenticator>();
-                Services.AddScoped<IHttpClient, HttpClientHandler>(x => new HttpClientHandler(new HttpClient()));
+                Services.AddScopedIfNotExists<ISecurityService, SecurityService>();
+                Services.AddScopedIfNotExists<IAuthentication, TAuthenticator>();
+                Services.AddScopedIfNotExists<IHttpClient, HttpClientHandler>(x => new HttpClientHandler(new HttpClient()));
 
                 IsDefaultAdded = true;
             }            
@@ -152,14 +136,14 @@ namespace AspNetCore.Security.Jwt
         {
             if (!IsDefaultAdded && !IsCustomAdded)
             {
-                Services.AddSingleton<BaseSecuritySettings>(SecuritySettings);
+                Services.AddSingletonIfNotExists<BaseSecuritySettings>(SecuritySettings);
                 if (addClaims != null)
                 {
-                    Services.AddSingleton<Action<IIdTypeBuilder<TUserModel>>>(x => addClaims);
+                    Services.AddSingletonIfNotExists<Action<IIdTypeBuilder<TUserModel>>>(x => addClaims);
                 }
-                Services.AddScoped<ISecurityService<TUserModel>, SecurityService<TUserModel>>();
-                Services.AddScoped<IAuthentication<TUserModel>, TAuthenticator>();
-                Services.AddScoped<IHttpClient, HttpClientHandler>(x => new HttpClientHandler(new HttpClient()));
+                Services.AddScopedIfNotExists<ISecurityService<TUserModel>, SecurityService<TUserModel>>();
+                Services.AddScopedIfNotExists<IAuthentication<TUserModel>, TAuthenticator>();
+                Services.AddScopedIfNotExists<IHttpClient, HttpClientHandler>(x => new HttpClientHandler(new HttpClient()));
 
                 IsCustomAdded = true;
             }

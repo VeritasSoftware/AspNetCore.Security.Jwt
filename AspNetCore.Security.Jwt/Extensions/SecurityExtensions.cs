@@ -12,6 +12,7 @@ namespace AspNetCore.Security.Jwt
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.IdentityModel.Tokens;
     using System;
+    using System.Linq;
     using System.Net.Http;
     using System.Text;
 
@@ -39,10 +40,10 @@ namespace AspNetCore.Security.Jwt
             var securitySettings = configuration.SecuritySettings();
             IdTypeHelpers.LoadClaimTypes();
 
-            services.AddSingleton(securitySettings);            
-            services.AddScoped<ISecurityService, SecurityService>();
-            services.AddScoped<IAuthentication, TAuthenticator>();
-            services.AddScoped<IHttpClient, HttpClientHandler>(x => new HttpClientHandler(new HttpClient()));
+            services.AddSingletonIfNotExists(securitySettings);            
+            services.AddScopedIfNotExists<ISecurityService, SecurityService>();
+            services.AddScopedIfNotExists<IAuthentication, TAuthenticator>();
+            services.AddScopedIfNotExists<IHttpClient, HttpClientHandler>(x => new HttpClientHandler(new HttpClient()));
 
             services.AddSwaggerAndJwtBearerScheme(addSwaggerSecurity, securitySettings);
 
@@ -69,15 +70,15 @@ namespace AspNetCore.Security.Jwt
             var securitySettings = configuration.SecuritySettings();
             IdTypeHelpers.LoadClaimTypes();
 
-            services.AddSingleton(securitySettings);
-            services.AddSingleton<BaseSecuritySettings>(securitySettings);
+            services.AddSingletonIfNotExists(securitySettings);
+            services.AddSingletonIfNotExists<BaseSecuritySettings>(securitySettings);
             if (addClaims != null)
             {
-                services.AddSingleton<Action<IIdTypeBuilder<TUserModel>>>(x => addClaims);
+                services.AddSingletonIfNotExists<Action<IIdTypeBuilder<TUserModel>>>(x => addClaims);
             }
-            services.AddScoped<ISecurityService<TUserModel>, SecurityService<TUserModel>>();
-            services.AddScoped<IAuthentication<TUserModel>, TAuthenticator>();
-            services.AddScoped<IHttpClient, HttpClientHandler>(x => new HttpClientHandler(new HttpClient()));
+            services.AddScopedIfNotExists<ISecurityService<TUserModel>, SecurityService<TUserModel>>();
+            services.AddScopedIfNotExists<IAuthentication<TUserModel>, TAuthenticator>();
+            services.AddScopedIfNotExists<IHttpClient, HttpClientHandler>(x => new HttpClientHandler(new HttpClient()));
 
             services.AddSwaggerAndJwtBearerScheme(addSwaggerSecurity, securitySettings);
 
@@ -100,16 +101,16 @@ namespace AspNetCore.Security.Jwt
             var securitySettings = configuration.SecuritySettings();
             IdTypeHelpers.LoadClaimTypes();
 
-            services.AddSingleton(securitySettings);
-            services.AddSingleton<BaseSecuritySettings>(securitySettings);
+            services.AddSingletonIfNotExists(securitySettings);
+            services.AddSingletonIfNotExists<BaseSecuritySettings>(securitySettings);
             if (addClaims != null)
             {
-                services.AddSingleton<Action<IIdTypeBuilder<FacebookAuthModel>>>(x => addClaims);
+                services.AddSingletonIfNotExists<Action<IIdTypeBuilder<FacebookAuthModel>>>(x => addClaims);
             }
-            services.AddScoped<ISecurityService<FacebookAuthModel>, SecurityService<FacebookAuthModel>>();           
-            services.AddScoped<IAuthentication<FacebookAuthModel>, FacebookAuthenticator>();
-            services.AddScoped<ISecurityClient<FacebookAuthModel, bool>, FacebookClient>();
-            services.AddScoped<IHttpClient, HttpClientHandler>(x => new HttpClientHandler(new HttpClient()));
+            services.AddScopedIfNotExists<ISecurityService<FacebookAuthModel>, SecurityService<FacebookAuthModel>>();           
+            services.AddScopedIfNotExists<IAuthentication<FacebookAuthModel>, FacebookAuthenticator>();
+            services.AddScopedIfNotExists<ISecurityClient<FacebookAuthModel, bool>, FacebookClient>();
+            services.AddScopedIfNotExists<IHttpClient, HttpClientHandler>(x => new HttpClientHandler(new HttpClient()));
 
             services.AddSwaggerAndJwtBearerScheme(addSwaggerSecurity, securitySettings);
 
@@ -130,13 +131,13 @@ namespace AspNetCore.Security.Jwt
             var securitySettings = configuration.SecuritySettings();
             IdTypeHelpers.LoadClaimTypes();
 
-            services.AddSingleton(securitySettings);
+            services.AddSingletonIfNotExists(securitySettings);
 
-            services.AddSingleton<BaseSecuritySettings>(securitySettings);
-            services.AddSingleton<GoogleSecuritySettings>(securitySettings.GoogleSecuritySettings);
-            services.AddScoped<IAuthentication<GoogleAuthModel, GoogleResponseModel>, GoogleAuthenticator>();
-            services.AddScoped<ISecurityClient<GoogleAuthModel, GoogleResponseModel>, GoogleClient>();
-            services.AddScoped<IHttpClient, HttpClientHandler>(x => new HttpClientHandler(new HttpClient()));
+            services.AddSingletonIfNotExists<BaseSecuritySettings>(securitySettings);
+            services.AddSingletonIfNotExists<GoogleSecuritySettings>(securitySettings.GoogleSecuritySettings);
+            services.AddScopedIfNotExists<IAuthentication<GoogleAuthModel, GoogleResponseModel>, GoogleAuthenticator>();
+            services.AddScopedIfNotExists<ISecurityClient<GoogleAuthModel, GoogleResponseModel>, GoogleClient>();
+            services.AddScopedIfNotExists<IHttpClient, HttpClientHandler>(x => new HttpClientHandler(new HttpClient()));
 
             services.AddSwaggerAndJwtBearerScheme(addSwaggerSecurity, securitySettings);
 
@@ -158,14 +159,14 @@ namespace AspNetCore.Security.Jwt
             var securitySettings = configuration.SecuritySettings();
             IdTypeHelpers.LoadClaimTypes();
 
-            services.AddSingleton(securitySettings);
+            services.AddSingletonIfNotExists(securitySettings);
 
-            services.AddSingleton<BaseSecuritySettings>(securitySettings);
+            services.AddSingletonIfNotExists<BaseSecuritySettings>(securitySettings);
 
-            services.AddSingleton<TwitterSecuritySettings>(securitySettings.TwitterSecuritySettings);
-            services.AddScoped<IAuthentication<TwitterAuthModel, TwitterResponseModel>, TwitterAuthenticator>();
-            services.AddScoped<ISecurityClient<TwitterResponseModel>, TwitterClient>();
-            services.AddScoped<IHttpClient, HttpClientHandler>(x => new HttpClientHandler(new HttpClient()));
+            services.AddSingletonIfNotExists<TwitterSecuritySettings>(securitySettings.TwitterSecuritySettings);
+            services.AddScopedIfNotExists<IAuthentication<TwitterAuthModel, TwitterResponseModel>, TwitterAuthenticator>();
+            services.AddScopedIfNotExists<ISecurityClient<TwitterResponseModel>, TwitterClient>();
+            services.AddScopedIfNotExists<IHttpClient, HttpClientHandler>(x => new HttpClientHandler(new HttpClient()));
 
             services.AddSwaggerAndJwtBearerScheme(addSwaggerSecurity, securitySettings);
 
@@ -186,11 +187,11 @@ namespace AspNetCore.Security.Jwt
             var securitySettings = configuration.SecuritySettings();
             IdTypeHelpers.LoadClaimTypes();
 
-            services.AddSingleton(securitySettings);
-            services.AddSingleton<AzureADSecuritySettings>(securitySettings.AzureADSecuritySettings);            
-            services.AddScoped<IAuthentication<AzureADAuthModel, AzureADResponseModel>, AzureAuthenticator>();
-            services.AddScoped<ISecurityClient<AzureADResponseModel>, AzureClient>();
-            services.AddScoped<IHttpClient, HttpClientHandler>(x => new HttpClientHandler(new HttpClient()));
+            services.AddSingletonIfNotExists(securitySettings);
+            services.AddSingletonIfNotExists<AzureADSecuritySettings>(securitySettings.AzureADSecuritySettings);            
+            services.AddScopedIfNotExists<IAuthentication<AzureADAuthModel, AzureADResponseModel>, AzureAuthenticator>();
+            services.AddScopedIfNotExists<ISecurityClient<AzureADResponseModel>, AzureClient>();
+            services.AddScopedIfNotExists<IHttpClient, HttpClientHandler>(x => new HttpClientHandler(new HttpClient()));
 
             if (addSwaggerSecurity)
             {
@@ -271,14 +272,83 @@ namespace AspNetCore.Security.Jwt
         public static IAddSecurityBuilder AddSecurity(this IServiceCollection services, SecuritySettings settings, bool addSwaggerSecurity = false)
         {
             var securitySettings = settings;
-            services.AddSingleton(securitySettings);
+            services.AddSingletonIfNotExists(securitySettings);
 
-            AddSecurityBuilder.Create(securitySettings, IsJwtSchemeAdded, services, addSwaggerSecurity);
+            services.AddSingletonIfNotExists<IAddSecurityBuilder, AddSecurityBuilder>(x => new AddSecurityBuilder(securitySettings, IsJwtSchemeAdded, services, addSwaggerSecurity));
 
-            IAddSecurityBuilder addSecurityBuilder = AddSecurityBuilder.TheInstance();
+            var sp = services.BuildServiceProvider();
+
+            IAddSecurityBuilder addSecurityBuilder = sp.GetRequiredService<IAddSecurityBuilder>();
 
             return addSecurityBuilder;
-        }        
+        }
+        
+        internal static IServiceCollection AddScopedIfNotExists<TService, TImplementation>(this IServiceCollection services, Func<IServiceProvider, TImplementation> implementationFactory = null)
+            where TService: class
+            where TImplementation: class, TService
+        {
+            if (!services.Any(x => x.ServiceType == typeof(TService)))
+            {
+                if (implementationFactory == null)
+                {
+                    services.AddScoped<TService, TImplementation>();
+                }
+                else
+                {
+                    services.AddScoped<TService, TImplementation>(implementationFactory);
+                }
+            }
+
+            return services;
+        }
+
+        internal static IServiceCollection AddSingletonIfNotExists<TService, TImplementation>(this IServiceCollection services, Func<IServiceProvider, TImplementation> implementationFactory)
+            where TService : class
+            where TImplementation : class, TService
+        {
+            if (!services.Any(x => x.ServiceType == typeof(TService)))
+            {
+                services.AddSingleton<TService, TImplementation>(implementationFactory);
+            }
+
+            return services;
+        }
+
+        internal static IServiceCollection AddSingletonIfNotExists<TService>(this IServiceCollection services, Func<IServiceProvider, TService> implementationFactory = null)
+                    where TService : class
+        {
+            if (!services.Any(x => x.ServiceType == typeof(TService)))
+            {
+                if (implementationFactory == null)
+                {
+                    services.AddSingleton<TService>();
+                }
+                else
+                {
+                    services.AddSingleton(implementationFactory);
+                }
+            }
+
+            return services;
+        }
+
+        internal static IServiceCollection AddSingletonIfNotExists<TService>(this IServiceCollection services, TService implementationFactory)
+                    where TService : class
+        {
+            if (!services.Any(x => x.ServiceType == typeof(TService)))
+            {
+                if (implementationFactory == null)
+                {
+                    services.AddSingleton<TService>();
+                }
+                else
+                {
+                    services.AddSingleton(implementationFactory);
+                }
+            }
+
+            return services;
+        }
 
         public static IApplicationBuilder UseSecurity(this IApplicationBuilder app, bool addSwaggerSecurity = false)
         {
