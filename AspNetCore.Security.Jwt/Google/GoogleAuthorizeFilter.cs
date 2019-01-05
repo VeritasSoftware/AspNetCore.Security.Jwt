@@ -18,6 +18,8 @@ namespace AspNetCore.Security.Jwt.Google
             base.ValidCondition = authModel =>
                                     authModel != null
                                     &&
+                                    (!string.IsNullOrEmpty(securitySettings.GoogleSecuritySettings.APIKey))
+                                    &&
                                     (string.Compare(authModel.APIKey?.Trim(), securitySettings.GoogleSecuritySettings.APIKey.Trim()) == 0)
                                     &&
                                     (!string.IsNullOrEmpty(authModel.AuthorizationCode));

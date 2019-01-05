@@ -18,6 +18,8 @@ namespace AspNetCore.Security.Jwt.Twitter
             base.ValidCondition = authModel => 
                                     authModel != null
                                     &&
+                                    (!string.IsNullOrEmpty(securitySettings.TwitterSecuritySettings.APIKey))
+                                    &&
                                     (string.Compare(authModel.APIKey?.Trim(), securitySettings.TwitterSecuritySettings.APIKey.Trim()) == 0);
 
         }

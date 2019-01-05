@@ -18,6 +18,8 @@ namespace AspNetCore.Security.Jwt.AzureAD
             base.ValidCondition = authModel =>
                                     authModel != null
                                     &&
+                                    (!string.IsNullOrEmpty(securitySettings.AzureADSecuritySettings.APIKey))
+                                    &&
                                     (string.Compare(authModel.APIKey?.Trim(), securitySettings.AzureADSecuritySettings.APIKey.Trim()) == 0);
         }
     }
