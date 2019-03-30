@@ -53,6 +53,10 @@ namespace AspNetCore.Security.Jwt
             {
                 feature.Controllers.Remove(typeof(GoogleController).GetTypeInfo());
             }
+            if (feature.Controllers.Contains(typeof(TwitterController).GetTypeInfo()))
+            {
+                feature.Controllers.Remove(typeof(TwitterController).GetTypeInfo());
+            }
         }
     }
 
