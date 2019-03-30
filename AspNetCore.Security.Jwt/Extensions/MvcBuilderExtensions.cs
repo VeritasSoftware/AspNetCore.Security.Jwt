@@ -94,7 +94,7 @@
         public static IMvcBuilder AddTwitterSecurity(this IMvcBuilder mvcBuilder)
         {
             mvcBuilder.SecurityInit()
-                      .ConfigureApplicationPartManager(!IsGoogleSecurityAdded,
+                      .ConfigureApplicationPartManager(!IsTwitterSecurityAdded,
                                                             apm => apm.FeatureProviders.Add(new TwitterControllerFeatureProvider() { AddTwitterController = true }));
 
             IsTwitterSecurityAdded = true;
