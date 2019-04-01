@@ -5,7 +5,7 @@
 
     <PackageId>AspNetCore.Security.Jwt</PackageId>
     <Description>Package makes integrating JWT Bearer Token Security to your ASP .NET Core 2.0+ app a breeze!! Azure Active Directory, Google, Facebook, Twitter auth integration. Also, Swagger UI integration!</Description>
-    <Version>1.6.0</Version>
+    <Version>1.7.0</Version>
     <Authors>Shantanu</Authors>
     <Company>Veritas Software</Company>
     <Copyright>Veritas Software 2019</Copyright>
@@ -13,7 +13,7 @@
     <PackageTags>AspNetCore.Security.Jwt JWT Bearer Token Security Swagger UI Facebook integration ASP .NET Core 2.0+ Azure Active Directory authentication app web api</PackageTags>
     <RepositoryUrl>https://github.com/VeritasSoftware/AspNetCore.Security.Jwt</RepositoryUrl>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-    <PackageReleaseNotes>Google and Twitter auth integration. No breaking changes.</PackageReleaseNotes>
+    <PackageReleaseNotes>Fixes and enhancements. No breaking changes.</PackageReleaseNotes>
   </PropertyGroup>  
   
   <ItemGroup>
