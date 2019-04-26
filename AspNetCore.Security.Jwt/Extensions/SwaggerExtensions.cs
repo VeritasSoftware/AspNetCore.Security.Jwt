@@ -2,7 +2,8 @@
 {
     using Microsoft.AspNetCore.Builder;
     using Microsoft.Extensions.DependencyInjection;
-    using Swashbuckle.AspNetCore.Swagger;
+    using Microsoft.OpenApi.Models;
+    using Swashbuckle.AspNetCore.SwaggerUI;
     using System.Collections.Generic;
 
     public static class SwaggerExtensions
@@ -13,23 +14,34 @@
         public static IServiceCollection AddSecureSwaggerDocumentation(this IServiceCollection services)
         {
             if (!IsSwaggerAdded)
-            {
+            {                  
                 services.AddSwaggerGen(c =>
                 {
-                    // Swagger 2.+ support
-                    var security = new Dictionary<string, IEnumerable<string>>
-                    {
-                        {"Bearer", new string[] { }},
-                    };
 
-                    c.AddSecurityDefinition("Bearer", new ApiKeyScheme
+                    // Swagger support                    
+                    var scheme = new OpenApiSecurityScheme
                     {
                         Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
                         Name = "Authorization",
-                        In = "header",
-                        Type = "apiKey"
-                    });
-                    c.AddSecurityRequirement(security);
+                        In = ParameterLocation.Header,
+                        Type = SecuritySchemeType.ApiKey,
+                        BearerFormat = "JWT",
+                        Scheme = "bearer"                        
+                    };                    
+
+                    c.AddSecurityDefinition("Bearer", scheme);
+
+                    var requirement = new OpenApiSecurityRequirement();
+                    requirement.Add(new OpenApiSecurityScheme
+                    {
+                        Reference = new OpenApiReference
+                        {
+                            Type = ReferenceType.SecurityScheme,
+                            Id = "Bearer"
+                        }
+                    }, new List<string>());
+
+                    c.AddSecurityRequirement(requirement);
                 });
 
                 IsSwaggerAdded = true;
@@ -54,4 +66,5 @@
             return app;
         }
     }
+
 }

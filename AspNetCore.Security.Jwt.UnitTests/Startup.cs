@@ -24,7 +24,7 @@ namespace AspNetCore.Security.Jwt.UnitTests
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new Info { Title = "XXX API", Version = "v1" });
+                c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "XXX API", Version = "v1" });
             });
 
             var securitySettings = new SecuritySettings();
