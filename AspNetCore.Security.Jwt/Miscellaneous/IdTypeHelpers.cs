@@ -17,18 +17,21 @@ namespace AspNetCore.Security.Jwt
         /// </summary>
         internal static void LoadClaimTypes()
         {
-            if (ClaimTypes != null && ClaimTypes.Any())
+            lock(claimTypesDictionary)
             {
-                return;
-            }
+                if (ClaimTypes != null && ClaimTypes.Any())
+                {
+                    return;
+                }
 
-            Type t = typeof(ClaimTypes);
-            FieldInfo[] fields = t.GetFields(BindingFlags.Static | BindingFlags.Public);
+                Type t = typeof(ClaimTypes);
+                FieldInfo[] fields = t.GetFields(BindingFlags.Static | BindingFlags.Public);
 
-            foreach (FieldInfo fi in fields)
-            {
-                ClaimTypes.Add(fi.Name, fi.GetValue(null).ToString());
-            }
+                foreach (FieldInfo fi in fields)
+                {
+                    ClaimTypes.Add(fi.Name, fi.GetValue(null).ToString());
+                }
+            }            
         }        
     }
 }
