@@ -2,7 +2,8 @@ language: csharp
 solution: AspNetCore.Security.Jwt.sln
 mono: none
 dist: xenial
-dotnet: 2.0
+sudo: required
+dotnet: 2.0.0
 script:
  - dotnet restore
  - dotnet build
