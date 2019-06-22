@@ -1,0 +1,8 @@
+language: csharp
+solution: AspNetCore.Security.Jwt.sln
+mono: none
+dist: xenial
+dotnet: 2.0
+script:
+ - dotnet restore AspNetCore.Security.Jwt/AspNetCore.Security.Jwt.csproj
+ - dotnet test AspNetCore.Security.Jwt.UnitTests
