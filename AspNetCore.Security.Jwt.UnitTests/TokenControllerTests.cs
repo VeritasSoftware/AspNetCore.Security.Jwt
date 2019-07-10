@@ -21,7 +21,7 @@ namespace AspNetCore.Security.Jwt.UnitTests
                 TokenExpiryInHours = 1.2,
             };
 
-            var securityService = new SecurityService(securitySettings);
+            var securityService = new SecurityService(securitySettings, builder => builder.AddClaim("CompanyName", "My Company"));
 
             //Authenticator returns a true, token is generated.
             var authenticator = new DefaultAuthenticator(true);

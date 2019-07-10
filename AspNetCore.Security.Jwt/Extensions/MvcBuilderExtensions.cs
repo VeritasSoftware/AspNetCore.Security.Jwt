@@ -25,6 +25,20 @@
         /// </summary>
         /// <param name="mvcBuilder">The MvcBuilder</param>
         /// <returns><see cref="IMvcBuilder"/></returns>
+        public static IMvcBuilder AddSecurityClient(this IMvcBuilder mvcBuilder)
+        {
+            mvcBuilder.SecurityInit();
+
+            IsDefaultSecurityAdded = true;
+
+            return mvcBuilder;
+        }
+
+        /// <summary>
+        /// Add Security extension. Adds Security assembly for default Authentication.
+        /// </summary>
+        /// <param name="mvcBuilder">The MvcBuilder</param>
+        /// <returns><see cref="IMvcBuilder"/></returns>
         public static IMvcBuilder AddSecurity(this IMvcBuilder mvcBuilder)
         {
             mvcBuilder.SecurityInit()

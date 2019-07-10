@@ -4,6 +4,13 @@ using System.Security.Claims;
 
 namespace AspNetCore.Security.Jwt
 {
+    public interface IIdTypeBuilder
+    {
+        IIdTypeBuilder AddClaim(string type, string value);
+
+        IIdTypeBuilder AddClaim(IdType idType, string value);
+    }
+
     /// <summary>
     /// IIdTypeBuilder interface. Used for adding IdTypes (ClaimTypes) to the token.
     /// </summary>

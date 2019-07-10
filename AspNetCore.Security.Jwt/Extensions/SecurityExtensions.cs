@@ -26,6 +26,24 @@ namespace AspNetCore.Security.Jwt
 
         /// <summary>
         /// Add Security extensions - Used to wire up the dependency injection
+        /// </summary>        
+        /// <param name="services">The services collection</param>
+        /// <param name="configuration">The configurations -- appsettings</param>
+        /// <param name="addSwaggerSecurity">Enable security in Swagger UI</param>
+        /// <returns>The services collection</returns>
+        public static IServiceCollection AddSecurityClient(this IServiceCollection services,
+                                                                        IConfiguration configuration,
+                                                                        bool addSwaggerSecurity = false)
+        {
+            var securitySettings = configuration.SecuritySettings();
+
+            services.AddSwaggerAndJwtBearerScheme(addSwaggerSecurity, securitySettings);
+
+            return services;
+        }
+
+        /// <summary>
+        /// Add Security extensions - Used to wire up the dependency injection
         /// </summary>
         /// <typeparam name="TAuthenticator">The authenticator - Used to authenticate the default authentication</typeparam>
         /// <param name="services">The services collection</param>
@@ -33,14 +51,19 @@ namespace AspNetCore.Security.Jwt
         /// <param name="addSwaggerSecurity">Enable security in Swagger UI</param>
         /// <returns>The services collection</returns>
         public static IServiceCollection AddSecurity<TAuthenticator>(this IServiceCollection services, 
-                                                                        IConfiguration configuration, 
-                                                                        bool addSwaggerSecurity = false)
+                                                                        IConfiguration configuration,                                                                        
+                                                                        bool addSwaggerSecurity = false,
+                                                                        Action<IIdTypeBuilder> addClaims = null)
             where TAuthenticator : class, IAuthentication
         {
             var securitySettings = configuration.SecuritySettings();
             IdTypeHelpers.LoadClaimTypes();
 
-            services.AddSingletonIfNotExists(securitySettings);            
+            services.AddSingletonIfNotExists(securitySettings);
+            if (addClaims != null)
+            {
+                services.AddSingletonIfNotExists<Action<IIdTypeBuilder>>(x => addClaims);
+            }
             services.AddScopedIfNotExists<ISecurityService, SecurityService>();
             services.AddScopedIfNotExists<IAuthentication, TAuthenticator>();
             services.AddScopedIfNotExists<IHttpClient, HttpClientHandler>(x => new HttpClientHandler(new HttpClient()));
@@ -193,10 +216,7 @@ namespace AspNetCore.Security.Jwt
             services.AddScopedIfNotExists<ISecurityClient<AzureADResponseModel>, AzureClient>();
             services.AddScopedIfNotExists<IHttpClient, HttpClientHandler>(x => new HttpClientHandler(new HttpClient()));
 
-            if (addSwaggerSecurity)
-            {
-                services.AddSecureSwaggerDocumentation();
-            }            
+            services.AddSwaggerAndJwtBearerScheme(addSwaggerSecurity, securitySettings);
 
             return services;
         } 

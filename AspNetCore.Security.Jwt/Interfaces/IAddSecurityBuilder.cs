@@ -6,7 +6,7 @@ namespace AspNetCore.Security.Jwt
 {
     public interface IAddSecurityBuilder
     {
-        IAddSecurityBuilder AddSecurity<TAuthenticator>()
+        IAddSecurityBuilder AddSecurity<TAuthenticator>(Action<IIdTypeBuilder> addClaims = null)
              where TAuthenticator : class, IAuthentication;
 
         IAddSecurityBuilder AddSecurity<TAuthenticator, TUserModel>(Action<IIdTypeBuilder<TUserModel>> addClaims = null)

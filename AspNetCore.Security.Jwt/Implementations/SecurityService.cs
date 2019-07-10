@@ -13,11 +13,13 @@
     internal class SecurityService : ISecurityService
     {
         private readonly SecuritySettings securitySettings;
+        private readonly Action<IIdTypeBuilder> addClaims;
         const double DEFAULT_TOKEN_EXPIRY_IN_HOURS = 1;
 
-        public SecurityService(SecuritySettings securitySettings)
+        public SecurityService(SecuritySettings securitySettings, Action<IIdTypeBuilder> addClaims = null)
         {
             this.securitySettings = securitySettings;
+            this.addClaims = addClaims;
         }        
 
         /// <inheritdoc>
@@ -34,11 +36,23 @@
             //create claim 
             Claim claim = new Claim(idType.ToClaimTypes(), seed);
 
-            var claims = new Claim[] {
+            var builder = new IdTypeBuilder();
+
+            if (addClaims != null)
+            {
+                this.addClaims(builder);
+            }
+
+            var claims = new List<Claim> {
                 claim,
                 new Claim(JwtRegisteredClaimNames.Exp, $"{new DateTimeOffset(DateTime.Now.AddHours(this.securitySettings.TokenExpiryInHours ?? DEFAULT_TOKEN_EXPIRY_IN_HOURS)).ToUnixTimeSeconds()}"),
                 new Claim(JwtRegisteredClaimNames.Nbf, $"{new DateTimeOffset(DateTime.Now).ToUnixTimeSeconds()}")
             };
+
+            if (addClaims != null)
+            {
+                claims.AddRange(builder.ToClaims());
+            }
 
             var token = new JwtSecurityToken(
                 issuer: this.securitySettings.Issuer,

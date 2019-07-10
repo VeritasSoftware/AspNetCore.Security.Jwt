@@ -118,11 +118,15 @@ namespace AspNetCore.Security.Jwt
             return this;
         }
 
-        IAddSecurityBuilder IAddSecurityBuilder.AddSecurity<TAuthenticator>()
+        IAddSecurityBuilder IAddSecurityBuilder.AddSecurity<TAuthenticator>(Action<IIdTypeBuilder> addClaims)
         {
             if (!IsDefaultAdded && !IsCustomAdded)
             {
                 Services.AddScopedIfNotExists<ISecurityService, SecurityService>();
+                if (addClaims != null)
+                {
+                    Services.AddSingletonIfNotExists<Action<IIdTypeBuilder>>(x => addClaims);
+                }
                 Services.AddScopedIfNotExists<IAuthentication, TAuthenticator>();
                 Services.AddScopedIfNotExists<IHttpClient, HttpClientHandler>(x => new HttpClientHandler(new HttpClient()));
 
