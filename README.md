@@ -46,6 +46,12 @@
 
 **Add a reference to the package and...**
 
+# Multiple Microservices security layer using Identity Microservice approach
+
+[**Identity Microservice**](https://github.com/VeritasSoftware/AspNetCore.Security.Jwt.IdentityMicroservice)
+
+# Single API security
+
 ## A. Use custom User model authentication
 
 If you want to use a **custom User model** in your app for authentication then do the following for below **steps 1, 2, 3**:
