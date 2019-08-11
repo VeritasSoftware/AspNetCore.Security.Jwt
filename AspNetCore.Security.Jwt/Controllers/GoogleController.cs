@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 namespace AspNetCore.Security.Jwt
 {
     /// <summary>
-    /// Facebook Contoller for authentication
+    /// Google Controller for authentication
     /// </summary>
     [Produces("application/json")]
     [Route("api/[controller]")]
