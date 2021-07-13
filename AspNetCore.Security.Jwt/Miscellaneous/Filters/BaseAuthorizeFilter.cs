@@ -2,10 +2,11 @@
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Threading.Tasks;
 
 namespace AspNetCore.Security.Jwt
 {
-    internal abstract class BaseAuthorizeFilter<TModel, TFilter> : IAuthorizationFilter
+    internal abstract class BaseAuthorizeFilter<TModel, TFilter> : IAsyncAuthorizationFilter
     {
         private readonly ILogger<TFilter> logger;
 
@@ -14,13 +15,13 @@ namespace AspNetCore.Security.Jwt
             this.logger = logger;
         }
 
-        public void OnAuthorization(AuthorizationFilterContext context)
+        public async Task OnAuthorizationAsync(AuthorizationFilterContext context)
         {
             var req = context.HttpContext.Request;
 
             try
             {
-                if (!req.IsValid(this.ValidCondition))
+                if (!await req.IsValid(this.ValidCondition))
                 {
                     context.Result = new UnauthorizedResult();
                 }

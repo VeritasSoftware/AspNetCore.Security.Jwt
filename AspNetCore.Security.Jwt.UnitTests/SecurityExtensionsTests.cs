@@ -2,7 +2,7 @@
 using AspNetCore.Security.Jwt.Facebook;
 using AspNetCore.Security.Jwt.Google;
 using AspNetCore.Security.Jwt.Twitter;
-using Microsoft.AspNetCore.Builder.Internal;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;

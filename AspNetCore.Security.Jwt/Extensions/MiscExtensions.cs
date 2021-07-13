@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.Internal;
 using Newtonsoft.Json;
 using System;
 using System.IO;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace AspNetCore.Security.Jwt
 {
@@ -16,14 +16,15 @@ namespace AspNetCore.Security.Jwt
         /// <param name="httpRequest">The http request</param>
         /// <param name="condition">the valid condition</param>
         /// <returns>true/false based on the evaluation of the condition</returns>
-        internal static bool IsValid<TModel>(this HttpRequest httpRequest, Func<TModel, bool> condition)
+        internal async static Task<bool> IsValid<TModel>(this HttpRequest httpRequest, Func<TModel, bool> condition)
         {
             // Allows using several time the stream in ASP.Net Core
-            httpRequest.EnableRewind();
+
+            HttpRequestRewindExtensions.EnableBuffering(httpRequest);
 
             using (MemoryStream m = new MemoryStream())
             {
-                httpRequest.Body.CopyTo(m);
+                await httpRequest.Body.CopyToAsync(m);
 
                 var bodyString = Encoding.UTF8.GetString(m.ToArray());
 

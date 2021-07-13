@@ -1,30 +1,30 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
 
     <PackageId>AspNetCore.Security.Jwt</PackageId>
     <Description>Package makes integrating JWT Bearer Token Security to your ASP .NET Core 2.0+ app a breeze!! Azure Active Directory, Google, Facebook, Twitter auth integration. Also, Swagger UI integration!</Description>
-    <Version>1.7.0</Version>
+    <Version>2.0.0</Version>
     <Authors>Shantanu</Authors>
     <Company>Veritas Software</Company>
-    <Copyright>Veritas Software 2019</Copyright>
+    <Copyright>Veritas Software 2021</Copyright>
     <PackageProjectUrl>https://github.com/VeritasSoftware/AspNetCore.Security.Jwt</PackageProjectUrl>
     <PackageTags>AspNetCore.Security.Jwt JWT Bearer Token Security Swagger UI Facebook integration ASP .NET Core 2.0+ Azure Active Directory authentication app web api</PackageTags>
     <RepositoryUrl>https://github.com/VeritasSoftware/AspNetCore.Security.Jwt</RepositoryUrl>
-    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-    <PackageReleaseNotes>Fixes and enhancements. No breaking changes.</PackageReleaseNotes>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageReleaseNotes>Updated framework to .net 5.0. No breaking changes.</PackageReleaseNotes>
   </PropertyGroup>  
   
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="2.0.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Configuration" Version="2.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="2.0.0" />
-    <PackageReference Include="Microsoft.IdentityModel.Clients.ActiveDirectory" Version="4.4.0" />
-    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.0.0-rc2" />
-    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="5.3.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.7" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.2.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="5.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="5.0.0" />
+    <PackageReference Include="Microsoft.IdentityModel.Clients.ActiveDirectory" Version="5.2.9" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.1.4" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.11.1" />
   </ItemGroup>  
 
   <ItemGroup>

@@ -7,6 +7,7 @@ using Swashbuckle.AspNetCore.Swagger;
 namespace AspNetCore.Security.Jwt.UnitTests
 {
     using AspNetCore.Security.Jwt;
+    using Microsoft.AspNetCore.Mvc;
 
     public class Startup
     {
@@ -26,6 +27,7 @@ namespace AspNetCore.Security.Jwt.UnitTests
             {
                 c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "XXX API", Version = "v1" });
             });
+
 
             var securitySettings = new SecuritySettings();
             this.Configuration.Bind("SecuritySettings", securitySettings);
@@ -55,15 +57,16 @@ namespace AspNetCore.Security.Jwt.UnitTests
                    .AddGoogleSecurity();
 
             //services.AddMvc().AddSecurity().AddFacebookSecurity().AddAzureADSecurity();
-            services.AddMvc()
+            services.AddMvc(o => o.EnableEndpointRouting = false)
                     .AddSecurity<UserModel>()
                     .AddFacebookSecurity()
                     .AddAzureADSecurity()
-                    .AddGoogleSecurity();
+                    .AddGoogleSecurity()
+                    .AddTwitterSecurity();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
 
             app.UseCors(builder =>
