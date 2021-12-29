@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Moq;
 using Xunit;
 
 namespace AspNetCore.Security.Jwt.UnitTests
@@ -36,6 +38,8 @@ namespace AspNetCore.Security.Jwt.UnitTests
         public void Test_SwaggerExtensions_UseSwaggerDocumentation_Pass()
         {
             var serviceCollection = new ServiceCollection();
+            var mockEnv = new Mock<IWebHostEnvironment>();
+            serviceCollection.AddScoped(x => mockEnv.Object);
             serviceCollection.AddSecurity<DefaultAuthenticator>(this.Configuration);
 
             var serviceProvider = serviceCollection.BuildServiceProvider();
